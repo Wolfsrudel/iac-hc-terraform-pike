@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [
+      "signer:StartSigningJob",
+      "signer:DescribeSigningJob"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

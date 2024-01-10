@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [
+      "iam:SetSecurityTokenServicePreferences",
+      "iam:GetAccountSummary"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

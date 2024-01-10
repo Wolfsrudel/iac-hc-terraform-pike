@@ -1444,19 +1444,19 @@ var awsVpcSecurityGroupEgressRule []byte
 //go:embed mapping/aws/resource/ec2/aws_vpc_security_group_ingress_rule.json
 var awsVpcSecurityGroupIngressRule []byte
 
-//go:embed mapping/aws/resource/location/aws_location_geofence_collection.json
+//go:embed mapping/aws/resource/geo/aws_location_geofence_collection.json
 var awsLocationGeofenceCollection []byte
 
-//go:embed mapping/aws/resource/location/aws_location_map.json
+//go:embed mapping/aws/resource/geo/aws_location_map.json
 var awsLocationMap []byte
 
-//go:embed mapping/aws/resource/location/aws_location_place_index.json
+//go:embed mapping/aws/resource/geo/aws_location_place_index.json
 var awsLocationPlaceIndex []byte
 
-//go:embed mapping/aws/resource/location/aws_location_route_calculator.json
+//go:embed mapping/aws/resource/geo/aws_location_route_calculator.json
 var awsLocationRouteCalculator []byte
 
-//go:embed mapping/aws/resource/location/aws_location_tracker.json
+//go:embed mapping/aws/resource/geo/aws_location_tracker.json
 var awsLocationTracker []byte
 
 //go:embed mapping/aws/resource/elasticloadbalancing/aws_load_balancer_backend_server_policy.json
@@ -1551,3 +1551,177 @@ var awsEbsEncryptionByDefault []byte
 
 //go:embed mapping/aws/resource/kms/aws_kms_key_policy.json
 var awsKmsKeyPolicy []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_availability_zone_group.json
+var awsEc2AvailabilityGroup []byte
+
+//go:embed mapping/aws/resource/ec2/aws_eip_association.json
+var awsEipAssociation []byte
+
+//go:embed mapping/aws/resource/iam/aws_iam_security_token_service_preferences.json
+var awsIamSecurityTokenServicePreferences []byte
+
+//go:embed mapping/aws/resource/iam/aws_iam_service_specific_credential.json
+var awsIamServiceSpecificCredential []byte
+
+//go:embed mapping/aws/resource/iam/aws_iam_signing_certificate.json
+var awsIamSigningCertificate []byte
+
+//go:embed mapping/aws/resource/iam/aws_iam_virtual_mfa_device.json
+var awsIamVirtualMfaDevice []byte
+
+//go:embed mapping/aws/resource/imagebuilder/aws_imagebuilder_container_recipe.json
+var awsImagebuilderContainerRecipe []byte
+
+//go:embed mapping/aws/resource/inspector2/aws_inspector2_delegated_admin_account.json
+var awsInspector2DelegatedAdminAccount []byte
+
+//go:embed mapping/aws/resource/inspector2/aws_inspector2_enabler.json
+var awsInspector2Enabler []byte
+
+//go:embed mapping/aws/resource/inspector2/aws_inspector2_member_association.json
+var awsInspector2MemberAssociation []byte
+
+//go:embed mapping/aws/resource/inspector2/aws_inspector2_organization_configuration.json
+var awsInspector2OrganizationConfiguration []byte
+
+//go:embed mapping/aws/resource/internetmonitor/aws_internetmonitor_monitor.json
+var awsInternetmonitorMonitor []byte
+
+//go:embed mapping/aws/resource/kms/aws_kms_ciphertext.json
+var awsKmsCiphertext []byte
+
+//go:embed mapping/aws/resource/kms/aws_kms_custom_key_store.json
+var awsKmsCustomKeyStore []byte
+
+//go:embed mapping/aws/resource/kms/aws_kms_external_key.json
+var awsKmsExternalKey []byte
+
+//go:embed mapping/aws/resource/kms/aws_kms_replica_external_key.json
+var awsKmsReplicaExternalKey []byte
+
+//go:embed mapping/aws/resource/kms/aws_kms_replica_key.json
+var awsKmsReplicaKey []byte
+
+//go:embed mapping/aws/resource/lambda/aws_lambda_code_signing_config.json
+var awsLambdaCodeSigningConfig []byte
+
+//go:embed mapping/aws/resource/signer/aws_signer_signing_job.json
+var awsSignerSigningJob []byte
+
+//go:embed mapping/aws/resource/signer/aws_signer_signing_profile.json
+var awsSignerSigningProfile []byte
+
+//go:embed mapping/aws/resource/signer/aws_signer_signing_profile_permission.json
+var awsSignerSigningProfilePermission []byte
+
+//go:embed mapping/aws/resource/elasticbeanstalk/aws_elastic_beanstalk_environment.json
+var awsElastiBeanstalkEnvironment []byte
+
+//go:embed mapping/aws/resource/elasticbeanstalk/aws_elastic_beanstalk_application_version.json
+var awsElasticBeanstalkApplicationVersion []byte
+
+//go:embed mapping/aws/resource/elasticbeanstalk/aws_elastic_beanstalk_configuration_template.json
+var awsElasticBeanstalkConfigurationTemplate []byte
+
+//go:embed mapping/aws/resource/codebuild/aws_codebuild_webhook.json
+var awsCodebuildWebhook []byte
+
+//go:embed mapping/aws/resource/access-analyzer/aws_accessanalyzer_analyzer.json
+var awsAccessAnalyzer []byte
+
+//go:embed mapping/aws/resource/geo/aws_location_tracker_association.json
+var awsLocationTrackerAssociation []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_access_log_subscription.json
+var awsVpclatticeAccesLogSubscription []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_auth_policy.json
+var awsVpclatticeAuthPolicy []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_listener.json
+var awsVpclatticeListener []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_listener_rule.json
+var awsVpclatticeListernerRule []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_resource_policy.json
+var awsVpclatticeResourcePolicy []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_service.json
+var awsVpclatticeService []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_service_network.json
+var awsVpclatticeServiceNetwork []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_service_network_service_association.json
+var awsVpclatticeServiceNetworkServiceAssocation []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_service_network_vpc_association.json
+var awsVpclatticeServiceNetworkVpcAssociation []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_target_group.json
+var awsVpclatticeTargetGroup []byte
+
+//go:embed mapping/aws/resource/vpc-lattice/aws_vpclattice_target_group_attachment.json
+var awsVpclatticeTargetGroupAssociation []byte
+
+//go:embed mapping/aws/resource/autoscaling/aws_autoscaling_group_tag.json
+var awsAutoscalingGroupTag []byte
+
+//go:embed mapping/aws/resource/autoscaling/aws_autoscaling_schedule.json
+var awsAutoscalingSchedule []byte
+
+//go:embed mapping/aws/resource/autoscaling/aws_autoscaling_traffic_source_attachment.json
+var awsAutoscalingTrafficSourceAttachment []byte
+
+//go:embed mapping/aws/resource/autoscaling-plans/aws_autoscalingplans_scaling_plan.json
+var awsAutoscalingplansScalingPlan []byte
+
+//go:embed mapping/aws/resource/elasticloadbalancing/aws_elb_attachment.json
+var awsElbAttachment []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_bot_association.json
+var awsConnectBotAssociation []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_contact_flow.json
+var awsConnectContactFlow []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_contact_flow_module.json
+var awsConnectContactFlowModule []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_hours_of_operation.json
+var awsConnectHoursOfOperation []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_instance.json
+var awsConnectInstance []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_instance_storage_config.json
+var awsConnectInstanceStorageConfig []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_phone_number.json
+var awsConnectPhoneNumber []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_queue.json
+var awsConnectQueue []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_quick_connect.json
+var awsConnectQuickConnect []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_routing_profile.json
+var awsConnectRoutingProfile []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_security_profile.json
+var awsConnectSecurityProfile []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_user.json
+var awsConnectUser []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_user_hierarchy_structure.json
+var awsConnectUserHierarchyStructure []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_user_hierarchy_group.json
+var awsConnectUserHierarchyGroup []byte
+
+//go:embed mapping/aws/resource/connect/aws_connect_vocabulary.json
+var awsConnectVocabulary []byte

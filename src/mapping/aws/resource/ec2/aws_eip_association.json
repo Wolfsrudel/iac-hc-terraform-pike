@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [
+      "ec2:AssociateAddress",
+      "ec2:DisassociateAddress"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]
