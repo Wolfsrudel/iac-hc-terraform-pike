@@ -7,20 +7,14 @@ resource "aws_iam_policy" "basic" {
         "Sid" : "0",
         "Effect" : "Allow",
         "Action" : [
-          "ec2:CreateNetworkInterface",
-          "ec2:CreateSecurityGroup",
-          "ec2:CreateTags",
-          "ec2:DeleteNetworkInterface",
-          "ec2:DeleteSecurityGroup",
-          "ec2:DeleteTags",
-          "ec2:DescribeAccountAttributes",
-          "ec2:DescribeNetworkInterfaces",
-          "ec2:DescribeSecurityGroups",
-          "ec2:RevokeSecurityGroupEgress",
-          "logs:CreateLogGroup",
-          "logs:DeleteLogGroup",
-          "logs:DescribeLogGroups",
-          "logs:ListTagsLogGroup"
+
+          //aws_bedrock_custom_model
+          "bedrock:GetCustomModel",
+
+          //aws_bedrock_custom_models
+          "bedrock:ListCustomModels",
+
+          "ssm-contacts:GetRotation",
         ],
         "Resource" : "*",
       }

@@ -216,3 +216,227 @@ var googleStorageObjectAccessControl []byte
 
 //go:embed mapping/google/resource/cloudbuild/google_cloudbuild_trigger.json
 var googleCloudbuildTrigger []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_endpoint.json
+var googleServiceDirectoryEndpoint []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_namespace.json
+var googleServiceDirectoryNamespace []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_namespace_iam_binding.json
+var googleServiceDirectoryNamespaceIamBinding []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_namespace_iam_member.json
+var googleServiceDirectoryNamespaceIamMember []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_namespace_iam_policy.json
+var googleServiceDirectoryNamespaceIamPolicy []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_service.json
+var googleServiceDirectoryService []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_service_iam_binding.json
+var googleServiceDirectoryServiceIamBinding []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_service_iam_member.json
+var googleServiceDirectoryServiceIamMember []byte
+
+//go:embed mapping/google/resource/servicedirectory/google_service_directory_service_iam_policy.json
+var googleServiceDirectoryServiceIamPolicy []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_access_level.json
+var googleAccessContextManagerAccessLevel []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_access_levels.json
+var googleAccessContextManagerAccessLevels []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_access_policy.json
+var googleAccessContextManagerAccessPolicy []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_access_policy_iam.json
+var googleAccessContextManagerAccessPolicyIam []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_authorized_orgs_desc.json
+var googleAccessContextManagerAuthorizedOrgsDesc []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_gcp_user_access_binding.json
+var googleAccessContextManagerGcpUserAccessBinding []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_service_perimeter.json
+var googleAccessContextManagerServicePerimeter []byte
+
+//go:embed mapping/google/resource/accesscontextmanager/google_access_context_manager_service_perimeters.json
+var googleAccessContextManagerServicePerimeters []byte
+
+//go:embed mapping/google/resource/alloydb/google_alloydb_backup.json
+var googleAlloydbBackup []byte
+
+//go:embed mapping/google/resource/alloydb/google_alloydb_cluster.json
+var googleAlloydbCluster []byte
+
+//go:embed mapping/google/resource/alloydb/google_alloydb_instance.json
+var googleAlloydbInstance []byte
+
+//go:embed mapping/google/resource/alloydb/google_alloydb_user.json
+var googleAlloydbUser []byte
+
+//go:embed mapping/google/resource/firebase/google_firebase_android_app.json
+var googleFirebaseAndroidApp []byte
+
+//go:embed mapping/google/resource/firebase/google_firebase_apple_app.json
+var googleFirebaseAppleApp []byte
+
+//go:embed mapping/google/resource/firebasedatabase/google_firebase_database_instance.json
+var googleFirebaseDatabaseInstance []byte
+
+//go:embed mapping/google/resource/firebasehosting/google_firebase_hosting_site.json
+var googleFirebaseHostingSite []byte
+
+//go:embed mapping/google/resource/firebase/google_firebase_project.json
+var googleFirebaseProject []byte
+
+//go:embed mapping/google/resource/firebasestorage/google_firebase_storage_bucket.json
+var googleFirebaseStorageBucket []byte
+
+//go:embed mapping/google/resource/firebase/google_firebase_android_app.json
+var googleFirebaseWebApp []byte
+
+//go:embed mapping/google/resource/firebaserules/google_firebaserules_release.json
+var googleFirebaserulesRelease []byte
+
+//go:embed mapping/google/resource/firebaserules/google_firebaserules_ruleset.json
+var googleFirebaserulesRuleset []byte
+
+//go:embed mapping/google/resource/bigtable/google_bigtable_app_profile.json
+var googleBigtableAppProfile []byte
+
+//go:embed mapping/google/resource/bigtable/google_bigtable_gc_policy.json
+var googleBigtableGcPolicy []byte
+
+var googleApiGatewayApi []byte
+
+//go:embed mapping/google/resource/apigateway/google_api_gateway_api_config.json
+var googleApiGatewayApiConfig []byte
+
+//go:embed mapping/google/resource/apigateway/google_api_gateway_api_config_iam.json
+var googleApiGatewayApiConfigIam []byte
+
+//go:embed mapping/google/resource/apigateway/google_api_gateway_api_iam.json
+var googleApiGatewayApiIam []byte
+
+//go:embed mapping/google/resource/apigateway/google_api_gateway_gateway.json
+var googleApiGatewayGateway []byte
+
+//go:embed mapping/google/resource/apigateway/google_api_gateway_gateway_iam.json
+var googleApiGatewayGatewayIam []byte
+
+//go:embed mapping/google/resource/spanner/google_spanner_database.json
+var GoogleSpannerDatabase []byte
+
+//go:embed mapping/google/resource/spanner/google_spanner_database_iam.json
+var GoogleSpannerDatabaseIam []byte
+
+//go:embed mapping/google/resource/spanner/google_spanner_instance.json
+var GoogleSpannerInstance []byte
+
+//go:embed mapping/google/resource/spanner/google_spanner_instance_iam.json
+var GoogleSpannerInstanceIam []byte
+
+//go:embed mapping/google/resource/run/google_cloud_run_v2_service.json
+var googleCloudRunV2Service []byte
+
+//go:embed mapping/google/resource/run/google_cloud_run_v2_job_iam.json
+var googleCloudRunV2JobIam []byte
+
+//go:embed mapping/google/resource/run/google_cloud_run_v2_service_iam.json
+var googleCloudRunV2ServiceIam []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_dataset.json
+var googleVertexAiDataset []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_endpoint.json
+var googleVertexAiEndpoint []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_endpoint_iam.json
+var googleVertexAiEndpointIam []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_feature_group.json
+var googleVertexAiFeatureGroup []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_feature_group_feature.json
+var googleVertexAiFeatureGroupFeature []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_feature_online_store.json
+var googleVertexAiFeatureOnlineStore []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_feature_online_store_featureview.json
+var googleVertexAiFeatureOnlineStoreFeatureview []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_featurestore.json
+var googleVertexAiFeaturestore []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_featurestore_entitytype.json
+var googleVertexAiFeaturestoreEntitytype []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_featurestore_entitytype_feature.json
+var googleVertexAiFeaturestoreEntitytypeFeature []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_featurestore_entitytype_iam.json
+var googleVertexAiFeaturestoreEntitytypeIam []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_featurestore_iam.json
+var googleVertexAiFeaturestoreIam []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_index.json
+var googleVertexAiIndex []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_index_endpoint.json
+var googleVertexAiIndexEndpoint []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_metadata_store.json
+var googleVertexAiMetadataStore []byte
+
+//go:embed mapping/google/resource/aiplatform/google_vertex_ai_tensorboard.json
+var googleVertexAiTensorboard []byte
+
+//go:embed mapping/google/resource/analyticshub/google_bigquery_analytics_hub_data_exchange.json
+var googleBigqueryAnalyticsHubDataExchange []byte
+
+//go:embed mapping/google/resource/analyticshub/google_bigquery_analytics_hub_data_exchange_iam.json
+var googleBigqueryAnalyticsHubDataExchangeIam []byte
+
+//go:embed mapping/google/resource/analyticshub/google_bigquery_analytics_hub_listing.json
+var googleBigqueryAnalyticsHubListing []byte
+
+//go:embed mapping/google/resource/analyticshub/google_bigquery_analytics_hub_listing_iam.json
+var googleBigqueryAnalyticsHubListingIam []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_bi_reservation.json
+var googleBigqueryBiReservation []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_capacity_commitment.json
+var googleBigqueryCapacityCommitment []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_connection.json
+var googleBigqueryConnection []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_connection_iam.json
+var googleBigqueryConnectionIam []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_data_transfer_config.json
+var googleBigqueryDataTransferConfig []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_dataset_iam.json
+var googleBigqueryDatasetIam []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_reservation.json
+var googleBigqueryReservation []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_reservation_assignment.json
+var googleBigqueryReservationAssignment []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_routine.json
+var googleBigqueryRoutine []byte
+
+//go:embed mapping/google/resource/bigquery/google_bigquery_table_iam.json
+var googleBigqueryTableIam []byte

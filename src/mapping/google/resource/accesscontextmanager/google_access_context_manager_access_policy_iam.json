@@ -1,0 +1,18 @@
+[
+  {
+    "apply": [
+      "accesscontextmanager.accessPolicies.getIamPolicy",
+      "accesscontextmanager.accessPolicies.setIamPolicy",
+      "analyticshub.dataExchanges.update",
+      "analyticshub.dataExchanges.get"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [
+      "analyticshub.dataExchanges.update"
+    ],
+    "plan": []
+  }
+]

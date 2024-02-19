@@ -14,7 +14,7 @@ func GetGCPDataPermissions(result ResourceV2) ([]string, error) {
 	)
 
 	if temp != nil {
-		Permissions, err = GetPermissionMap(temp.([]byte), result.Attributes)
+		Permissions, err = GetPermissionMap(temp.([]byte), result.Attributes, result.Name)
 	} else {
 		return nil, fmt.Errorf("data.%s not implemented", result.Name)
 	}
@@ -245,6 +245,28 @@ func GCPDataLookup(result string) interface{} {
 		"google_vmwareengine_network_policy":                     dataGoogleVmwareengineNetworkPolicy,
 		"google_vmwareengine_network_peering":                    dataGoogleVmwareengineNetworkPeering,
 		"google_vertex_ai_endpoint_iam_policy":                   dataGoogleVertexAiEndpointIamPolicy,
+		"google_vmwareengine_external_address":                   dataGoogleVmwareengineExternalAddress,
+		"google_vmwareengine_nsx_credentials":                    dataGoogleVmwareengineNsxCredentials,
+		"google_vmwareengine_subnet":                             dataGoogleVmwareengineSubnet,
+		"google_vmwareengine_vcenter_credentials":                dataGoogleVmwareengineVcenterCredentials,
+		"google_workbench_instance_iam_policy":                   dataGoogleWorkbenchInstanceIamPolicy,
+		"google_vmwareengine_external_access_rule":               placeholder,
+		"google_compute_region_disk":                             dataGoogleComputeRegionDisk,
+		"google_compute_reservation":                             dataGoogleComputeReservation,
+		"google_filestore_instance":                              dataGoogleFilestoreInstance,
+		"google_logging_project_settings":                        dataGoogleLoggingProjectSettings,
+		"google_billing_account":                                 placeholder,
+		"google_logging_folder_settings":                         placeholder,
+		"google_logging_organization_settings":                   placeholder,
+		"google_network_security_address_group_iam_policy":       dataGoogleSecurityAddressGroupIamPolicy,
+		"google_service_directory_namespace_iam_policy":          dataGoogleServiceDirectoryNamespaceIamPolicy,
+		"google_service_directory_service_iam_policy":            dataGoogleServiceDirectoryServiceIamPolicy,
+		"google_sql_backup_run":                                  dataGoogleSQLBackupRun,
+		"google_sql_ca_certs":                                    placeholder,
+		"google_sql_database_instance_latest_recovery_time":      dataGoogleSQLDatabaseInstanceLatestRecoveryTime,
+		"google_data_catalog_taxonomy_iam_policy":                dataGoogleDataCatalogTaxonomyIamPolicy,
+		"google_dataform_repository_iam_policy":                  dataGoogleDataformRepositoryIamPolicy,
+		"google_endpoints_service_iam_policy":                    dataGoogleEndpointsServiceIamPolicy,
 	}
 
 	return TFLookup[result]

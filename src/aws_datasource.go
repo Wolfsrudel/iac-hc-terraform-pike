@@ -12,7 +12,7 @@ func GetAWSDataPermissions(result ResourceV2) ([]string, error) {
 	)
 
 	if temp := AwsDataLookup(result.Name); temp != nil {
-		Permissions, err = GetPermissionMap(temp.([]byte), result.Attributes)
+		Permissions, err = GetPermissionMap(temp.([]byte), result.Attributes, result.Name)
 	} else {
 		return nil, fmt.Errorf("%s not implemented", result.Name)
 	}
@@ -548,6 +548,13 @@ func AwsDataLookup(find string) interface{} {
 		"aws_s3_directory_buckets":                                  dataAwsS3DirectoryBuckets,
 		"aws_ssoadmin_application_assignments":                      dataAwsSsoadminApplicationAssignments,
 		"aws_ssoadmin_principal_application_assignments":            dataAwsSsoadminPrincipalApplicationAssignments,
+		"aws_verifiedpermissions_policy_store":                      dataVerifiedpermissionsPolicyStore,
+		"aws_msk_bootstrap_brokers":                                 dataAwsMskBoostrapBrokers,
+		"aws_mq_broker_engine_types":                                dataMqBrokerEngineTypes,
+		"aws_eks_access_entry":                                      dataAwsEksAccessEntry,
+		"aws_bedrock_custom_model":                                  dataAwsBedrockCustomModel,
+		"aws_bedrock_custom_models":                                 dataAwsBedrockCustomModels,
+		"aws_ssmcontacts_rotation":                                  dataAwsSsmcontactsRotation,
 	}
 
 	return TFLookup[find]
