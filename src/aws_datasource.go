@@ -555,6 +555,22 @@ func AwsDataLookup(find string) interface{} {
 		"aws_bedrock_custom_model":                                  dataAwsBedrockCustomModel,
 		"aws_bedrock_custom_models":                                 dataAwsBedrockCustomModels,
 		"aws_ssmcontacts_rotation":                                  dataAwsSsmcontactsRotation,
+		"aws_apprunner_hosted_zone_id":                              placeholder,
+		"aws_batch_job_definition":                                  dataAwsBatchJobDefinition,
+		"aws_cognito_user_group":                                    dataAwsCognitoUserGroup,
+		"aws_cognito_user_groups":                                   dataAwsCognitoUserGroups,
+		"aws_db_parameter_group":                                    dataAwsDbParameterGroup,
+		"aws_medialive_input":                                       dataAwsMedialiveInput,
+		"aws_redshift_data_shares":                                  dataAwsRedshiftDataShares,
+		"aws_redshift_producer_data_shares":                         dataAwsRedshiftProducerDataShares,
+		"aws_resourceexplorer2_search":                              dataAwsResourceexplorer2Search,
+		"aws_servicecatalogappregistry_application":                 dataAwsServicecatalogappregistryApplication,
+		"aws_devopsguru_notification_channel":                       dataAwsDevopsguruNotificationChannel,
+		"aws_devopsguru_resource_collection":                        dataAwsDevopsguruResourceCollection,
+		"aws_ecr_lifecycle_policy_document":                         placeholder,
+		"aws_identitystore_groups":                                  dataAwsIdentitystoreGroups,
+		"aws_datazone_environment_blueprint":                        dataAwsDatazoneEnvironmentBlueprint,
+		"aws_chatbot_slack_workspace":                               dataAwsChatbotSlackWorkspace,
 	}
 
 	return TFLookup[find]

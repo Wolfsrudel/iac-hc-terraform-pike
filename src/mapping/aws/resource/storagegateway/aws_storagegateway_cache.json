@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [
+      "storagegateway:DescribeCache",
+      "storagegateway:AddCache"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

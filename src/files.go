@@ -1824,3 +1824,120 @@ var awsAuditmanagerFrameworkShare []byte
 
 //go:embed mapping/aws/resource/auditmanager/aws_auditmanager_organization_admin_account_registration.json
 var awsAuditmanagerOrganizationAdminAccountRegistration []byte
+
+//go:embed mapping/aws/resource/bedrock/aws_bedrock_custom_model.json
+var awsBedrockCustomModel []byte
+
+//go:embed mapping/aws/resource/bedrock/aws_bedrock_model_invocation_logging_configuration.json
+var awsBedrockModelInvocationLoggingConfiguration []byte
+
+//go:embed mapping/aws/resource/bedrock/aws_bedrock_provisioned_model_throughput.json
+var awsBedrockProvisionedModelThroughput []byte
+
+//go:embed mapping/aws/resource/bedrock/aws_bedrockagent_agent.json
+var awsBedrockagentAgent []byte
+
+//go:embed mapping/aws/resource/bedrock/aws_bedrockagent_agent_action_group.json
+var awsBedrockagentActionGroup []byte
+
+//go:embed mapping/aws/resource/bedrock/aws_bedrockagent_agent_alias.json
+var awsBedrockagentAgentAlias []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_agent.json
+var awsDatasyncAgent []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_azure_blob.json
+var awsDatasyncLocationAzureBlob []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_efs.json
+var awsDatasyncLocationEfs []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_fsx_lustre_file_system.json
+var awsDatasyncLocationFsxLustreFileSystem []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_fsx_ontap_file_system.json
+var awsDatasyncLocationFsxOntapFileSystem []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_fsx_openzfs_file_system.json
+var awsDatasyncLocationFsxOpenzfsFileSystem []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_fsx_windows_file_system.json
+var awsDatasyncLocationFsxWindowsFileSystem []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_hdfs.json
+var awsDatasyncLocationHdfs []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_nfs.json
+var awsDatasyncLocationNfs []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_object_storage.json
+var awsDatasyncLocationObjectStorage []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_s3.json
+var awsDatasyncLocationS3 []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_location_smb.json
+var awsDatasyncLocationSmb []byte
+
+//go:embed mapping/aws/resource/datasync/aws_datasync_task.json
+var awsDatasyncTask []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_lustre_file_system.json
+var awsFsxLustreFileSystem []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_windows_file_system.json
+var awsFsxWindowsFileSystem []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_backup.json
+var awsFsxBackup []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_data_repository_association.json
+var awsFsxDataRepositoryAssociation []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_file_cache.json
+var awsFsxFileCache []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_ontap_file_system.json
+var awsFsxOntapFileSystem []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_ontap_storage_virtual_machine.json
+var awsFsxOntapStorageVirtualMachine []byte
+
+//go:embed mapping/aws/resource/fsx/aws_fsx_ontap_volume.json
+var awsFsxOntapVolume []byte
+
+//go:embed mapping/aws/resource/datazone/aws_datazone_domain.json
+var awsDatazoneDomain []byte
+
+//go:embed mapping/aws/resource/datazone/aws_datazone_environment_blueprint_configuration.json
+var awsDatazoneEnvironmentBlueprintConfiguration []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_cache.json
+var awsStoragegatewayCache []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_cached_iscsi_volume.json
+var awsStoragegatewayCachedIscsiVolume []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_file_system_association.json
+var awsStoragegatewayFileSystemAssociation []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_gateway.json
+var awsStoragegatewayGateway []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_nfs_file_share.json
+var awsStoragegatewayNfsFileShare []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_smb_file_share.json
+var awsStoragegatewaySmbFileShare []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_stored_iscsi_volume.json
+var awsStoragegatewayStoredIscsiVolume []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_tape_pool.json
+var awsStoragegatewayTapePool []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_upload_buffer.json
+var awsStoragegatewayUploadBuffer []byte
+
+//go:embed mapping/aws/resource/storagegateway/aws_storagegateway_working_storage.json
+var awsStoragegatewayWorkingStorage []byte

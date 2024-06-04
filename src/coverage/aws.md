@@ -1,9 +1,10 @@
 # todo aws
 
-Resource percentage coverage   49.85
+Resource percentage coverage   50.95
 Datasource percentage coverage 100.00
 
 ./resource.ps1 aws_accessanalyzer_archive_rule
+./resource.ps1 aws_account_region
 ./resource.ps1 aws_acmpca_permission
 ./resource.ps1 aws_acmpca_policy
 ./resource.ps1 aws_amplify_app
@@ -32,6 +33,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_apprunner_connection
 ./resource.ps1 aws_apprunner_custom_domain_association
 ./resource.ps1 aws_apprunner_default_auto_scaling_configuration_version
+./resource.ps1 aws_apprunner_deployment
 ./resource.ps1 aws_apprunner_observability_configuration
 ./resource.ps1 aws_apprunner_service
 ./resource.ps1 aws_apprunner_vpc_connector
@@ -53,8 +55,10 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_appsync_resolver
 ./resource.ps1 aws_appsync_type
 ./resource.ps1 aws_athena_prepared_statement
-./resource.ps1 aws_bedrock_custom_model
-./resource.ps1 aws_bedrock_model_invocation_logging_configuration
+./resource.ps1 aws_bcmdataexports_export
+./resource.ps1 aws_bedrockagent_agent_knowledge_base_association
+./resource.ps1 aws_bedrockagent_data_source
+./resource.ps1 aws_bedrockagent_knowledge_base
 ./resource.ps1 aws_chime_voice_connector
 ./resource.ps1 aws_chime_voice_connector_group
 ./resource.ps1 aws_chime_voice_connector_logging
@@ -71,7 +75,9 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_cleanrooms_configured_table
 ./resource.ps1 aws_cloud9_environment_membership
 ./resource.ps1 aws_cloudcontrolapi_resource
+./resource.ps1 aws_cloudfront_key_value_store
 ./resource.ps1 aws_cloudfront_realtime_log_config
+./resource.ps1 aws_cloudfrontkeyvaluestore_key
 ./resource.ps1 aws_cloudhsm_v2_cluster
 ./resource.ps1 aws_cloudhsm_v2_hsm
 ./resource.ps1 aws_cognito_identity_pool_provider_principal_tag
@@ -86,26 +92,15 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_config_organization_custom_rule
 ./resource.ps1 aws_config_organization_managed_rule
 ./resource.ps1 aws_config_remediation_configuration
+./resource.ps1 aws_config_retention_configuration
 ./resource.ps1 aws_connect_lambda_function_association
 ./resource.ps1 aws_controltower_control
+./resource.ps1 aws_controltower_landing_zone
 ./resource.ps1 aws_cur_report_definition
 ./resource.ps1 aws_customerprofiles_domain
 ./resource.ps1 aws_customerprofiles_profile
 ./resource.ps1 aws_dataexchange_data_set
 ./resource.ps1 aws_dataexchange_revision
-./resource.ps1 aws_datasync_agent
-./resource.ps1 aws_datasync_location_azure_blob
-./resource.ps1 aws_datasync_location_efs
-./resource.ps1 aws_datasync_location_fsx_lustre_file_system
-./resource.ps1 aws_datasync_location_fsx_ontap_file_system
-./resource.ps1 aws_datasync_location_fsx_openzfs_file_system
-./resource.ps1 aws_datasync_location_fsx_windows_file_system
-./resource.ps1 aws_datasync_location_hdfs
-./resource.ps1 aws_datasync_location_nfs
-./resource.ps1 aws_datasync_location_object_storage
-./resource.ps1 aws_datasync_location_s3
-./resource.ps1 aws_datasync_location_smb
-./resource.ps1 aws_datasync_task
 ./resource.ps1 aws_db_instance_automated_backups_replication
 ./resource.ps1 aws_db_instance_role_association
 ./resource.ps1 aws_db_proxy
@@ -124,6 +119,10 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_devicefarm_network_profile
 ./resource.ps1 aws_devicefarm_project
 ./resource.ps1 aws_devicefarm_upload
+./resource.ps1 aws_devopsguru_event_sources_config
+./resource.ps1 aws_devopsguru_notification_channel
+./resource.ps1 aws_devopsguru_resource_collection
+./resource.ps1 aws_devopsguru_service_integration
 ./resource.ps1 aws_directory_service_conditional_forwarder
 ./resource.ps1 aws_directory_service_radius_settings
 ./resource.ps1 aws_directory_service_region
@@ -156,6 +155,8 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_dx_public_virtual_interface
 ./resource.ps1 aws_dx_transit_virtual_interface
 ./resource.ps1 aws_dynamodb_kinesis_streaming_destination
+./resource.ps1 aws_dynamodb_resource_policy
+./resource.ps1 aws_dynamodb_table_export
 ./resource.ps1 aws_dynamodb_table_replica
 ./resource.ps1 aws_ebs_fast_snapshot_restore
 ./resource.ps1 aws_ebs_snapshot_import
@@ -169,6 +170,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_ec2_image_block_public_access
 ./resource.ps1 aws_ec2_instance
 ./resource.ps1 aws_ec2_instance_connect_endpoint
+./resource.ps1 aws_ec2_instance_metadata_defaults
 ./resource.ps1 aws_ec2_instance_state
 ./resource.ps1 aws_ec2_local_gateway_route
 ./resource.ps1 aws_ec2_local_gateway_route_table_vpc_association
@@ -197,6 +199,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_ecs_cluster_capacity_providers
 ./resource.ps1 aws_ecs_tag
 ./resource.ps1 aws_ecs_task_set
+./resource.ps1 aws_eip_domain_name
 ./resource.ps1 aws_eks_access_entry
 ./resource.ps1 aws_eks_access_policy_association
 ./resource.ps1 aws_eks_fargate_profile
@@ -231,14 +234,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_fis_experiment_template
 ./resource.ps1 aws_fms_admin_account
 ./resource.ps1 aws_fms_policy
-./resource.ps1 aws_fsx_backup
-./resource.ps1 aws_fsx_data_repository_association
-./resource.ps1 aws_fsx_file_cache
-./resource.ps1 aws_fsx_lustre_file_system
-./resource.ps1 aws_fsx_ontap_file_system
-./resource.ps1 aws_fsx_ontap_storage_virtual_machine
-./resource.ps1 aws_fsx_ontap_volume
-./resource.ps1 aws_fsx_windows_file_system
 ./resource.ps1 aws_gamelift_alias
 ./resource.ps1 aws_gamelift_build
 ./resource.ps1 aws_gamelift_fleet
@@ -246,6 +241,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_gamelift_game_session_queue
 ./resource.ps1 aws_gamelift_script
 ./resource.ps1 aws_globalaccelerator_accelerator
+./resource.ps1 aws_globalaccelerator_cross_account_attachment
 ./resource.ps1 aws_globalaccelerator_custom_routing_accelerator
 ./resource.ps1 aws_globalaccelerator_custom_routing_endpoint_group
 ./resource.ps1 aws_globalaccelerator_custom_routing_listener
@@ -311,11 +307,14 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_kinesis_resource_policy
 ./resource.ps1 aws_kinesisanalyticsv2_application
 ./resource.ps1 aws_kinesisanalyticsv2_application_snapshot
+./resource.ps1 aws_lakeformation_data_cells_filter
 ./resource.ps1 aws_lakeformation_data_lake_settings
 ./resource.ps1 aws_lakeformation_lf_tag
 ./resource.ps1 aws_lakeformation_permissions
 ./resource.ps1 aws_lakeformation_resource
+./resource.ps1 aws_lakeformation_resource_lf_tag
 ./resource.ps1 aws_lakeformation_resource_lf_tags
+./resource.ps1 aws_lambda_runtime_management_config
 ./resource.ps1 aws_lb_listener_certificate
 ./resource.ps1 aws_lb_ssl_negotiation_policy
 ./resource.ps1 aws_lb_trust_store
@@ -352,6 +351,9 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_lightsail_lb_certificate_attachment
 ./resource.ps1 aws_lightsail_lb_https_redirection_policy
 ./resource.ps1 aws_lightsail_lb_stickiness_policy
+./resource.ps1 aws_m2_application
+./resource.ps1 aws_m2_deployment
+./resource.ps1 aws_m2_environment
 ./resource.ps1 aws_macie2_account
 ./resource.ps1 aws_macie2_classification_export_configuration
 ./resource.ps1 aws_macie2_classification_job
@@ -430,6 +432,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_organizations_organization
 ./resource.ps1 aws_organizations_organizational_unit
 ./resource.ps1 aws_organizations_resource_policy
+./resource.ps1 aws_osis_pipeline
 ./resource.ps1 aws_pinpoint_adm_channel
 ./resource.ps1 aws_pinpoint_apns_channel
 ./resource.ps1 aws_pinpoint_apns_sandbox_channel
@@ -473,11 +476,16 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_rds_export_task
 ./resource.ps1 aws_rds_reserved_instance
 ./resource.ps1 aws_redshift_cluster_snapshot
+./resource.ps1 aws_redshift_data_share_authorization
+./resource.ps1 aws_redshift_data_share_consumer_association
 ./resource.ps1 aws_redshift_endpoint_access
 ./resource.ps1 aws_redshift_endpoint_authorization
+./resource.ps1 aws_redshift_logging
 ./resource.ps1 aws_redshift_partner
 ./resource.ps1 aws_redshift_resource_policy
+./resource.ps1 aws_redshift_snapshot_copy
 ./resource.ps1 aws_redshiftdata_statement
+./resource.ps1 aws_redshiftserverless_custom_domain_association
 ./resource.ps1 aws_redshiftserverless_endpoint_access
 ./resource.ps1 aws_redshiftserverless_namespace
 ./resource.ps1 aws_redshiftserverless_resource_policy
@@ -556,6 +564,9 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_schemas_schema
 ./resource.ps1 aws_securityhub_account
 ./resource.ps1 aws_securityhub_action_target
+./resource.ps1 aws_securityhub_automation_rule
+./resource.ps1 aws_securityhub_configuration_policy
+./resource.ps1 aws_securityhub_configuration_policy_association
 ./resource.ps1 aws_securityhub_finding_aggregator
 ./resource.ps1 aws_securityhub_insight
 ./resource.ps1 aws_securityhub_invite_accepter
@@ -566,7 +577,10 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_securityhub_standards_control
 ./resource.ps1 aws_securityhub_standards_subscription
 ./resource.ps1 aws_securitylake_aws_log_source
+./resource.ps1 aws_securitylake_custom_log_source
 ./resource.ps1 aws_securitylake_data_lake
+./resource.ps1 aws_securitylake_subscriber
+./resource.ps1 aws_securitylake_subscriber_notification
 ./resource.ps1 aws_serverlessapplicationrepository_cloudformation_stack
 ./resource.ps1 aws_service_discovery_http_namespace
 ./resource.ps1 aws_service_discovery_instance
@@ -574,6 +588,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_service_discovery_public_dns_namespace
 ./resource.ps1 aws_service_discovery_service
 ./resource.ps1 aws_servicecatalog_provisioning_artifact
+./resource.ps1 aws_servicecatalogappregistry_application
 ./resource.ps1 aws_ses_active_receipt_rule_set
 ./resource.ps1 aws_ses_configuration_set
 ./resource.ps1 aws_ses_email_identity
@@ -593,6 +608,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_shield_application_layer_automatic_response
 ./resource.ps1 aws_shield_drt_access_log_bucket_association
 ./resource.ps1 aws_shield_drt_access_role_arn_association
+./resource.ps1 aws_shield_proactive_engagement
 ./resource.ps1 aws_shield_protection
 ./resource.ps1 aws_shield_protection_group
 ./resource.ps1 aws_shield_protection_health_check_association
@@ -620,16 +636,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_ssoadmin_permission_set_inline_policy
 ./resource.ps1 aws_ssoadmin_permissions_boundary_attachment
 ./resource.ps1 aws_ssoadmin_trusted_token_issuer
-./resource.ps1 aws_storagegateway_cache
-./resource.ps1 aws_storagegateway_cached_iscsi_volume
-./resource.ps1 aws_storagegateway_file_system_association
-./resource.ps1 aws_storagegateway_gateway
-./resource.ps1 aws_storagegateway_nfs_file_share
-./resource.ps1 aws_storagegateway_smb_file_share
-./resource.ps1 aws_storagegateway_stored_iscsi_volume
-./resource.ps1 aws_storagegateway_tape_pool
-./resource.ps1 aws_storagegateway_upload_buffer
-./resource.ps1 aws_storagegateway_working_storage
 ./resource.ps1 aws_synthetics_canary
 ./resource.ps1 aws_synthetics_group
 ./resource.ps1 aws_synthetics_group_association
@@ -648,14 +654,17 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_transfer_user
 ./resource.ps1 aws_transfer_workflow
 ./resource.ps1 aws_verifiedaccess_instance_trust_provider_attachment
+./resource.ps1 aws_verifiedpermissions_policy
 ./resource.ps1 aws_verifiedpermissions_policy_store
 ./resource.ps1 aws_verifiedpermissions_policy_template
 ./resource.ps1 aws_verifiedpermissions_schema
 ./resource.ps1 aws_vpc_endpoint_connection_accepter
 ./resource.ps1 aws_vpc_endpoint_connection_notification
 ./resource.ps1 aws_vpc_endpoint_policy
+./resource.ps1 aws_vpc_endpoint_private_dns
 ./resource.ps1 aws_vpc_endpoint_security_group_association
 ./resource.ps1 aws_vpc_endpoint_service_allowed_principal
+./resource.ps1 aws_vpc_endpoint_service_private_dns_verification
 ./resource.ps1 aws_vpc_ipam_organization_admin_account
 ./resource.ps1 aws_vpc_ipv6_cidr_block_association
 ./resource.ps1 aws_vpc_network_performance_metric_subscription

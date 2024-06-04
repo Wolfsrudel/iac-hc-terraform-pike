@@ -1,8 +1,9 @@
-//go:build never
+package testdata
 
-package nothing
+import (
+	"github.com/rs/zerolog/log"
+)
 
-const data = `
-resource "aws_test" {
-
-}`
+func main() {
+	log.Printf("aws_sample")
+}

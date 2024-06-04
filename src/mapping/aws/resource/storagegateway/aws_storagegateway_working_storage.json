@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [
+      "storagegateway:AddWorkingStorage",
+      "storagegateway:DescribeWorkingStorage"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

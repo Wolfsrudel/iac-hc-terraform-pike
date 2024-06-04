@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [
+      "storagegateway:DescribeUploadBuffer",
+      "storagegateway:AddUploadBuffer"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]
