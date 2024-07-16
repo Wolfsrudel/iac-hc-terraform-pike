@@ -1941,3 +1941,213 @@ var awsStoragegatewayUploadBuffer []byte
 
 //go:embed mapping/aws/resource/storagegateway/aws_storagegateway_working_storage.json
 var awsStoragegatewayWorkingStorage []byte
+
+//go:embed mapping/aws/resource/ses/aws_ses_active_receipt_rule_set.json
+var awsSesActiveReceiptRuleSet []byte
+
+//go:embed mapping/aws/resource/ses/aws_ses_configuration_set.json
+var awsSesConfigurationSet []byte
+
+//go:embed mapping/aws/resource/ses/aws_ses_email_identity.json
+var awsSesEmailIdentity []byte
+
+//go:embed mapping/aws/resource/ses/aws_ses_event_destination.json
+var awsSesEventDestination []byte
+
+//go:embed mapping/aws/resource/ses/aws_ses_receipt_filter.json
+var awsSesReceiptFilter []byte
+
+//go:embed mapping/aws/resource/ses/aws_ses_template.json
+var awsSesTemplate []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_app.json
+var awsSagemakerApp []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_app_image_config.json
+var awsSagemakerAppImageConfig []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_code_repository.json
+var awsSagemakerCodeRepository []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_data_quality_job_definition.json
+var awsSagemakerDataQualityJobDefinition []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_device.json
+var awsSagemakerDevice []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_device_fleet.json
+var awsSagemakerDeviceFleet []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_domain.json
+var awsSagemakerDomain []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_endpoint.json
+var awsSagemakerEndpoint []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_feature_group.json
+var awsSagemakerFeatureGroup []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_image.json
+var awsSagemakerImage []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_image_version.json
+var awsSagemakerImageVersion []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_model_package_group.json
+var awsSagemakerModelPackageGroup []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_model_package_group_policy.json
+var awsSagemakerModelPackageGroupPolicy []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_monitoring_schedule.json
+var awsSagemakerMonitoringSchedule []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_notebook_instance.json
+var awsSagemakerNotebookInstance []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_notebook_instance_lifecycle_configuration.json
+var awsSagemakerNotebookInstanceLifecycleConfiguration []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_pipeline.json
+var awsSagemakerPipeline []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_project.json
+var awsSagemakerProject []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_servicecatalog_portfolio_status.json
+var awsSagemakerServicecatalogPortfolioStatus []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_space.json
+var awsSagemakerSpace []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_studio_lifecycle_config.json
+var awsSagemakerStudioLifecycleConfig []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_user_profile.json
+var awsSagemakerUserProfile []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_workforce.json
+var awsSagemakerWorkforce []byte
+
+//go:embed mapping/aws/resource/sagemaker/aws_sagemaker_workteam.json
+var awsSagemakerWorkteam []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_carrier_gateway.json
+var awsEc2CarrierGateway []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_client_vpn_authorization_rule.json
+var awsEc2ClientvpnAuthorizationRule []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_client_vpn_endpoint.json
+var awsEc2ClientVpnEndpoint []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_client_vpn_network_association.json
+var awsEc2ClientVpnNetworkAssociation []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_client_vpn_route.json
+var awsEc2ClientVpnRoute []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_fleet.json
+var awsEc2Fleet []byte
+
+//go:embed mapping/aws/resource/ec2/aws_ec2_host.json
+var awsEc2Host []byte
+
+//go:embed mapping/aws/resource/access-analyzer/aws_accessanalyzer_archive_rule.json
+var awsAccessAnalyzerArchiveRule []byte
+
+//go:embed mapping/aws/resource/account/aws_account_region.json
+var awsAccountRegion []byte
+
+//go:embed mapping/aws/resource/acm-pa/aws_acmpca_permission.json
+var awsAcmpcaPermission []byte
+
+//go:embed mapping/aws/resource/acm-pa/aws_acmpca_policy.json
+var awsAcmpcaPolicy []byte
+
+//go:embed mapping/aws/resource/sdb/aws_simpledb_domain.json
+var awsSimpledbDomain []byte
+
+//go:embed mapping/aws/resource/ec2/aws_snapshot_create_volume_permission.json
+var awsSnapshotCreateVolumePermission []byte
+
+//go:embed mapping/aws/resource/sns/aws_sns_platform_application.json
+var awsSnsPlatformApplication []byte
+
+//go:embed mapping/aws/resource/synthetics/aws_synthetics_canary.json
+var awsSyntheticsCanary []byte
+
+//go:embed mapping/aws/resource/synthetics/aws_synthetics_group.json
+var awsSyntheticsGroup []byte
+
+//go:embed mapping/aws/resource/synthetics/aws_synthetics_group_association.json
+var awsSyntheticsGroupAssociation []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_certificate.json
+var awsDmsCertificate []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_endpoint.json
+var awsDmsEndpoint []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_event_subscription.json
+var awsDmsEventSubscription []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_replication_instance.json
+var awsDmsReplicationInstance []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_replication_subnet_group.json
+var awsDmsReplicationSubnetGroup []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_replication_task.json
+var awsDmsReplicationTask []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_s3_endpoint.json
+var awsDmsS3Endpoint []byte
+
+//go:embed mapping/aws/resource/dms/aws_dms_replication_config.json
+var awsDmsReplicationConfig []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_instance_automated_backups_replication.json
+var awsDbInstanceAutomatedBackupsReplication []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_instance_role_association.json
+var awsDbInstanceRoleAssociation []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_proxy.json
+var awsDbProxy []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_proxy_default_target_group.json
+var awsDbProxyDefaultTargetGroup []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_proxy_endpoint.json
+var awsDbProxyEndpoint []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_proxy_target.json
+var awsDbProxyTarget []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_snapshot.json
+var awsDbSnapshot []byte
+
+//go:embed mapping/aws/resource/rds/aws_db_snapshot_copy.json
+var awsDbSnapshotCopy []byte
+
+//go:embed mapping/aws/resource/transcribe/aws_transcribe_language_model.json
+var awsTranscribeLanguageModel []byte
+
+//go:embed mapping/aws/resource/transcribe/aws_transcribe_medical_vocabulary.json
+var awsTranscribeMedicalVocabulary []byte
+
+//go:embed mapping/aws/resource/transcribe/aws_transcribe_vocabulary.json
+var awsTranscribeVocabulary []byte
+
+//go:embed mapping/aws/resource/transcribe/aws_transcribe_vocabulary_filter.json
+var awsTranscribeVocabularyFilter []byte
+
+//go:embed mapping/aws/resource/oam/aws_oam_link.json
+var awsOamLink []byte
+
+//go:embed mapping/aws/resource/oam/aws_oam_sink.json
+var awsOamSink []byte
+
+//go:embed mapping/aws/resource/oam/aws_oam_sink_policy.json
+var awsOamSinkPolicy []byte

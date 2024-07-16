@@ -1,12 +1,8 @@
 # todo aws
 
-Resource percentage coverage   50.95
+Resource percentage coverage   55.78
 Datasource percentage coverage 100.00
 
-./resource.ps1 aws_accessanalyzer_archive_rule
-./resource.ps1 aws_account_region
-./resource.ps1 aws_acmpca_permission
-./resource.ps1 aws_acmpca_policy
 ./resource.ps1 aws_amplify_app
 ./resource.ps1 aws_amplify_backend_environment
 ./resource.ps1 aws_amplify_branch
@@ -18,6 +14,8 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_appconfig_extension
 ./resource.ps1 aws_appconfig_extension_association
 ./resource.ps1 aws_appconfig_hosted_configuration_version
+./resource.ps1 aws_appfabric_app_authorization
+./resource.ps1 aws_appfabric_app_bundle
 ./resource.ps1 aws_appflow_connector_profile
 ./resource.ps1 aws_appflow_flow
 ./resource.ps1 aws_appintegrations_data_integration
@@ -101,14 +99,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_customerprofiles_profile
 ./resource.ps1 aws_dataexchange_data_set
 ./resource.ps1 aws_dataexchange_revision
-./resource.ps1 aws_db_instance_automated_backups_replication
-./resource.ps1 aws_db_instance_role_association
-./resource.ps1 aws_db_proxy
-./resource.ps1 aws_db_proxy_default_target_group
-./resource.ps1 aws_db_proxy_endpoint
-./resource.ps1 aws_db_proxy_target
-./resource.ps1 aws_db_snapshot
-./resource.ps1 aws_db_snapshot_copy
 ./resource.ps1 aws_detective_graph
 ./resource.ps1 aws_detective_invitation_accepter
 ./resource.ps1 aws_detective_member
@@ -129,14 +119,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_directory_service_shared_directory
 ./resource.ps1 aws_directory_service_shared_directory_accepter
 ./resource.ps1 aws_directory_service_trust
-./resource.ps1 aws_dms_certificate
-./resource.ps1 aws_dms_endpoint
-./resource.ps1 aws_dms_event_subscription
-./resource.ps1 aws_dms_replication_config
-./resource.ps1 aws_dms_replication_instance
-./resource.ps1 aws_dms_replication_subnet_group
-./resource.ps1 aws_dms_replication_task
-./resource.ps1 aws_dms_s3_endpoint
 ./resource.ps1 aws_docdbelastic_cluster
 ./resource.ps1 aws_dx_bgp_peer
 ./resource.ps1 aws_dx_connection
@@ -160,13 +142,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_dynamodb_table_replica
 ./resource.ps1 aws_ebs_fast_snapshot_restore
 ./resource.ps1 aws_ebs_snapshot_import
-./resource.ps1 aws_ec2_carrier_gateway
-./resource.ps1 aws_ec2_client_vpn_authorization_rule
-./resource.ps1 aws_ec2_client_vpn_endpoint
-./resource.ps1 aws_ec2_client_vpn_network_association
-./resource.ps1 aws_ec2_client_vpn_route
-./resource.ps1 aws_ec2_fleet
-./resource.ps1 aws_ec2_host
+./resource.ps1 aws_ec2_capacity_block_reservation
 ./resource.ps1 aws_ec2_image_block_public_access
 ./resource.ps1 aws_ec2_instance
 ./resource.ps1 aws_ec2_instance_connect_endpoint
@@ -234,6 +210,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_fis_experiment_template
 ./resource.ps1 aws_fms_admin_account
 ./resource.ps1 aws_fms_policy
+./resource.ps1 aws_fms_resource_set
 ./resource.ps1 aws_gamelift_alias
 ./resource.ps1 aws_gamelift_build
 ./resource.ps1 aws_gamelift_fleet
@@ -260,6 +237,7 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_guardduty_filter
 ./resource.ps1 aws_guardduty_invite_accepter
 ./resource.ps1 aws_guardduty_ipset
+./resource.ps1 aws_guardduty_malware_protection_plan
 ./resource.ps1 aws_guardduty_member
 ./resource.ps1 aws_guardduty_organization_admin_account
 ./resource.ps1 aws_guardduty_organization_configuration
@@ -401,9 +379,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_networkmanager_transit_gateway_registration
 ./resource.ps1 aws_networkmanager_transit_gateway_route_table_attachment
 ./resource.ps1 aws_networkmanager_vpc_attachment
-./resource.ps1 aws_oam_link
-./resource.ps1 aws_oam_sink
-./resource.ps1 aws_oam_sink_policy
 ./resource.ps1 aws_opensearch_domain_saml_options
 ./resource.ps1 aws_opensearch_inbound_connection_accepter
 ./resource.ps1 aws_opensearch_outbound_connection
@@ -433,6 +408,8 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_organizations_organizational_unit
 ./resource.ps1 aws_organizations_resource_policy
 ./resource.ps1 aws_osis_pipeline
+./resource.ps1 aws_paymentcryptography_key
+./resource.ps1 aws_paymentcryptography_key_alias
 ./resource.ps1 aws_pinpoint_adm_channel
 ./resource.ps1 aws_pinpoint_apns_channel
 ./resource.ps1 aws_pinpoint_apns_sandbox_channel
@@ -530,32 +507,8 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_s3control_object_lambda_access_point_policy
 ./resource.ps1 aws_s3control_storage_lens_configuration
 ./resource.ps1 aws_s3outposts_endpoint
-./resource.ps1 aws_sagemaker_app
-./resource.ps1 aws_sagemaker_app_image_config
-./resource.ps1 aws_sagemaker_code_repository
-./resource.ps1 aws_sagemaker_data_quality_job_definition
-./resource.ps1 aws_sagemaker_device
-./resource.ps1 aws_sagemaker_device_fleet
-./resource.ps1 aws_sagemaker_domain
-./resource.ps1 aws_sagemaker_endpoint
-./resource.ps1 aws_sagemaker_feature_group
 ./resource.ps1 aws_sagemaker_flow_definition
 ./resource.ps1 aws_sagemaker_human_task_ui
-./resource.ps1 aws_sagemaker_image
-./resource.ps1 aws_sagemaker_image_version
-./resource.ps1 aws_sagemaker_model_package_group
-./resource.ps1 aws_sagemaker_model_package_group_policy
-./resource.ps1 aws_sagemaker_monitoring_schedule
-./resource.ps1 aws_sagemaker_notebook_instance
-./resource.ps1 aws_sagemaker_notebook_instance_lifecycle_configuration
-./resource.ps1 aws_sagemaker_pipeline
-./resource.ps1 aws_sagemaker_project
-./resource.ps1 aws_sagemaker_servicecatalog_portfolio_status
-./resource.ps1 aws_sagemaker_space
-./resource.ps1 aws_sagemaker_studio_lifecycle_config
-./resource.ps1 aws_sagemaker_user_profile
-./resource.ps1 aws_sagemaker_workforce
-./resource.ps1 aws_sagemaker_workteam
 ./resource.ps1 aws_scheduler_schedule
 ./resource.ps1 aws_scheduler_schedule_group
 ./resource.ps1 aws_schemas_discoverer
@@ -589,12 +542,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_service_discovery_service
 ./resource.ps1 aws_servicecatalog_provisioning_artifact
 ./resource.ps1 aws_servicecatalogappregistry_application
-./resource.ps1 aws_ses_active_receipt_rule_set
-./resource.ps1 aws_ses_configuration_set
-./resource.ps1 aws_ses_email_identity
-./resource.ps1 aws_ses_event_destination
-./resource.ps1 aws_ses_receipt_filter
-./resource.ps1 aws_ses_template
 ./resource.ps1 aws_sesv2_account_vdm_attributes
 ./resource.ps1 aws_sesv2_configuration_set
 ./resource.ps1 aws_sesv2_configuration_set_event_destination
@@ -612,9 +559,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_shield_protection
 ./resource.ps1 aws_shield_protection_group
 ./resource.ps1 aws_shield_protection_health_check_association
-./resource.ps1 aws_simpledb_domain
-./resource.ps1 aws_snapshot_create_volume_permission
-./resource.ps1 aws_sns_platform_application
 ./resource.ps1 aws_spot_datafeed_subscription
 ./resource.ps1 aws_spot_fleet_request
 ./resource.ps1 aws_ssm_activation
@@ -636,13 +580,6 @@ Datasource percentage coverage 100.00
 ./resource.ps1 aws_ssoadmin_permission_set_inline_policy
 ./resource.ps1 aws_ssoadmin_permissions_boundary_attachment
 ./resource.ps1 aws_ssoadmin_trusted_token_issuer
-./resource.ps1 aws_synthetics_canary
-./resource.ps1 aws_synthetics_group
-./resource.ps1 aws_synthetics_group_association
-./resource.ps1 aws_transcribe_language_model
-./resource.ps1 aws_transcribe_medical_vocabulary
-./resource.ps1 aws_transcribe_vocabulary
-./resource.ps1 aws_transcribe_vocabulary_filter
 ./resource.ps1 aws_transfer_access
 ./resource.ps1 aws_transfer_agreement
 ./resource.ps1 aws_transfer_certificate
