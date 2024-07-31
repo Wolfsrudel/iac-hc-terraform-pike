@@ -15,6 +15,7 @@ type members struct {
 	Resources   []string `json:"resources"`
 }
 
+//goland:noinspection GoUnusedFunction
 func coverageAWS() error {
 	data := importMembers("../parse/aws-members.json")
 	missing := members{}
@@ -45,7 +46,6 @@ func coverageAWS() error {
 
 	target = Prepend + target
 	err := os.WriteFile("aws.md", []byte(target), 0o700)
-
 	if err != nil {
 		return err
 	}
@@ -53,6 +53,7 @@ func coverageAWS() error {
 	return nil
 }
 
+//goland:noinspection GoUnusedFunction
 func coverageAzure() error {
 	data := importMembers("../parse/azurerm-members.json")
 	missing := members{}
@@ -79,7 +80,6 @@ func coverageAzure() error {
 
 	target = Prepend + target
 	err := os.WriteFile("azure.md", []byte(target), 0o700)
-
 	if err != nil {
 		return err
 	}
@@ -87,6 +87,7 @@ func coverageAzure() error {
 	return nil
 }
 
+//goland:noinspection GoUnusedFunction
 func coverageGcp() error {
 	data := importMembers("../parse/google-members.json")
 	missing := members{}
@@ -126,6 +127,7 @@ func importMembers(targetMembers string) members {
 	data := members{}
 
 	_ = json.Unmarshal(file, &data)
+
 	return data
 }
 

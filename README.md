@@ -13,7 +13,7 @@
 [![codecov](https://codecov.io/gh/JamesWoolfenden/pike/graph/badge.svg?token=S5SW3BHIQQ)](https://codecov.io/gh/JamesWoolfenden/pike)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/7032/badge)](https://www.bestpractices.dev/projects/7032)
 
-Pike is a tool, to determine the minimum permissions required to run a TF/IAC run:
+Pike is a tool to determine the minimum permissions required to run a TF/IAC run:
 
 Pike currently supports Terraform and supports multiple providers (AWS, GCP, AZURE),
 Azure is the newest with AWS having the most supported resources
@@ -23,8 +23,8 @@ merging it ASAP.
 
 **CAVEAT** The outputs of this tool are your first step, if you have AWS, you can now generate resources partially, there are no conditions and even partial resources are wildcarded (for now).
 (for AWS)
-**best practice** would go further (and I am working on it as well), you will need to modify these permissions to the minimum required in your enviornment by adding these
-restrictions, you can also deploy using short lived credentials (using this tool or Vault) (in AWS so far), generating short-lived credentials for your build
+**best practice** would go further (and I am working on it as well), you will need to modify these permissions to the minimum required in your environment by adding these
+restrictions, you can also deploy using short-lived credentials (using this tool or Vault) (in AWS so far), generating short-lived credentials for your build
 and then remotely (REMOTE) supply and invoke your builds (INVOKE).
 
 Ideally I would like to do this for you, but these policies are currently determined statically (QUICKER), and unrecorded intentions can be impossible to infer.
@@ -43,6 +43,7 @@ Ideally I would like to do this for you, but these policies are currently determ
     - [Output](#output)
     - [Make](#make)
     - [Invoke](#invoke)
+    - [Inspect](#inspect)
     - [Apply](#apply)
     - [Remote](#remote)
     - [Readme](#readme)
@@ -359,10 +360,10 @@ on:
       - master
 ```
 
-To authenticate the GitHub Api you will need to set you GitHub Personal Access Token as the environment variable
+To authenticate the GitHub API you will need to set you GitHub Personal Access Token, as the environment variable
 *GITHUB_TOKEN*
 
-To Invoke a workflow it is then:
+To Invoke a workflow, it is then:
 
 ```shell
 pike invoke -workflow master.yml -branch master -repository JamesWoolfenden/terraform-aws-s3
@@ -370,7 +371,7 @@ pike invoke -workflow master.yml -branch master -repository JamesWoolfenden/terr
 
 I created Invoke to be used in tandem with the new remote command which supplies temporary credentials to a workflow.
 
-**Note The gitHub API is rate limited usually 5000 calls per hour.
+**Note The GitHub API is rate limited, usually 5000 calls per hour.
 
 ```shell
 pike make -d ./module/aws/terraform-aws-s3/example/examplea
@@ -715,10 +716,10 @@ NAME:
    pike - Generate IAM policy from your IAC code
 
 USAGE:
-   pike [global options] command [command options] [arguments...]
+   pike [global options] command [command options]
 
 VERSION:
-   v0.2.107
+   9.9.9
 
 AUTHOR:
    James Woolfenden <james.woolfenden@gmail.com>
@@ -726,21 +727,22 @@ AUTHOR:
 COMMANDS:
    apply, a    Create a policy and use it to instantiate the IAC
    compare, c  policy comparison of deployed versus IAC
+   inspect, x  policy comparison of environment versus IAC
    invoke, i   Triggers a gitHub action specified with the workflow flag
    make, m     make the policy/role required for this IAC to deploy
    parse, p    Triggers a gitHub action specified with the workflow flag
-   pull, p     Clones remote repo and scans it using pike
+   pull, l     Clones remote repo and scans it using pike
    readme, r   Looks in dir for a README.md and updates it with the Policy required to build the code
-   remote, m   Create/Update the Policy and set credentials/secret for Github Action
+   remote, o   Create/Update the Policy and set credentials/secret for Github Action
    scan, s     scan a directory for IAM code
    version, v  Outputs the application version
    watch, w    Waits for policy update
    help, h     Shows a list of commands or help for one command
 
-
 GLOBAL OPTIONS:
-   --help, -h     show help (default: false)
-   --version, -v  print the version (default: false)
+   --help, -h     show help
+   --version, -v  print the version
+
 ```
 
 ## Building
@@ -754,6 +756,58 @@ or
 ```Make
 Make build
 ```
+
+## Inspect
+
+This new feature is in *beta*, and is not yet fully supported and currently only for AWS.
+When Pike is run with inspect, it will scan your code and output a policy that is required to deploy the code, as normal,
+but it will also detect the running IAM credentials.
+It will then report on the overlap between the running credentials and the minimum policy.
+
+This works with AWS IAM user, group and role/assumed role credentials.
+
+```bash
+./pike inspect -d terraform/aws
+The following are over-permissive:
+s3:*
+s3-object-lambda:*
+*
+account:GetAccountInformation
+aws-portal:*Billing
+aws-portal:*PaymentMethods
+aws-portal:*Usage
+billing:GetBillingData
+billing:GetBillingDetails
+billing:GetBillingNotifications
+billing:GetBillingPreferences
+
+```
+
+This currently uses a different AWS profile to run the scan - presently hardcoded to "basic",
+which only has the following permissions:
+
+```json
+statement {
+    effect = "Allow"
+    actions = [
+      "iam:ListUserPolicies",
+      "iam:ListAttachedUserPolicies",
+      "iam:ListRolePolicies",
+      "iam:ListAttachedRolePolicies",
+      "iam:ListGroupPolicies",
+      "iam:ListAttachedGroupPolicies",
+      "iam:GetPolicy",
+      "iam:GetPolicyVersion",
+      "iam:GetUserPolicy",
+      "iam:GetRolePolicy",
+      "iam:GetGroupPolicy",
+      "iam:ListGroupsForUser"
+    ]
+    resources = ["*"]
+  }
+```
+
+Expect this all to change and be configurable SOON.
 
 ## Extending
 

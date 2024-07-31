@@ -67,6 +67,7 @@ psbump:
 update:
 	go get -u
 	go mod tidy
+	go vendor
 	pre-commit autoupdate
 
 lint:
@@ -77,3 +78,6 @@ gci:
 
 fmt:
 	gofumpt -l -w .
+
+schema:
+	wget -qO- https://schema.cloudformation.us-east-1.amazonaws.com/CloudformationSchema.zip  |tar xvz -C ./src/schema

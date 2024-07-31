@@ -7,40 +7,7 @@ resource "aws_iam_policy" "basic" {
         "Sid" : "0",
         "Effect" : "Allow",
         "Action" : [
-          //aws_dms_replication_task
-          "dms:CreateReplicationTask",
-          //aws_dms_s3_endpoint
-          "dms:CreateEndpoint",
-          "dms:DeleteEndpoint",
-          "rds:DescribeDBProxies",
-          "dms:ModifyEndpoint",
-          "iam:PassRole",
-          "rds:RemoveTagsFromResource",
-          "oam:UnTagResource",
-
-
-          "ec2:DescribeCapacityBlockOfferings",
-          "acm:ListCertificates",
-          "oam:GetLink",
-          "iam:AttachRolePolicy",
-          "ec2:DescribeSubnets",
-          "oam:UpdateLink",
-          "oam:DeleteLink",
-          "iam:DetachRolePolicy",
-
-          //aws_oam_sink_policy
-          "iam:GetRolePolicy",
-          "iam:PutRolePolicy",
-          "rds:DeleteDBInstance",
-          "kms:DescribeKey",
-          "rds:ListTagsForResource",
-          "rds:ModifyDBInstance",
-          "sns:CreateTopic",
-          "sns:DeleteTopic",
-          "secretsmanager:DescribeSecret",
-          "sns:GetTopicAttributes",
-          "sns:ListTagsForResource",
-          "sns:SetTopicAttributes"
+          "amplify:CreateApp"
         ],
         "Resource" : "*",
       }
