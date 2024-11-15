@@ -621,6 +621,8 @@
         "azurerm_nat_gateway_public_ip_prefix_association",
         "azurerm_netapp_account",
         "azurerm_netapp_account_encryption",
+        "azurerm_netapp_backup_policy",
+        "azurerm_netapp_backup_vault",
         "azurerm_netapp_pool",
         "azurerm_netapp_snapshot",
         "azurerm_netapp_snapshot_policy",
@@ -1212,6 +1214,7 @@
         "azurerm_key_vault_encrypted_value",
         "azurerm_key_vault_key",
         "azurerm_key_vault_managed_hardware_security_module",
+        "azurerm_key_vault_managed_hardware_security_module_key",
         "azurerm_key_vault_managed_hardware_security_module_role_definition",
         "azurerm_key_vault_secret",
         "azurerm_key_vault_secrets",
@@ -1397,6 +1400,8 @@
         "azurerm_web_pubsub",
         "azurerm_web_pubsub_private_link_resource",
         "azurerm_windows_function_app",
-        "azurerm_windows_web_app"
+        "azurerm_windows_web_app",
+        "netapp_backup_policy",
+        "netapp_backup_vault"
     ]
 }
