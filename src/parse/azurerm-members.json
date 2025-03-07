@@ -1004,6 +1004,7 @@
         "azurerm_system_center_virtual_machine_manager_availability_set",
         "azurerm_system_center_virtual_machine_manager_cloud",
         "azurerm_system_center_virtual_machine_manager_server",
+        "azurerm_system_center_virtual_machine_manager_virtual_machine_instance",
         "azurerm_system_center_virtual_machine_manager_virtual_machine_template",
         "azurerm_system_center_virtual_machine_manager_virtual_network",
         "azurerm_tenant_template_deployment",
