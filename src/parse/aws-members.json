@@ -167,6 +167,7 @@
         "aws_bedrockagent_agent_knowledge_base_association",
         "aws_bedrockagent_data_source",
         "aws_bedrockagent_knowledge_base",
+        "aws_bedrockagent_prompt",
         "aws_budgets_budget",
         "aws_budgets_budget_action",
         "aws_ce_anomaly_monitor",
@@ -215,6 +216,7 @@
         "aws_cloudfront_response_headers_policy",
         "aws_cloudfront_vpc_origin",
         "aws_cloudfrontkeyvaluestore_key",
+        "aws_cloudfrontkeyvaluestore_keys_exclusive",
         "aws_cloudhsm_v2_cluster",
         "aws_cloudhsm_v2_hsm",
         "aws_cloudsearch_domain",
@@ -341,6 +343,7 @@
         "aws_dataexchange_data_set",
         "aws_dataexchange_event_action",
         "aws_dataexchange_revision",
+        "aws_dataexchange_revision_assets",
         "aws_datapipeline_pipeline",
         "aws_datapipeline_pipeline_definition",
         "aws_datasync_agent",
@@ -1012,6 +1015,7 @@
         "aws_qbusiness_application",
         "aws_qldb_ledger",
         "aws_qldb_stream",
+        "aws_quicksight_account_settings",
         "aws_quicksight_account_subscription",
         "aws_quicksight_analysis",
         "aws_quicksight_dashboard",
@@ -1478,6 +1482,7 @@
         "aws_wafregional_web_acl",
         "aws_wafregional_web_acl_association",
         "aws_wafregional_xss_match_set",
+        "aws_wafv2_api_key",
         "aws_wafv2_ip_set",
         "aws_wafv2_regex_pattern_set",
         "aws_wafv2_rule_group",
@@ -1496,6 +1501,7 @@
         "aws_xray_sampling_rule"
     ],
     "dataSources": [
+        "aws_account_primary_contact",
         "aws_acm_certificate",
         "aws_acmpca_certificate",
         "aws_acmpca_certificate_authority",
@@ -1511,7 +1517,6 @@
         "aws_api_gateway_rest_api",
         "aws_api_gateway_sdk",
         "aws_api_gateway_vpc_link",
-        "aws_apigateway_api_keys",
         "aws_apigatewayv2_api",
         "aws_apigatewayv2_apis",
         "aws_apigatewayv2_export",
@@ -1697,7 +1702,6 @@
         "aws_ec2_transit_gateway_vpc_attachment",
         "aws_ec2_transit_gateway_vpc_attachments",
         "aws_ec2_transit_gateway_vpn_attachment",
-        "aws_ec2_transitgateway_route_table_propagations",
         "aws_ecr_authorization_token",
         "aws_ecr_image",
         "aws_ecr_lifecycle_policy_document",
@@ -1978,7 +1982,6 @@
         "aws_s3_objects",
         "aws_s3control_multi_region_access_point",
         "aws_sagemaker_prebuilt_ecr_image",
-        "aws_saml_provider",
         "aws_secretsmanager_random_password",
         "aws_secretsmanager_secret",
         "aws_secretsmanager_secret_rotation",
@@ -2092,7 +2095,6 @@
         "aws_wafv2_web_acl",
         "aws_workspaces_bundle",
         "aws_workspaces_directory",
-        "aws_workspaces_image",
-        "ssm_maintenance_windows"
+        "aws_workspaces_image"
     ]
 }
