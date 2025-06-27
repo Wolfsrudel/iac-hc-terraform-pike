@@ -359,6 +359,7 @@
         "azurerm_elastic_san_volume_group",
         "azurerm_email_communication_service",
         "azurerm_email_communication_service_domain",
+        "azurerm_email_communication_service_domain_sender_username",
         "azurerm_eventgrid_domain",
         "azurerm_eventgrid_domain_topic",
         "azurerm_eventgrid_event_subscription",
