@@ -12,10 +12,10 @@
           "items": {
             "maxLength": 200,
             "minLength": 5,
-            "pattern": "^geo:\\w*\\*?$",
+            "pattern": "^(geo|geo-routes|geo-places|geo-maps):\\w*\\*?$",
             "type": "string"
           },
-          "maxItems": 7,
+          "maxItems": 24,
           "minItems": 1,
           "type": "array"
         },
@@ -37,7 +37,7 @@
             "pattern": "(^arn(:[a-z0-9]+([.-][a-z0-9]+)*):geo(:([a-z0-9]+([.-][a-z0-9]+)*))(:[0-9]+):((\\*)|([-a-z]+[/][*-._\\w]+))$)|(^arn(:[a-z0-9]+([.-][a-z0-9]+)*):(geo-routes|geo-places|geo-maps)(:((\\*)|([a-z0-9]+([.-][a-z0-9]+)*)))::((provider[\\/][*-._\\w]+))$)",
             "type": "string"
           },
-          "maxItems": 5,
+          "maxItems": 8,
           "minItems": 1,
           "type": "array"
         }
@@ -86,6 +86,10 @@
       },
       "type": "object"
     },
+    "Unit": {
+      "additionalProperties": false,
+      "type": "object"
+    },
     "iso8601UTC": {
       "description": "The datetime value in ISO 8601 format. The timezone is always UTC. (YYYY-MM-DDThh:mm:ss.sssZ)",
       "pattern": "^([0-2]\\d{3})-(0[0-9]|1[0-2])-([0-2]\\d|3[01])T([01]\\d|2[0-4]):([0-5]\\d):([0-6]\\d)((\\.\\d{3})?)Z$",
@@ -109,7 +113,21 @@
         "geo:SearchPlaceIndexForSuggestions",
         "geo:GetPlace",
         "geo:CalculateRoute",
-        "geo:CalculateRouteMatrix"
+        "geo:CalculateRouteMatrix",
+        "geo-maps:GetTile",
+        "geo-maps:GetStaticMap",
+        "geo-places:Autocomplete",
+        "geo-places:Geocode",
+        "geo-places:GetPlace",
+        "geo-places:ReverseGeocode",
+        "geo-places:SearchNearby",
+        "geo-places:SearchText",
+        "geo-places:Suggest",
+        "geo-routes:CalculateIsolines",
+        "geo-routes:CalculateRouteMatrix",
+        "geo-routes:CalculateRoutes",
+        "geo-routes:OptimizeWaypoints",
+        "geo-routes:SnapToRoads"
       ]
     },
     "delete": {
@@ -144,6 +162,20 @@
         "geo:GetPlace",
         "geo:CalculateRoute",
         "geo:CalculateRouteMatrix",
+        "geo-maps:GetTile",
+        "geo-maps:GetStaticMap",
+        "geo-places:Autocomplete",
+        "geo-places:Geocode",
+        "geo-places:GetPlace",
+        "geo-places:ReverseGeocode",
+        "geo-places:SearchNearby",
+        "geo-places:SearchText",
+        "geo-places:Suggest",
+        "geo-routes:CalculateIsolines",
+        "geo-routes:CalculateRouteMatrix",
+        "geo-routes:CalculateRoutes",
+        "geo-routes:OptimizeWaypoints",
+        "geo-routes:SnapToRoads",
         "geo:UpdateKey"
       ]
     }
@@ -218,6 +250,10 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "geo:TagResource",
+      "geo:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

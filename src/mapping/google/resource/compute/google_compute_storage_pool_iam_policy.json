@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "compute.storagePools.getIamPolicy",
+      "compute.storagePools.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "compute.storagePools.getIamPolicy"
+    ]
+  }
+]

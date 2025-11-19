@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "datafusion.instances.getIamPolicy",
+      "datafusion.instances.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "datafusion.instances.getIamPolicy"
+    ]
+  }
+]

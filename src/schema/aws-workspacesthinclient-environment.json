@@ -130,7 +130,7 @@
     },
     "list": {
       "permissions": [
-        "thinclient:ListEnvironment",
+        "thinclient:ListEnvironments",
         "thinclient:ListTagsForResource",
         "kms:Decrypt"
       ]
@@ -149,7 +149,6 @@
         "workspaces-web:GetPortal",
         "workspaces-web:GetUserSettings",
         "thinclient:UpdateEnvironment",
-        "thinclient:ListTagsForResource",
         "thinclient:TagResource",
         "thinclient:UntagResource",
         "kms:Decrypt",
@@ -310,6 +309,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "thinclient:UntagResource",
+      "thinclient:ListTagsForResource",
+      "thinclient:TagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

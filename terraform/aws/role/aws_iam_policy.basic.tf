@@ -4,12 +4,20 @@ resource "aws_iam_policy" "basic" {
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Sid" : "0",
+        "Sid" : "VisualEditor0",
         "Effect" : "Allow",
         "Action" : [
-          "amplify:CreateApp"
+          //aws_vpn_connection
+          "ec2:DescribeVpnConnections",
+          //aws_rds_global_cluster
+          "rds:DescribeGlobalClusters",
+          //aws_ecrpublic_images
+          "ecr-public:DescribeImages"
+
         ],
-        "Resource" : "*",
+        "Resource" : [
+          "*"
+        ]
       }
     ]
   })

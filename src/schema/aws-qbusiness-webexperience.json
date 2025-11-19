@@ -4,6 +4,135 @@
     "/properties/ApplicationId"
   ],
   "definitions": {
+    "BrowserExtension": {
+      "enum": [
+        "FIREFOX",
+        "CHROME"
+      ],
+      "type": "string"
+    },
+    "BrowserExtensionConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "EnabledBrowserExtensions": {
+          "insertionOrder": false,
+          "items": {
+            "$ref": "#/definitions/BrowserExtension"
+          },
+          "maxItems": 2,
+          "minItems": 0,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "EnabledBrowserExtensions"
+      ],
+      "type": "object"
+    },
+    "CustomizationConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "CustomCSSUrl": {
+          "maxLength": 1284,
+          "minLength": 0,
+          "pattern": "^(https?://[a-zA-Z0-9-_.+%/]+\\.css)?$",
+          "type": "string"
+        },
+        "FaviconUrl": {
+          "maxLength": 1284,
+          "minLength": 0,
+          "pattern": "^(https?://[a-zA-Z0-9-_.+%/]+\\.(svg|ico))?$",
+          "type": "string"
+        },
+        "FontUrl": {
+          "maxLength": 1284,
+          "minLength": 0,
+          "pattern": "^(https?://[a-zA-Z0-9-_.+%/]+\\.(ttf|woff|woff2|otf))?$",
+          "type": "string"
+        },
+        "LogoUrl": {
+          "maxLength": 1284,
+          "minLength": 0,
+          "pattern": "^(https?://[a-zA-Z0-9-_.+%/]+\\.(svg|png))?$",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "IdentityProviderConfiguration": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "SamlConfiguration": {
+              "$ref": "#/definitions/SamlProviderConfiguration"
+            }
+          },
+          "required": [
+            "SamlConfiguration"
+          ],
+          "title": "SamlConfiguration",
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "OpenIDConnectConfiguration": {
+              "$ref": "#/definitions/OpenIDConnectProviderConfiguration"
+            }
+          },
+          "required": [
+            "OpenIDConnectConfiguration"
+          ],
+          "title": "OpenIDConnectConfiguration",
+          "type": "object"
+        }
+      ]
+    },
+    "OpenIDConnectProviderConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "SecretsArn": {
+          "maxLength": 1284,
+          "minLength": 0,
+          "pattern": "^arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}$",
+          "type": "string"
+        },
+        "SecretsRole": {
+          "maxLength": 1284,
+          "minLength": 0,
+          "pattern": "^arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "SecretsArn",
+        "SecretsRole"
+      ],
+      "type": "object"
+    },
+    "Origin": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^(http:\\/\\/|https:\\/\\/)[a-zA-Z0-9-_.]+(?::[0-9]{1,5})?$",
+      "type": "string"
+    },
+    "SamlProviderConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "AuthenticationUrl": {
+          "maxLength": 1284,
+          "minLength": 1,
+          "pattern": "^https://.*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "AuthenticationUrl"
+      ],
+      "type": "object"
+    },
     "Tag": {
       "additionalProperties": false,
       "properties": {
@@ -106,15 +235,33 @@
       "pattern": "^[a-zA-Z0-9][a-zA-Z0-9-]{35}$",
       "type": "string"
     },
+    "BrowserExtensionConfiguration": {
+      "$ref": "#/definitions/BrowserExtensionConfiguration"
+    },
     "CreatedAt": {
       "format": "date-time",
       "type": "string"
+    },
+    "CustomizationConfiguration": {
+      "$ref": "#/definitions/CustomizationConfiguration"
     },
     "DefaultEndpoint": {
       "maxLength": 2048,
       "minLength": 1,
       "pattern": "^(https?|ftp|file)://([^\\s]*)$",
       "type": "string"
+    },
+    "IdentityProviderConfiguration": {
+      "$ref": "#/definitions/IdentityProviderConfiguration"
+    },
+    "Origins": {
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/Origin"
+      },
+      "maxItems": 10,
+      "minItems": 0,
+      "type": "array"
     },
     "RoleArn": {
       "maxLength": 1284,
@@ -184,6 +331,15 @@
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-qbusiness",
   "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "qbusiness:UntagResource",
+      "qbusiness:TagResource",
+      "qbusiness:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
     "taggable": true
   },
   "typeName": "AWS::QBusiness::WebExperience"

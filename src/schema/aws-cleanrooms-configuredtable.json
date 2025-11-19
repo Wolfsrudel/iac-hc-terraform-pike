@@ -2,10 +2,17 @@
   "additionalProperties": false,
   "createOnlyProperties": [
     "/properties/AllowedColumns",
-    "/properties/AnalysisMethod",
     "/properties/TableReference"
   ],
   "definitions": {
+    "AdditionalAnalyses": {
+      "enum": [
+        "ALLOWED",
+        "REQUIRED",
+        "NOT_ALLOWED"
+      ],
+      "type": "string"
+    },
     "AggregateColumn": {
       "additionalProperties": false,
       "properties": {
@@ -76,7 +83,7 @@
     "AllowedAnalysis": {
       "maxLength": 200,
       "minLength": 0,
-      "pattern": "(ANY_QUERY|arn:[\\w]{3}:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+)",
+      "pattern": "(ANY_QUERY|ANY_JOB|arn:[\\w]{3}:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+)",
       "type": "string"
     },
     "AllowedAnalysisProvider": {
@@ -95,7 +102,9 @@
     },
     "AnalysisMethod": {
       "enum": [
-        "DIRECT_QUERY"
+        "DIRECT_QUERY",
+        "DIRECT_JOB",
+        "MULTIPLE"
       ],
       "type": "string"
     },
@@ -118,6 +127,9 @@
     "AnalysisRuleAggregation": {
       "additionalProperties": false,
       "properties": {
+        "AdditionalAnalyses": {
+          "$ref": "#/definitions/AdditionalAnalyses"
+        },
         "AggregateColumns": {
           "insertionOrder": false,
           "items": {
@@ -185,6 +197,9 @@
     "AnalysisRuleCustom": {
       "additionalProperties": false,
       "properties": {
+        "AdditionalAnalyses": {
+          "$ref": "#/definitions/AdditionalAnalyses"
+        },
         "AllowedAnalyses": {
           "$ref": "#/definitions/AllowedAnalyses"
         },
@@ -193,6 +208,9 @@
         },
         "DifferentialPrivacy": {
           "$ref": "#/definitions/DifferentialPrivacy"
+        },
+        "DisallowedOutputColumns": {
+          "$ref": "#/definitions/DisallowedOutputColumns"
         }
       },
       "required": [
@@ -203,6 +221,9 @@
     "AnalysisRuleList": {
       "additionalProperties": false,
       "properties": {
+        "AdditionalAnalyses": {
+          "$ref": "#/definitions/AdditionalAnalyses"
+        },
         "AllowedJoinOperators": {
           "insertionOrder": false,
           "items": {
@@ -230,6 +251,35 @@
       "required": [
         "JoinColumns",
         "ListColumns"
+      ],
+      "type": "object"
+    },
+    "AthenaTableReference": {
+      "additionalProperties": false,
+      "properties": {
+        "DatabaseName": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "OutputLocation": {
+          "maxLength": 1024,
+          "minLength": 8,
+          "type": "string"
+        },
+        "TableName": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "WorkGroup": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "DatabaseName",
+        "TableName",
+        "WorkGroup"
       ],
       "type": "object"
     },
@@ -326,6 +376,14 @@
       ],
       "type": "object"
     },
+    "DisallowedOutputColumns": {
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/AnalysisRuleColumnName"
+      },
+      "minItems": 0,
+      "type": "array"
+    },
     "GlueTableReference": {
       "additionalProperties": false,
       "properties": {
@@ -388,18 +446,144 @@
       ],
       "type": "string"
     },
-    "TableReference": {
+    "SelectedAnalysisMethod": {
+      "enum": [
+        "DIRECT_QUERY",
+        "DIRECT_JOB"
+      ],
+      "type": "string"
+    },
+    "SelectedAnalysisMethods": {
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/SelectedAnalysisMethod"
+      },
+      "type": "array"
+    },
+    "SnowflakeTableReference": {
       "additionalProperties": false,
       "properties": {
-        "Glue": {
-          "$ref": "#/definitions/GlueTableReference"
+        "AccountIdentifier": {
+          "maxLength": 256,
+          "minLength": 3,
+          "type": "string"
+        },
+        "DatabaseName": {
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "SchemaName": {
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "SecretArn": {
+          "maxLength": 256,
+          "type": "string"
+        },
+        "TableName": {
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        },
+        "TableSchema": {
+          "$ref": "#/definitions/SnowflakeTableSchema"
         }
       },
       "required": [
-        "Glue"
+        "AccountIdentifier",
+        "DatabaseName",
+        "SchemaName",
+        "SecretArn",
+        "TableName",
+        "TableSchema"
       ],
-      "title": "Glue",
       "type": "object"
+    },
+    "SnowflakeTableSchema": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "V1": {
+              "insertionOrder": false,
+              "items": {
+                "$ref": "#/definitions/SnowflakeTableSchemaV1"
+              },
+              "maxItems": 250,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "V1"
+          ],
+          "title": "V1",
+          "type": "object"
+        }
+      ]
+    },
+    "SnowflakeTableSchemaV1": {
+      "additionalProperties": false,
+      "properties": {
+        "ColumnName": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "ColumnType": {
+          "maxLength": 255,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ColumnName",
+        "ColumnType"
+      ],
+      "type": "object"
+    },
+    "TableReference": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "Glue": {
+              "$ref": "#/definitions/GlueTableReference"
+            }
+          },
+          "required": [
+            "Glue"
+          ],
+          "title": "Glue",
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "Snowflake": {
+              "$ref": "#/definitions/SnowflakeTableReference"
+            }
+          },
+          "required": [
+            "Snowflake"
+          ],
+          "title": "Snowflake",
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "Athena": {
+              "$ref": "#/definitions/AthenaTableReference"
+            }
+          },
+          "required": [
+            "Athena"
+          ],
+          "title": "Athena",
+          "type": "object"
+        }
+      ]
     },
     "Tag": {
       "additionalProperties": false,
@@ -442,7 +626,8 @@
         "glue:GetSchemaVersion",
         "cleanrooms:ListTagsForResource",
         "cleanrooms:TagResource",
-        "cleanrooms:ListConfiguredTables"
+        "cleanrooms:ListConfiguredTables",
+        "athena:GetTableMetadata"
       ]
     },
     "delete": {
@@ -546,6 +731,9 @@
       "pattern": "^(?!\\s*$)[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*$",
       "type": "string"
     },
+    "SelectedAnalysisMethods": {
+      "$ref": "#/definitions/SelectedAnalysisMethods"
+    },
     "TableReference": {
       "$ref": "#/definitions/TableReference"
     },
@@ -571,6 +759,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "cleanrooms:ListTagsForResource",
+      "cleanrooms:UntagResource",
+      "cleanrooms:TagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

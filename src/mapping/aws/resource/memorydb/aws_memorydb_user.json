@@ -1,0 +1,30 @@
+[
+  {
+    "apply": [
+      "memorydb:CreateUser",
+      "memorydb:DescribeUsers",
+      "memorydb:ListTags",
+      "memorydb:DeleteUser",
+      "iam:CreateServiceLinkedRole"
+    ],
+    "attributes": {
+      "tags": [
+        "memorydb:TagResource",
+        "memorydb:UntagResource"
+      ]
+    },
+    "destroy": [
+      "memorydb:DeleteUser",
+      "memorydb:DescribeUsers"
+    ],
+    "modify": [
+      "memorydb:UpdateUser",
+      "memorydb:DescribeUsers",
+      "memorydb:ListTags"
+    ],
+    "plan": [
+      "memorydb:DescribeUsers",
+      "memorydb:ListTags"
+    ]
+  }
+]

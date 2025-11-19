@@ -23,6 +23,12 @@
       "additionalProperties": false,
       "description": "An object that defines the dedicated IP pool that is used to send emails that you send using the configuration set.",
       "properties": {
+        "MaxDeliverySeconds": {
+          "description": "Specifies the maximum time until which SES will retry sending emails",
+          "maximum": 50400,
+          "minimum": 300,
+          "type": "number"
+        },
         "SendingPoolName": {
           "description": "The name of the dedicated IP pool to associate with the configuration set.",
           "type": "string"
@@ -98,11 +104,13 @@
         "CustomRedirectDomain": {
           "description": "The domain to use for tracking open and click events.",
           "type": "string"
+        },
+        "HttpsPolicy": {
+          "description": "The https policy to use for tracking open and click events.",
+          "pattern": "REQUIRE|REQUIRE_OPEN_ONLY|OPTIONAL",
+          "type": "string"
         }
       },
-      "required": [
-        "CustomRedirectDomain"
-      ],
       "type": "object"
     },
     "VdmOptions": {

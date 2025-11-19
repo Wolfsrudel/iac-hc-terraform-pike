@@ -2,12 +2,38 @@
   {
     "apply": [
       "ec2:DescribeAccountAttributes",
-      "rds:CreateDBInstance",
+      "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcAttribute",
+      "ec2:DescribeVpcs",
+      "rds:DescribeDBClusters",
+      "rds:DescribeDBEngineVersions",
       "rds:DescribeDBInstances",
+      "rds:DescribeDBParameterGroups",
+      "rds:DescribeDBInstanceAutomatedBackups",
+      "iam:CreateServiceLinkedRole",
+      "iam:GetRole",
+      "iam:ListRoles",
+      "iam:PassRole",
+      "rds:CreateDBInstance",
       "rds:DeleteDBInstance",
-      "rds:ListTagsForResource"
+      "rds:DescribeDBInstances",
+      "rds:ListTagsForResource",
+      "rds:ModifyDBInstance",
+      "rds:ModifyDBInstance",
+      "rds:RebootDBInstance"
     ],
     "attributes": {
+      "manage_master_user_password": [
+        "secretsmanager:CreateSecret",
+        "secretsmanager:TagResource"
+      ],
+      "master_user_secret_kms_key_id": [
+        "kms:CreateGrant",
+        "kms:DescribeKey"
+      ],
       "monitoring_role_arn": [
         "iam:PassRole"
       ],
@@ -17,11 +43,22 @@
       ]
     },
     "destroy": [
-      "rds:DeleteDBInstance"
+      "rds:CreateDBSnapshot",
+      "rds:DeleteDBInstance",
+      "rds:DescribeDBInstances"
     ],
     "modify": [
       "rds:ModifyDBInstance"
     ],
-    "plan": []
+    "plan": [
+      "ec2:DescribeAccountAttributes",
+      "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcAttribute",
+      "ec2:DescribeVpcs",
+      "rds:DescribeDBInstances"
+    ]
   }
 ]

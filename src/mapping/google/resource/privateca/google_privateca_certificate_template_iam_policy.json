@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "privateca.certificateTemplates.getIamPolicy",
+      "privateca.certificateTemplates.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "privateca.certificateTemplates.getIamPolicy"
+    ]
+  }
+]

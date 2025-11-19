@@ -39,6 +39,9 @@
       "properties": {
         "EFSFileSystem": {
           "$ref": "#/definitions/EFSFileSystem"
+        },
+        "FSxLustreFileSystem": {
+          "$ref": "#/definitions/FSxLustreFileSystem"
         }
       },
       "type": "object"
@@ -106,6 +109,21 @@
       },
       "required": [
         "EbsVolumeSizeInGb"
+      ],
+      "type": "object"
+    },
+    "FSxLustreFileSystem": {
+      "additionalProperties": false,
+      "properties": {
+        "FileSystemId": {
+          "maxLength": 21,
+          "minLength": 11,
+          "pattern": "^(fs-[0-9a-f]{8,})$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "FileSystemId"
       ],
       "type": "object"
     },
@@ -267,10 +285,22 @@
       },
       "type": "object"
     },
+    "SpaceAppLifecycleManagement": {
+      "additionalProperties": false,
+      "properties": {
+        "IdleSettings": {
+          "$ref": "#/definitions/SpaceIdleSettings"
+        }
+      },
+      "type": "object"
+    },
     "SpaceCodeEditorAppSettings": {
       "additionalProperties": false,
       "description": "The CodeEditor app settings.",
       "properties": {
+        "AppLifecycleManagement": {
+          "$ref": "#/definitions/SpaceAppLifecycleManagement"
+        },
         "DefaultResourceSpec": {
           "$ref": "#/definitions/ResourceSpec"
         }
@@ -282,10 +312,25 @@
       "minimum": 5,
       "type": "integer"
     },
+    "SpaceIdleSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "IdleTimeoutInMinutes": {
+          "description": "The space idle timeout value set in minutes",
+          "maximum": 525600,
+          "minimum": 60,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "SpaceJupyterLabAppSettings": {
       "additionalProperties": false,
       "description": "The JupyterServer app settings.",
       "properties": {
+        "AppLifecycleManagement": {
+          "$ref": "#/definitions/SpaceAppLifecycleManagement"
+        },
         "CodeRepositories": {
           "description": "A list of CodeRepositories available for use with JupyterLab apps.",
           "items": {
@@ -392,29 +437,37 @@
     "create": {
       "permissions": [
         "sagemaker:CreateSpace",
-        "sagemaker:DescribeSpace"
+        "sagemaker:DescribeSpace",
+        "sagemaker:ListTags",
+        "sagemaker:AddTags"
       ]
     },
     "delete": {
       "permissions": [
         "sagemaker:DeleteSpace",
-        "sagemaker:DescribeSpace"
+        "sagemaker:DescribeSpace",
+        "sagemaker:DeleteTags"
       ]
     },
     "list": {
       "permissions": [
-        "sagemaker:ListSpaces"
+        "sagemaker:ListSpaces",
+        "sagemaker:ListTags"
       ]
     },
     "read": {
       "permissions": [
-        "sagemaker:DescribeSpace"
+        "sagemaker:DescribeSpace",
+        "sagemaker:ListTags"
       ]
     },
     "update": {
       "permissions": [
         "sagemaker:UpdateSpace",
-        "sagemaker:DescribeSpace"
+        "sagemaker:DescribeSpace",
+        "sagemaker:AddTags",
+        "sagemaker:DeleteTags",
+        "sagemaker:ListTags"
       ]
     }
   },
@@ -484,6 +537,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "sagemaker:AddTags",
+      "sagemaker:DeleteTags",
+      "sagemaker:ListTags"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
@@ -491,7 +549,6 @@
   },
   "typeName": "AWS::SageMaker::Space",
   "writeOnlyProperties": [
-    "/properties/SpaceSettings",
-    "/properties/Tags"
+    "/properties/SpaceSettings"
   ]
 }

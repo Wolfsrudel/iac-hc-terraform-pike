@@ -23,11 +23,33 @@
       },
       "type": "object"
     },
+    "ClientCertificateConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientCertificateCallbackArn": {
+          "maxLength": 170,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ServerCertificateConfig": {
       "additionalProperties": false,
       "properties": {
         "EnableOCSPCheck": {
           "type": "boolean"
+        },
+        "OcspAuthorizedResponderArn": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "pattern": "^arn:aws(-cn|-us-gov|-iso-b|-iso)?:acm:[a-z]{2}-(gov-|iso-|isob-)?[a-z]{4,9}-\\d{1}:\\d{12}:certificate/[a-zA-Z0-9/-]+$",
+          "type": "string"
+        },
+        "OcspLambdaArn": {
+          "maxLength": 170,
+          "minLength": 1,
+          "type": "string"
         }
       },
       "type": "object"
@@ -125,11 +147,33 @@
     "/properties/DomainConfigurationName"
   ],
   "properties": {
+    "ApplicationProtocol": {
+      "enum": [
+        "SECURE_MQTT",
+        "MQTT_WSS",
+        "HTTPS",
+        "DEFAULT"
+      ],
+      "type": "string"
+    },
     "Arn": {
+      "type": "string"
+    },
+    "AuthenticationType": {
+      "enum": [
+        "AWS_X509",
+        "CUSTOM_AUTH",
+        "AWS_SIGV4",
+        "CUSTOM_AUTH_X509",
+        "DEFAULT"
+      ],
       "type": "string"
     },
     "AuthorizerConfig": {
       "$ref": "#/definitions/AuthorizerConfig"
+    },
+    "ClientCertificateConfig": {
+      "$ref": "#/definitions/ClientCertificateConfig"
     },
     "DomainConfigurationName": {
       "maxLength": 128,
@@ -212,6 +256,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "iot:ListTagsForResource",
+      "iot:TagResource",
+      "iot:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

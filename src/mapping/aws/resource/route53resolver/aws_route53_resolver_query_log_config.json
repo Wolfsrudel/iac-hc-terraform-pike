@@ -1,19 +1,41 @@
 [
   {
     "apply": [
-      "route53resolver:CreateResolverQueryLogConfig",
-      "route53resolver:GetResolverQueryLogConfig"
+      "iam:CreateServiceLinked",
+      "logs:CreateLogDelivery",
+      "logs:DeleteLogDelivery",
+      "logs:DescribeLogGroups",
+      "logs:DescribeResourcePolicies",
+      "logs:GetLogDelivery",
+      "logs:ListLogDeliveries",
+      "logs:PutResourcePolicy",
+      "logs:UpdateLogDelivery",
+      "resolverquerylogging:CreateConfig",
+      "resolverquerylogging:DeleteConfig",
+      "resolverquerylogging:GetConfig",
+      "resolverquerylogging:ListConfig",
+      "route53resolver:DeleteResolverQueryLogConfig",
+      "route53resolver:GetResolverQueryLogConfig",
+      "route53resolver:ListTagsForResource",
+      "route53resolver:ListResolverQueryLogConfigs"
     ],
     "attributes": {
       "tags": [
-        "route53resolver:ListTagsForResource",
-        "route53resolver:TagResource"
+        "route53resolver:TagResource",
+        "route53resolver:UntagResource"
       ]
     },
     "destroy": [
-      "route53resolver:DeleteResolverQueryLogConfig"
+      "route53resolver:DeleteResolverQueryLogConfig",
+      "resolverquerylogging:DeleteConfig",
+      "resolverquerylogging:ListConfig"
     ],
     "modify": [],
-    "plan": []
+    "plan": [
+      "resolverquerylogging:GetConfig",
+      "route53resolver:GetResolverQueryLogConfig",
+      "route53resolver:ListTagsForResource",
+      "route53resolver:ListResolverQueryLogConfigs"
+    ]
   }
 ]

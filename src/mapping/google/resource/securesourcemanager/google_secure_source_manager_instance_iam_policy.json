@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "securesourcemanager.instances.getIamPolicy",
+      "securesourcemanager.instances.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "securesourcemanager.instances.getIamPolicy"
+    ]
+  }
+]

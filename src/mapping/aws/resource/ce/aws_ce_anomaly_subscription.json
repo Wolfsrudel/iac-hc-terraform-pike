@@ -4,7 +4,8 @@
       "ce:CreateAnomalySubscription",
       "ce:GetAnomalySubscriptions",
       "ce:DeleteAnomalySubscription",
-      "ce:UpdateAnomalySubscription"
+      "ce:UpdateAnomalySubscription",
+      "ce:ListTagsForResource"
     ],
     "attributes": {
       "tags": [
@@ -18,6 +19,9 @@
     "modify": [
       "ce:UpdateAnomalySubscription"
     ],
-    "plan": []
+    "plan": [
+      "ce:GetAnomalySubscriptions",
+      "ce:ListTagsForResource"
+    ]
   }
 ]

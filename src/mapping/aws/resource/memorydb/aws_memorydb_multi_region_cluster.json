@@ -1,0 +1,31 @@
+[
+  {
+    "apply": [
+      "memorydb:CreateMultiRegionCluster",
+      "memorydb:DescribeMultiRegionClusters",
+      "memorydb:DeleteMultiRegionCluster",
+      "memorydb:UpdateMultiRegionCluster",
+      "memorydb:ListTags",
+      "iam:CreateServiceLinkedRole"
+    ],
+    "attributes": {
+      "tags": [
+        "memorydb:TagResource",
+        "memorydb:UntagResource"
+      ]
+    },
+    "destroy": [
+      "memorydb:DeleteMultiRegionCluster",
+      "memorydb:DescribeMultiRegionClusters"
+    ],
+    "modify": [
+      "memorydb:UpdateMultiRegionCluster",
+      "memorydb:DescribeMultiRegionClusters",
+      "memorydb:ListTags"
+    ],
+    "plan": [
+      "memorydb:DescribeMultiRegionClusters",
+      "memorydb:ListTags"
+    ]
+  }
+]

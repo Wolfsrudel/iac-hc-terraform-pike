@@ -23,7 +23,7 @@
         },
         "Expression": {
           "description": "<p>An expression that defines the calculated column.</p>",
-          "maxLength": 4096,
+          "maxLength": 250000,
           "minLength": 1,
           "type": "string"
         }
@@ -157,13 +157,10 @@
             "$ref": "#/definitions/CalculatedColumn"
           },
           "maxItems": 128,
-          "minItems": 1,
+          "minItems": 0,
           "type": "array"
         }
       },
-      "required": [
-        "Columns"
-      ],
       "type": "object"
     },
     "CustomSql": {
@@ -197,7 +194,6 @@
         }
       },
       "required": [
-        "Columns",
         "DataSourceArn",
         "Name",
         "SqlQuery"
@@ -215,13 +211,13 @@
       "additionalProperties": false,
       "description": "<p>The refresh properties of a dataset.</p>",
       "properties": {
+        "FailureConfiguration": {
+          "$ref": "#/definitions/RefreshFailureConfiguration"
+        },
         "RefreshConfiguration": {
           "$ref": "#/definitions/RefreshConfiguration"
         }
       },
-      "required": [
-        "RefreshConfiguration"
-      ],
       "type": "object"
     },
     "DataSetUsageConfiguration": {
@@ -240,6 +236,12 @@
         }
       },
       "type": "object"
+    },
+    "DataSetUseAs": {
+      "enum": [
+        "RLS_RULES"
+      ],
+      "type": "string"
     },
     "DatasetParameter": {
       "additionalProperties": false,
@@ -683,8 +685,7 @@
         }
       },
       "required": [
-        "Alias",
-        "Source"
+        "Alias"
       ],
       "type": "object"
     },
@@ -856,6 +857,20 @@
       ],
       "type": "object"
     },
+    "PerformanceConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "UniqueKeys": {
+          "items": {
+            "$ref": "#/definitions/UniqueKey"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "PhysicalTable": {
       "additionalProperties": false,
       "description": "<p>A view of a data source that contains information about the shape of the data in the\n            underlying source. This is a variant type structure. For this structure to be valid,\n            only one of the attributes can be non-null.</p>",
@@ -893,7 +908,7 @@
             "type": "string"
           },
           "maxItems": 2000,
-          "minItems": 1,
+          "minItems": 0,
           "type": "array"
         }
       },
@@ -913,6 +928,31 @@
       "required": [
         "IncrementalRefresh"
       ],
+      "type": "object"
+    },
+    "RefreshFailureAlertStatus": {
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
+    },
+    "RefreshFailureConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "EmailAlert": {
+          "$ref": "#/definitions/RefreshFailureEmailAlert"
+        }
+      },
+      "type": "object"
+    },
+    "RefreshFailureEmailAlert": {
+      "additionalProperties": false,
+      "properties": {
+        "AlertStatus": {
+          "$ref": "#/definitions/RefreshFailureAlertStatus"
+        }
+      },
       "type": "object"
     },
     "RelationalTable": {
@@ -953,7 +993,6 @@
       },
       "required": [
         "DataSourceArn",
-        "InputColumns",
         "Name"
       ],
       "type": "object"
@@ -976,8 +1015,7 @@
         }
       },
       "required": [
-        "ColumnName",
-        "NewColumnName"
+        "ColumnName"
       ],
       "type": "object"
     },
@@ -1145,8 +1183,7 @@
         }
       },
       "required": [
-        "DataSourceArn",
-        "InputColumns"
+        "DataSourceArn"
       ],
       "type": "object"
     },
@@ -1309,6 +1346,25 @@
       },
       "type": "object"
     },
+    "UniqueKey": {
+      "additionalProperties": false,
+      "properties": {
+        "ColumnNames": {
+          "items": {
+            "maxLength": 127,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "ColumnNames"
+      ],
+      "type": "object"
+    },
     "UntagColumnOperation": {
       "additionalProperties": false,
       "description": "<p>A transform operation that removes tags associated with a column.</p>",
@@ -1376,7 +1432,10 @@
         "quicksight:TagResource",
         "quicksight:ListTagsForResource",
         "quicksight:DescribeDataSetRefreshProperties",
-        "quicksight:PutDataSetRefreshProperties"
+        "quicksight:PutDataSetRefreshProperties",
+        "quicksight:CreateFolderMembership",
+        "quicksight:DeleteFolderMembership",
+        "quicksight:ListFoldersForResource"
       ]
     },
     "delete": {
@@ -1414,6 +1473,9 @@
         "quicksight:DescribeIngestion",
         "quicksight:ListIngestions",
         "quicksight:CancelIngestion",
+        "quicksight:CreateFolderMembership",
+        "quicksight:DeleteFolderMembership",
+        "quicksight:ListFoldersForResource",
         "quicksight:TagResource",
         "quicksight:UntagResource",
         "quicksight:ListTagsForResource",
@@ -1486,6 +1548,15 @@
     "FieldFolders": {
       "$ref": "#/definitions/FieldFolderMap"
     },
+    "FolderArns": {
+      "description": "<p>When you create the dataset, Amazon QuickSight adds the dataset to these folders.</p>",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 0,
+      "type": "array"
+    },
     "ImportMode": {
       "$ref": "#/definitions/DataSetImportMode"
     },
@@ -1513,6 +1584,9 @@
       },
       "type": "array"
     },
+    "PerformanceConfiguration": {
+      "$ref": "#/definitions/PerformanceConfiguration"
+    },
     "Permissions": {
       "description": "<p>A list of resource permissions on the dataset.</p>",
       "items": {
@@ -1539,6 +1613,9 @@
       "maxItems": 200,
       "minItems": 1,
       "type": "array"
+    },
+    "UseAs": {
+      "$ref": "#/definitions/DataSetUseAs"
     }
   },
   "readOnlyProperties": [
@@ -1550,6 +1627,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "quicksight:TagResource",
+      "quicksight:UntagResource",
+      "quicksight:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
@@ -1558,6 +1640,7 @@
   "typeName": "AWS::QuickSight::DataSet",
   "writeOnlyProperties": [
     "/properties/FieldFolders",
-    "/properties/IngestionWaitPolicy"
+    "/properties/IngestionWaitPolicy",
+    "/properties/FolderArns"
   ]
 }

@@ -103,7 +103,8 @@
         "ec2:CreateNetworkInterface",
         "ec2:DescribeNetworkInterfaces",
         "ec2:CreateTags",
-        "ec2:ModifyNetworkInterfaceAttribute"
+        "ec2:ModifyNetworkInterfaceAttribute",
+        "ec2:ModifyPublicIpDnsNameOptions"
       ]
     },
     "delete": {
@@ -131,7 +132,8 @@
         "ec2:DeleteTags",
         "ec2:CreateTags",
         "ec2:UnassignPrivateIpAddresses",
-        "ec2:AssignPrivateIpAddresses"
+        "ec2:AssignPrivateIpAddresses",
+        "ec2:ModifyPublicIpDnsNameOptions"
       ]
     }
   },
@@ -273,6 +275,16 @@
     "SubnetId"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-ec2/networkinterface",
-  "taggable": true,
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "ec2:CreateTags",
+      "ec2:DeleteTags"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::EC2::NetworkInterface"
 }

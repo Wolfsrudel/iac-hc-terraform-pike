@@ -1,12 +1,9 @@
-package pike_test
+package pike
 
 import (
 	_ "embed"
 	"reflect"
-	"strings"
 	"testing"
-
-	pike "github.com/jameswoolfenden/pike/src"
 )
 
 func TestNewAWSPolicy(t *testing.T) {
@@ -19,7 +16,7 @@ func TestNewAWSPolicy(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    pike.Policy
+		want    Policy
 		wantErr bool
 	}{
 		{
@@ -44,9 +41,9 @@ func TestNewAWSPolicy(t *testing.T) {
 				"s3:GetReplicationConfiguration",
 				"s3:ListBucket",
 			}},
-			pike.Policy{
+			Policy{
 				Version: "2012-10-17",
-				Statements: []pike.Statement{
+				Statements: []Statement{
 					{"VisualEditor0", "Allow", []string{
 						"s3:CreateBucket",
 						"s3:DeleteBucket",
@@ -77,12 +74,15 @@ func TestNewAWSPolicy(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := pike.NewAWSPolicy(tt.args.Actions, false)
+
+			got, err := NewAWSPolicy(tt.args.Actions, false)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("NewAWSPolicy() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewAWSPolicy() = %v, want %v", got, tt.want)
 			}
@@ -94,7 +94,7 @@ func TestGetPolicy(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		actions pike.Sorted
+		actions Sorted
 	}
 
 	tests := []struct {
@@ -105,15 +105,15 @@ func TestGetPolicy(t *testing.T) {
 	}{
 		{
 			"first",
-			args{pike.Sorted{
+			args{Sorted{
 				AWS: []string{},
 			}},
-			"{\"Version\": \"2012-10-17\",\"Statement\": null\n}",
+			``,
 			false,
 		},
 		{
 			"aws",
-			args{pike.Sorted{AWS: []string{
+			args{Sorted{AWS: []string{
 				"ec2:DescribeInstances",
 				"ec2:DescribeTags",
 				"ec2:DescribeInstanceAttribute",
@@ -128,13 +128,51 @@ func TestGetPolicy(t *testing.T) {
 				"ec2:StopInstances",
 				"ec2:TerminateInstances",
 			}}},
-			"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"VisualEditor0\",\"Effect\":\"Allow\",\"Action\":[\"ec2:DescribeInstanceAttribute\",\"ec2:DescribeInstanceCreditSpecifications\",\"ec2:DescribeInstanceTypes\",\"ec2:DescribeInstances\",\"ec2:DescribeTags\",\"ec2:DescribeVolumes\",\"ec2:ModifyInstanceAttribute\",\"ec2:RunInstances\",\"ec2:StartInstances\",\"ec2:StopInstances\",\"ec2:TerminateInstances\"],\"Resource\":[\"*\"]}]}",
+			`{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstanceAttribute",
+        "ec2:DescribeInstanceCreditSpecifications",
+        "ec2:DescribeInstanceTypes",
+        "ec2:DescribeInstances",
+        "ec2:DescribeTags",
+        "ec2:DescribeVolumes",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:RunInstances",
+        "ec2:StartInstances",
+        "ec2:StopInstances",
+        "ec2:TerminateInstances"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}`,
 			false,
 		},
 		{
 			"short",
-			args{pike.Sorted{AWS: []string{"s3:*"}}},
-			"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"VisualEditor0\",\"Effect\":\"Allow\",\"Action\":[\"s3:*\"],\"Resource\":[\"*\"]}]}",
+			args{Sorted{AWS: []string{"s3:*"}}},
+			`{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}`,
 			false,
 		},
 	}
@@ -143,27 +181,23 @@ func TestGetPolicy(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := pike.GetPolicy(tt.args.actions, false)
+
+			got, err := GetPolicy(tt.args.actions, false, "")
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetPolicy() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			newGot := Minify(got.AWS.JSONOut)
 			reallyWant := Minify(tt.want)
+
 			if newGot != reallyWant {
 				t.Errorf("GetPolicy() = %v, want %v", got.AWS.JSONOut, tt.want)
 			}
 		})
 	}
-}
-
-func Minify(JSONOut string) string {
-	return strings.ReplaceAll(
-		strings.ReplaceAll(
-			strings.ReplaceAll(
-				strings.ReplaceAll(
-					strings.ReplaceAll(JSONOut, "\n", ""), "	", ""), " ", ""), "\r", ""), "\t", "")
 }
 
 func TestAWSPolicy(t *testing.T) {
@@ -176,20 +210,34 @@ func TestAWSPolicy(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    pike.AwsOutput
+		want    AwsOutput
 		wantErr bool
 	}{
 		{
 			"fail",
 			args{[]string{"woof"}},
-			pike.AwsOutput{},
+			AwsOutput{},
 			true,
 		},
-		{"fail2", args{[]string{"woof", "meow:*"}}, pike.AwsOutput{}, true},
+		{"fail2", args{[]string{"woof", "meow:*"}}, AwsOutput{}, true},
 		{
 			"pass",
 			args{[]string{"woof:*"}},
-			pike.AwsOutput{JSONOut: "{\n    \"Version\": \"2012-10-17\",\n    \"Statement\": [\n        {\n            \"Sid\": \"VisualEditor0\",\n            \"Effect\": \"Allow\",\n            \"Action\": [\n                \"woof:*\"\n            ],\n            \"Resource\": [\n                \"*\"\n            ]\n        }\n    ]\n}"},
+			AwsOutput{JSONOut: `{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "woof:*"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}`},
 			false,
 		},
 	}
@@ -198,12 +246,15 @@ func TestAWSPolicy(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := pike.AWSPolicy(tt.args.Permissions, false)
+
+			got, err := AWSPolicy(tt.args.Permissions, false, "")
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AWSPolicy() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if Minify(got.JSONOut) != Minify(tt.want.JSONOut) {
 				t.Errorf("AWSPolicy() = %v, want %v", got.JSONOut, tt.want.JSONOut)
 			}
@@ -230,7 +281,8 @@ func Test_unique(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if got := pike.Unique(tt.args.s); !reflect.DeepEqual(got, tt.want) {
+
+			if got := Unique(tt.args.s); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Unique() = %v, want %v", got, tt.want)
 			}
 		})

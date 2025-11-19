@@ -4,9 +4,13 @@
       "run.services.create",
       "run.services.get",
       "run.services.delete",
-      "run.services.update"
+      "run.services.update",
+      "run.operations.get"
     ],
     "attributes": {
+      "image_uri": [
+        "artifactregistry.repositories.downloadArtifacts"
+      ],
       "tags": []
     },
     "destroy": [
@@ -15,6 +19,8 @@
     "modify": [
       "run.services.update"
     ],
-    "plan": []
+    "plan": [
+      "run.services.get"
+    ]
   }
 ]

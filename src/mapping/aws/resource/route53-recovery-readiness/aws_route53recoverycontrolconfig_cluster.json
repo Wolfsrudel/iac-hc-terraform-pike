@@ -1,0 +1,29 @@
+[
+  {
+    "apply": [
+      "route53-recovery-control-config:CreateCluster",
+      "route53-recovery-control-config:DescribeCluster",
+      "route53-recovery-control-config:ListTagsForResource",
+      "route53-recovery-control-config:DeleteCluster"
+    ],
+    "attributes": {
+      "tags": [
+        "route53-recovery-control-config:TagResource",
+        "route53-recovery-control-config:UntagResource"
+      ]
+    },
+    "destroy": [
+      "route53-recovery-control-config:DescribeCluster",
+      "route53-recovery-control-config:DeleteCluster"
+    ],
+    "modify": [
+      "route53-recovery-control-config:DescribeCluster",
+      "route53-recovery-control-config:ListTagsForResource",
+      "route53-recovery-control-config:UpdateCluster"
+    ],
+    "plan": [
+      "route53-recovery-control-config:DescribeCluster",
+      "route53-recovery-control-config:ListTagsForResource"
+    ]
+  }
+]

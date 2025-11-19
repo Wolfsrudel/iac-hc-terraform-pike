@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "clouddeploy.customTargetTypes.getIamPolicy",
+      "clouddeploy.customTargetTypes.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "clouddeploy.customTargetTypes.getIamPolicy"
+    ]
+  }
+]

@@ -43,7 +43,6 @@
           "description": "The key-value string map. The valid character set is [a-zA-Z1-9+-=._:/]. The tag key can be up to 128 characters and must not start with aws:.",
           "maxLength": 128,
           "minLength": 1,
-          "pattern": "^(?!aws:.)[a-zA-Z1-9+=._:/-]*$",
           "type": "string"
         },
         "Value": {
@@ -117,6 +116,15 @@
       "pattern": "[a-z0-9]{4,7}",
       "type": "string"
     },
+    "DeletionProtectionCheck": {
+      "description": "On resource deletion this controls whether the Deletion Protection check should be applied, bypassed, or (the default) whether the behavior should be controlled by the account-level Deletion Protection setting. See https://docs.aws.amazon.com/appconfig/latest/userguide/deletion-protection.html",
+      "enum": [
+        "ACCOUNT_DEFAULT",
+        "APPLY",
+        "BYPASS"
+      ],
+      "type": "string"
+    },
     "Description": {
       "description": "A description of the environment.",
       "maxLength": 1024,
@@ -164,10 +172,18 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-appconfig.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "appconfig:TagResource",
+      "appconfig:UntagResource",
+      "appconfig:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
     "taggable": true
   },
-  "typeName": "AWS::AppConfig::Environment"
+  "typeName": "AWS::AppConfig::Environment",
+  "writeOnlyProperties": [
+    "/properties/DeletionProtectionCheck"
+  ]
 }

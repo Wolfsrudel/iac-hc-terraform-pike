@@ -1,0 +1,20 @@
+[
+  {
+    "apply": [
+      "workspaces-web:CreateNetworkSettings",
+      "iam:CreateServiceLinkedRole",
+      "workspaces-web:GetNetworkSettings",
+      "workspaces-web:DeleteNetworkSettings"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [
+      "workspaces-web:DeleteNetworkSettings"
+    ],
+    "modify": [],
+    "plan": [
+      "workspaces-web:GetNetworkSettings"
+    ]
+  }
+]

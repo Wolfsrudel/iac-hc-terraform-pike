@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "compute.instanceTemplates.getIamPolicy",
+      "compute.instanceTemplates.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "compute.instanceTemplates.getIamPolicy"
+    ]
+  }
+]

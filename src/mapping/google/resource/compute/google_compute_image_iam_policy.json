@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "compute.images.getIamPolicy",
+      "compute.images.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "compute.images.getIamPolicy"
+    ]
+  }
+]

@@ -3,7 +3,6 @@
   "conditionalCreateOnlyProperties": [
     "/properties/LaunchConfigurationName",
     "/properties/VPCZoneIdentifier",
-    "/properties/PlacementGroup",
     "/properties/LaunchTemplate",
     "/properties/MixedInstancesPolicy"
   ],
@@ -42,6 +41,44 @@
       },
       "type": "object"
     },
+    "AvailabilityZoneDistribution": {
+      "additionalProperties": false,
+      "description": "``AvailabilityZoneDistribution`` is a property of the [AWS::AutoScaling::AutoScalingGroup](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-autoscaling-autoscalinggroup.html) resource.",
+      "properties": {
+        "CapacityDistributionStrategy": {
+          "description": "If launches fail in an Availability Zone, the following strategies are available. The default is ``balanced-best-effort``. \n  +   ``balanced-only`` - If launches fail in an Availability Zone, Auto Scaling will continue to attempt to launch in the unhealthy zone to preserve a balanced distribution.\n  +   ``balanced-best-effort`` - If launches fail in an Availability Zone, Auto Scaling will attempt to launch in another healthy Availability Zone instead.",
+          "enum": [
+            "balanced-best-effort",
+            "balanced-only"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AvailabilityZoneImpairmentPolicy": {
+      "additionalProperties": false,
+      "description": "Describes an Availability Zone impairment policy.",
+      "properties": {
+        "ImpairedZoneHealthCheckBehavior": {
+          "description": "Specifies the health check behavior for the impaired Availability Zone in an active zonal shift. If you select ``Replace unhealthy``, instances that appear unhealthy will be replaced in all Availability Zones. If you select ``Ignore unhealthy``, instances will not be replaced in the Availability Zone with the active zonal shift. For more information, see [Auto Scaling group zonal shift](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html) in the *Amazon EC2 Auto Scaling User Guide*.",
+          "enum": [
+            "IgnoreUnhealthy",
+            "ReplaceUnhealthy"
+          ],
+          "type": "string"
+        },
+        "ZonalShiftEnabled": {
+          "description": "If ``true``, enable zonal shift for your Auto Scaling group.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ImpairedZoneHealthCheckBehavior",
+        "ZonalShiftEnabled"
+      ],
+      "type": "object"
+    },
     "BaselineEbsBandwidthMbpsRequest": {
       "additionalProperties": false,
       "description": "``BaselineEbsBandwidthMbpsRequest`` is a property of the ``InstanceRequirements`` property of the [AWS::AutoScaling::AutoScalingGroup LaunchTemplateOverrides](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-autoscaling-autoscalinggroup-launchtemplateoverrides.html) property type that describes the minimum and maximum baseline bandwidth performance for an instance type, in Mbps.",
@@ -53,6 +90,73 @@
         "Min": {
           "description": "The minimum value in Mbps.",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "BaselinePerformanceFactorsRequest": {
+      "additionalProperties": false,
+      "description": "",
+      "properties": {
+        "Cpu": {
+          "$ref": "#/definitions/CpuPerformanceFactorRequest",
+          "description": ""
+        }
+      },
+      "type": "object"
+    },
+    "CapacityReservationIds": {
+      "insertionOrder": true,
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "CapacityReservationResourceGroupArns": {
+      "insertionOrder": true,
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "CapacityReservationSpecification": {
+      "additionalProperties": false,
+      "description": "",
+      "properties": {
+        "CapacityReservationPreference": {
+          "type": "string"
+        },
+        "CapacityReservationTarget": {
+          "$ref": "#/definitions/CapacityReservationTarget"
+        }
+      },
+      "required": [
+        "CapacityReservationPreference"
+      ],
+      "type": "object"
+    },
+    "CapacityReservationTarget": {
+      "additionalProperties": false,
+      "description": "",
+      "properties": {
+        "CapacityReservationIds": {
+          "$ref": "#/definitions/CapacityReservationIds"
+        },
+        "CapacityReservationResourceGroupArns": {
+          "$ref": "#/definitions/CapacityReservationResourceGroupArns"
+        }
+      },
+      "type": "object"
+    },
+    "CpuPerformanceFactorRequest": {
+      "additionalProperties": false,
+      "description": "",
+      "properties": {
+        "References": {
+          "$ref": "#/definitions/PerformanceFactorReferenceSetRequest",
+          "description": ""
         }
       },
       "type": "object"
@@ -135,6 +239,10 @@
         "BaselineEbsBandwidthMbps": {
           "$ref": "#/definitions/BaselineEbsBandwidthMbpsRequest",
           "description": "The minimum and maximum baseline bandwidth performance for an instance type, in Mbps. For more information, see [Amazon EBS\u2013optimized instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html) in the *Amazon EC2 User Guide for Linux Instances*.\n Default: No minimum or maximum limits"
+        },
+        "BaselinePerformanceFactors": {
+          "$ref": "#/definitions/BaselinePerformanceFactorsRequest",
+          "description": ""
         },
         "BurstablePerformance": {
           "description": "Indicates whether burstable performance instance types are included, excluded, or required. For more information, see [Burstable performance instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html) in the *Amazon EC2 User Guide for Linux Instances*.\n Default: ``excluded``",
@@ -495,6 +603,25 @@
       ],
       "type": "object"
     },
+    "PerformanceFactorReferenceRequest": {
+      "additionalProperties": false,
+      "description": "",
+      "properties": {
+        "InstanceFamily": {
+          "description": "",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PerformanceFactorReferenceSetRequest": {
+      "insertionOrder": true,
+      "items": {
+        "$ref": "#/definitions/PerformanceFactorReferenceRequest"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
     "TagProperty": {
       "additionalProperties": false,
       "description": "A structure that specifies a tag for the ``Tags`` property of [AWS::AutoScaling::AutoScalingGroup](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-autoscaling-autoscalinggroup.html) resource.\n For more information, see [Tag Auto Scaling groups and instances](https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-tagging.html) in the *Amazon EC2 Auto Scaling User Guide*. You can find a sample template snippet in the [Examples](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-autoscaling-autoscalinggroup.html#aws-resource-autoscaling-autoscalinggroup--examples) section of the ``AWS::AutoScaling::AutoScalingGroup`` resource.\n CloudFormation adds the following tags to all Auto Scaling groups and associated instances: \n  +  aws:cloudformation:stack-name\n  +  aws:cloudformation:stack-id\n  +  aws:cloudformation:logical-id",
@@ -532,6 +659,25 @@
           "type": "number"
         }
       },
+      "type": "object"
+    },
+    "TrafficSourceIdentifier": {
+      "additionalProperties": false,
+      "description": "Identifying information for a traffic source.",
+      "properties": {
+        "Identifier": {
+          "description": "Identifies the traffic source.\n For Application Load Balancers, Gateway Load Balancers, Network Load Balancers, and VPC Lattice, this will be the Amazon Resource Name (ARN) for a target group in this account and Region. For Classic Load Balancers, this will be the name of the Classic Load Balancer in this account and Region.\n For example: \n  +  Application Load Balancer ARN: ``arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/1234567890123456`` \n  +  Classic Load Balancer name: ``my-classic-load-balancer`` \n  +  VPC Lattice ARN: ``arn:aws:vpc-lattice:us-west-2:123456789012:targetgroup/tg-1234567890123456`` \n  \n To get the ARN of a target group for a Application Load Balancer, Gateway Load Balancer, or Network Load Balancer, or the name of a Classic Load Balancer, use the Elastic Load Balancing [DescribeTargetGroups](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeTargetGroups.html) and [DescribeLoadBalancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html) API operations.\n To get the ARN of a target group for VPC Lattice, use the VPC Lattice [GetTargetGroup](https://docs.aws.amazon.com/vpc-lattice/latest/APIReference/API_GetTargetGroup.html) API operation.",
+          "type": "string"
+        },
+        "Type": {
+          "description": "Provides additional context for the value of ``Identifier``.\n The following lists the valid values:\n  +   ``elb`` if ``Identifier`` is the name of a Classic Load Balancer.\n  +   ``elbv2`` if ``Identifier`` is the ARN of an Application Load Balancer, Gateway Load Balancer, or Network Load Balancer target group.\n  +   ``vpc-lattice`` if ``Identifier`` is the ARN of a VPC Lattice target group.\n  \n Required if the identifier is the name of a Classic Load Balancer.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Identifier",
+        "Type"
+      ],
       "type": "object"
     },
     "VCpuCountRequest": {
@@ -573,7 +719,11 @@
         "managed-fleets:Get*",
         "managed-fleets:CreateAutoScalingGroup",
         "managed-fleets:UpdateAutoScalingGroup",
-        "ssm:Get*"
+        "ssm:Get*",
+        "vpc-lattice:DeregisterTargets",
+        "vpc-lattice:GetTargetGroup",
+        "vpc-lattice:ListTargets",
+        "vpc-lattice:RegisterTargets"
       ],
       "timeoutInMinutes": 360
     },
@@ -627,7 +777,11 @@
         "managed-fleets:RegisterAutoScalingGroup",
         "managed-fleets:DeregisterAutoScalingGroup",
         "managed-fleets:UpdateAutoScalingGroup",
-        "ssm:Get*"
+        "ssm:Get*",
+        "vpc-lattice:DeregisterTargets",
+        "vpc-lattice:GetTargetGroup",
+        "vpc-lattice:ListTargets",
+        "vpc-lattice:RegisterTargets"
       ],
       "timeoutInMinutes": 660
     }
@@ -639,6 +793,14 @@
     "AutoScalingGroupName": {
       "description": "The name of the Auto Scaling group. This name must be unique per Region per account.\n The name can contain any ASCII character 33 to 126 including most punctuation characters, digits, and upper and lowercased letters.\n  You cannot use a colon (:) in the name.",
       "type": "string"
+    },
+    "AvailabilityZoneDistribution": {
+      "$ref": "#/definitions/AvailabilityZoneDistribution",
+      "description": "The instance capacity distribution across Availability Zones."
+    },
+    "AvailabilityZoneImpairmentPolicy": {
+      "$ref": "#/definitions/AvailabilityZoneImpairmentPolicy",
+      "description": "The Availability Zone impairment policy."
     },
     "AvailabilityZones": {
       "description": "A list of Availability Zones where instances in the Auto Scaling group can be created. Used for launching into the default VPC subnet in each Availability Zone when not using the ``VPCZoneIdentifier`` property, or for attaching a network interface when an existing network interface ID is specified in a launch template.",
@@ -652,6 +814,10 @@
     "CapacityRebalance": {
       "description": "Indicates whether Capacity Rebalancing is enabled. Otherwise, Capacity Rebalancing is disabled. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption. After launching a new instance, it then terminates an old instance. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-capacity-rebalancing.html) in the in the *Amazon EC2 Auto Scaling User Guide*.",
       "type": "boolean"
+    },
+    "CapacityReservationSpecification": {
+      "$ref": "#/definitions/CapacityReservationSpecification",
+      "description": ""
     },
     "Context": {
       "description": "Reserved.",
@@ -679,7 +845,7 @@
       "type": "integer"
     },
     "HealthCheckType": {
-      "description": "A comma-separated value string of one or more health check types.\n The valid values are ``EC2``, ``ELB``, and ``VPC_LATTICE``. ``EC2`` is the default health check and cannot be disabled. For more information, see [Health checks for instances in an Auto Scaling group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html) in the *Amazon EC2 Auto Scaling User Guide*.\n Only specify ``EC2`` if you must clear a value that was previously set.",
+      "description": "A comma-separated value string of one or more health check types.\n The valid values are ``EC2``, ``EBS``, ``ELB``, and ``VPC_LATTICE``. ``EC2`` is the default health check and cannot be disabled. For more information, see [Health checks for instances in an Auto Scaling group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html) in the *Amazon EC2 Auto Scaling User Guide*.\n Only specify ``EC2`` if you must clear a value that was previously set.",
       "type": "string"
     },
     "InstanceId": {
@@ -768,6 +934,10 @@
       "description": "The Amazon Resource Name (ARN) of the service-linked role that the Auto Scaling group uses to call other AWS service on your behalf. By default, Amazon EC2 Auto Scaling uses a service-linked role named ``AWSServiceRoleForAutoScaling``, which it creates if it does not exist. For more information, see [Service-linked roles](https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-service-linked-role.html) in the *Amazon EC2 Auto Scaling User Guide*.",
       "type": "string"
     },
+    "SkipZonalShiftValidation": {
+      "description": "",
+      "type": "boolean"
+    },
     "Tags": {
       "description": "One or more tags. You can tag your Auto Scaling group and propagate the tags to the Amazon EC2 instances it launches. Tags are not propagated to Amazon EBS volumes. To add tags to Amazon EBS volumes, specify the tags in a launch template but use caution. If the launch template specifies an instance tag with a key that is also specified for the Auto Scaling group, Amazon EC2 Auto Scaling overrides the value of that instance tag with the value specified by the Auto Scaling group. For more information, see [Tag Auto Scaling groups and instances](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-tagging.html) in the *Amazon EC2 Auto Scaling User Guide*.",
       "insertionOrder": false,
@@ -793,6 +963,15 @@
       },
       "type": "array",
       "uniqueItems": false
+    },
+    "TrafficSources": {
+      "description": "The traffic sources associated with this Auto Scaling group.",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/TrafficSourceIdentifier"
+      },
+      "type": "array",
+      "uniqueItems": true
     },
     "VPCZoneIdentifier": {
       "description": "A list of subnet IDs for a virtual private cloud (VPC) where instances in the Auto Scaling group can be created.\n If this resource specifies public subnets and is also in a VPC that is defined in the same stack template, you must use the [DependsOn attribute](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-dependson.html) to declare a dependency on the [VPC-gateway attachment](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpc-gateway-attachment.html).\n  When you update ``VPCZoneIdentifier``, this retains the same Auto Scaling group and replaces old instances with new ones, according to the specified subnets. You can optionally specify how CloudFormation handles these updates by using an [UpdatePolicy attribute](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-updatepolicy.html).\n  Required to launch instances into a nondefault VPC. If you specify ``VPCZoneIdentifier`` with ``AvailabilityZones``, the subnets that you specify for this property must reside in those Availability Zones.",
@@ -820,6 +999,7 @@
   },
   "typeName": "AWS::AutoScaling::AutoScalingGroup",
   "writeOnlyProperties": [
+    "/properties/SkipZonalShiftValidation",
     "/properties/InstanceId"
   ]
 }

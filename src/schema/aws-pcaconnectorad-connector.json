@@ -15,9 +15,20 @@
       },
       "type": "object"
     },
+    "Unit": {
+      "additionalProperties": false,
+      "type": "object"
+    },
     "VpcInformation": {
       "additionalProperties": false,
       "properties": {
+        "IpAddressType": {
+          "enum": [
+            "IPV4",
+            "DUALSTACK"
+          ],
+          "type": "string"
+        },
         "SecurityGroupIds": {
           "items": {
             "maxLength": 20,
@@ -37,7 +48,7 @@
       "type": "object"
     }
   },
-  "description": "Definition of AWS::PCAConnectorAD::Connector Resource Type",
+  "description": "Represents a Connector that connects AWS PrivateCA and your directory",
   "handlers": {
     "create": {
       "permissions": [
@@ -50,15 +61,17 @@
         "ec2:CreateVpcEndpoint",
         "ec2:DescribeVpcEndpoints",
         "pca-connector-ad:CreateConnector",
-        "pca-connector-ad:GetConnector"
+        "pca-connector-ad:GetConnector",
+        "pca-connector-ad:TagResource"
       ]
     },
     "delete": {
       "permissions": [
+        "ec2:DeleteVpcEndpoints",
+        "ec2:DescribeVpcEndpoints",
         "pca-connector-ad:GetConnector",
         "pca-connector-ad:DeleteConnector",
-        "ec2:DeleteVpcEndpoints",
-        "ec2:DescribeVpcEndpoints"
+        "pca-connector-ad:UntagResource"
       ]
     },
     "list": {
@@ -87,13 +100,13 @@
     "CertificateAuthorityArn": {
       "maxLength": 200,
       "minLength": 5,
-      "pattern": "^arn:[\\w-]+:acm-pca:[\\w-]+:[0-9]+:certificate-authority(\\/[\\w-]+)$",
+      "pattern": "^arn:[\\w-]+:acm-pca:[\\w-]+:[0-9]+:certificate-authority\\/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
       "type": "string"
     },
     "ConnectorArn": {
       "maxLength": 200,
       "minLength": 5,
-      "pattern": "^arn:[\\w-]+:pca-connector-ad:[\\w-]+:[0-9]+:connector(\\/[\\w-]+)$",
+      "pattern": "^arn:[\\w-]+:pca-connector-ad:[\\w-]+:[0-9]+:connector\\/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
       "type": "string"
     },
     "DirectoryId": {
@@ -117,16 +130,15 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "pca-connector-ad:ListTagsForResource",
+      "pca-connector-ad:TagResource",
+      "pca-connector-ad:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
     "taggable": true
   },
-  "typeName": "AWS::PCAConnectorAD::Connector",
-  "writeOnlyProperties": [
-    "/properties/CertificateAuthorityArn",
-    "/properties/DirectoryId",
-    "/properties/Tags",
-    "/properties/VpcInformation"
-  ]
+  "typeName": "AWS::PCAConnectorAD::Connector"
 }

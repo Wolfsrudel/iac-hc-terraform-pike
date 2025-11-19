@@ -28,6 +28,15 @@
       },
       "type": "object"
     },
+    "AdvancedSecurityAdditionalFlows": {
+      "additionalProperties": false,
+      "properties": {
+        "CustomAuthMode": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CustomEmailSender": {
       "additionalProperties": false,
       "properties": {
@@ -166,6 +175,9 @@
         "MinimumLength": {
           "type": "integer"
         },
+        "PasswordHistorySize": {
+          "type": "integer"
+        },
         "RequireLowercase": {
           "type": "boolean"
         },
@@ -189,6 +201,9 @@
       "properties": {
         "PasswordPolicy": {
           "$ref": "#/definitions/PasswordPolicy"
+        },
+        "SignInPolicy": {
+          "$ref": "#/definitions/SignInPolicy"
         }
       },
       "type": "object"
@@ -244,6 +259,18 @@
       },
       "type": "object"
     },
+    "SignInPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "AllowedFirstAuthFactors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "SmsConfiguration": {
       "additionalProperties": false,
       "properties": {
@@ -289,6 +316,9 @@
     "UserPoolAddOns": {
       "additionalProperties": false,
       "properties": {
+        "AdvancedSecurityAdditionalFlows": {
+          "$ref": "#/definitions/AdvancedSecurityAdditionalFlows"
+        },
         "AdvancedSecurityMode": {
           "type": "string"
         }
@@ -329,7 +359,7 @@
       "type": "object"
     }
   },
-  "description": "Resource Type definition for AWS::Cognito::UserPool",
+  "description": "Definition of AWS::Cognito::UserPool Resource Type",
   "handlers": {
     "create": {
       "permissions": [
@@ -338,7 +368,8 @@
         "cognito-idp:SetUserPoolMfaConfig",
         "cognito-idp:DescribeUserPool",
         "kms:CreateGrant",
-        "iam:CreateServiceLinkedRole"
+        "iam:CreateServiceLinkedRole",
+        "cognito-idp:TagResource"
       ],
       "timeoutInMinutes": 2
     },
@@ -355,7 +386,8 @@
     },
     "read": {
       "permissions": [
-        "cognito-idp:DescribeUserPool"
+        "cognito-idp:DescribeUserPool",
+        "cognito-idp:GetUserPoolMfaConfig"
       ]
     },
     "update": {
@@ -367,6 +399,7 @@
         "cognito-idp:SetUserPoolMfaConfig",
         "cognito-idp:AddCustomAttributes",
         "cognito-idp:DescribeUserPool",
+        "cognito-idp:GetUserPoolMfaConfig",
         "iam:PassRole"
       ],
       "timeoutInMinutes": 2
@@ -402,6 +435,16 @@
     },
     "DeviceConfiguration": {
       "$ref": "#/definitions/DeviceConfiguration"
+    },
+    "EmailAuthenticationMessage": {
+      "maxLength": 20000,
+      "minLength": 6,
+      "type": "string"
+    },
+    "EmailAuthenticationSubject": {
+      "maxLength": 140,
+      "minLength": 1,
+      "type": "string"
     },
     "EmailConfiguration": {
       "$ref": "#/definitions/EmailConfiguration"
@@ -479,6 +522,14 @@
       },
       "type": "object"
     },
+    "UserPoolTier": {
+      "enum": [
+        "LITE",
+        "ESSENTIALS",
+        "PLUS"
+      ],
+      "type": "string"
+    },
     "UsernameAttributes": {
       "items": {
         "type": "string"
@@ -490,6 +541,16 @@
     },
     "VerificationMessageTemplate": {
       "$ref": "#/definitions/VerificationMessageTemplate"
+    },
+    "WebAuthnRelyingPartyID": {
+      "maxLength": 63,
+      "minLength": 1,
+      "type": "string"
+    },
+    "WebAuthnUserVerification": {
+      "maxLength": 9,
+      "minLength": 1,
+      "type": "string"
     }
   },
   "propertyTransform": {
@@ -504,6 +565,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "cognito-idp:ListTagsForResource",
+      "cognito-idp:UntagResource",
+      "cognito-idp:TagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/UserPoolTags",
     "tagUpdatable": true,

@@ -1,0 +1,13 @@
+[
+  {
+    "apply": [
+      "odb:ListCloudAutonomousVmClusters"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

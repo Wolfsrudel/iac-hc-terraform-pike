@@ -25,31 +25,36 @@
       "permissions": [
         "ec2:DescribeTransitGatewayMulticastDomains",
         "ec2:CreateTransitGatewayMulticastDomain",
-        "ec2:CreateTags"
+        "ec2:CreateTags",
+        "ec2:DescribeTags"
       ]
     },
     "delete": {
       "permissions": [
         "ec2:DescribeTransitGatewayMulticastDomains",
         "ec2:DeleteTransitGatewayMulticastDomain",
-        "ec2:DeleteTags"
+        "ec2:DeleteTags",
+        "ec2:DescribeTags"
       ]
     },
     "list": {
       "permissions": [
-        "ec2:DescribeTransitGatewayMulticastDomains"
+        "ec2:DescribeTransitGatewayMulticastDomains",
+        "ec2:DescribeTags"
       ]
     },
     "read": {
       "permissions": [
-        "ec2:DescribeTransitGatewayMulticastDomains"
+        "ec2:DescribeTransitGatewayMulticastDomains",
+        "ec2:DescribeTags"
       ]
     },
     "update": {
       "permissions": [
         "ec2:DescribeTransitGatewayMulticastDomains",
         "ec2:DeleteTags",
-        "ec2:CreateTags"
+        "ec2:CreateTags",
+        "ec2:DescribeTags"
       ]
     }
   },
@@ -115,5 +120,16 @@
     "TransitGatewayId"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-transitgateway/aws-ec2-transitgatewaymulticastdomain",
+  "tagging": {
+    "cloudFormationSystemTags": false,
+    "permissions": [
+      "ec2:CreateTags",
+      "ec2:DeleteTags"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::EC2::TransitGatewayMulticastDomain"
 }

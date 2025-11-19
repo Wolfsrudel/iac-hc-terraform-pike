@@ -1470,3 +1470,237 @@ var dataAwsTimestreamwriteTable []byte
 
 //go:embed mapping/aws/data/transfer/aws_transfer_connector.json
 var dataAwsTransferConnector []byte
+
+//go:embed mapping/aws/data/ecr/aws_ecr_repository_creation_template.json
+var dataAwsEcrRepositoryCreationTemplate []byte
+
+//go:embed mapping/aws/data/rds/aws_rds_cluster_parameter_group.json
+var dataAwsRdsClusterParameterGroup []byte
+
+//go:embed mapping/aws/data/secretsmanager/aws_secretsmanager_secret_versions.json
+var dataAwsSecretsmanagerSecretVersions []byte
+
+//go:embed mapping/aws/data/bedrock/aws_bedrockagent_agent_versions.json
+var dataAwsBedrockAgentVersions []byte
+
+//go:embed mapping/aws/data/glue/aws_glue_registry.json
+var dataAwsGlueRegistry []byte
+
+//go:embed mapping/aws/data/organizations/aws_organizations_organizational_unit_descendant_organizational_units.json
+var dataAwsOrganizationsOrganizationalUnitDescendantOrganizationalUnits []byte
+
+//go:embed mapping/aws/data/quicksight/aws_quicksight_analysis.json
+var dataAwsQuicksightAnalysis []byte
+
+//go:embed mapping/aws/data/route53/aws_route53_zones.json
+var dataAwsRoute53Zones []byte
+
+//go:embed mapping/aws/data/shield/aws_shield_protection.json
+var dataAwsShieldProtection []byte
+
+//go:embed mapping/aws/data/sso/aws_ssoadmin_permission_sets.json
+var dataAwsSsoadminPermissionSets []byte
+
+//go:embed mapping/aws/data/codebuild/aws_codebuild_fleet.json
+var dataAwsCodebuildFleet []byte
+
+//go:embed mapping/aws/data/elasticache/aws_elasticache_reserved_cache_node_offering.json
+var dataAwsElasticacheReservedCacheNodeOffering []byte
+
+//go:embed mapping/aws/data/synthetics/aws_synthetics_runtime_version.json
+var dataAwsSyntheticsRuntimeVersion []byte
+
+//go:embed mapping/aws/data/synthetics/aws_synthetics_runtime_versions.json
+var dataAwsSytheticsRuntimeVersions []byte
+
+//go:embed mapping/aws/data/bedrock/aws_bedrock_inference_profile.json
+var dataAwsBedrockInferenceProfile []byte
+
+//go:embed mapping/aws/data/bedrock/aws_bedrock_inference_profiles.json
+var dataAwsBedrockInferenceProfiles []byte
+
+//go:embed mapping/aws/data/elasticache/aws_elasticache_serverless_cache.json
+var dataAwsElasticacheServerlessCache []byte
+
+//go:embed mapping/aws/data/aps/aws_prometheus_default_scraper_configuration.json
+var dataAwsPrometheusDefaultScarperConfiguration []byte
+
+//go:embed mapping/aws/data/route53profiles/aws_route53profiles_profiles.json
+var dataAwsRoute53profilesProfiles []byte
+
+//go:embed mapping/aws/data/ssm/aws_ssm_patch_baselines.json
+var dataAwsSsmPatchBaselines []byte
+
+//go:embed mapping/aws/data/elasticloadbalancing/aws_lb_listener_rule.json
+var dataAwsLbListenerRule []byte
+
+//go:embed mapping/aws/data/ec2/aws_spot_datafeed_subscription.json
+var dataAwsSpotDatafeedSubscription []byte
+
+//go:embed mapping/aws/data/servicecatalog/aws_servicecatalogappregistry_attribute_group.json
+var dataServicecatalogappregistryAttributeGroup []byte
+
+//go:embed mapping/aws/data/servicecatalog/aws_servicecatalogappregistry_attribute_group_associations.json
+var dataServicecatalogappregistryAttributeGroupAssociations []byte
+
+//go:embed mapping/aws/data/route53/aws_route53_records.json
+var dataAwsRoute53Records []byte
+
+//go:embed mapping/aws/data/cloudwatch/aws_cloudwatch_event_buses.json
+var dataAwsCloudwatchEventBuses []byte
+
+//go:embed  mapping/aws/data/ecs/aws_ecs_clusters.json
+var dataAwsEcsClusters []byte
+
+//go:embed  mapping/aws/data/ec2/aws_vpc_ipam.json
+var dataAwsVpcIpam []byte
+
+//go:embed  mapping/aws/data/cloudwatch/aws_cloudwatch_contributor_managed_insight_rules.json
+var dataAwsCloudwatchContributorManagedInsightRules []byte
+
+//go:embed  mapping/aws/data/datazone/aws_datazone_domain.json
+var dataAwsDatazoneDomain []byte
+
+//go:embed  mapping/aws/data/eks/aws_eks_cluster_versions.json
+var dataAwsEksClusterVersions []byte
+
+//go:embed  mapping/aws/data/identitystore/aws_identitystore_group_memberships.json
+var dataAwsIdentitystoreGroupMembership []byte
+
+//go:embed  mapping/aws/data/identitystore/aws_identitystore_user.json
+var dataAwsIdentitystoreGroupUsers []byte
+
+//go:embed  mapping/aws/data/ec2/aws_vpc_endpoint_associations.json
+var dataAwsVpcEndpointAssociations []byte
+
+//go:embed  mapping/aws/data/fis/aws_fis_experiment_templates.json
+var dataAwsFisExperimentTemplates []byte
+
+//go:embed  mapping/aws/data/kms/aws_kms_public_key.json
+var dataAwsKmsPublicKey []byte
+
+//go:embed  mapping/aws/data/lambda/aws_lambda_function_url.json
+var dataAwsLambdaFunctionUrl []byte
+
+//go:embed  mapping/aws/data/lambda/aws_lambda_functions.json
+var dataAwsLambdaFunctions []byte
+
+//go:embed  mapping/aws/data/lambda/aws_lambda_layer_version.json
+var dataAwsLambdaLayerVersion []byte
+
+//go:embed  mapping/aws/data/ec2/aws_network_interface.json
+var dataAwsNetworkInterface []byte
+
+//go:embed  mapping/aws/data/waf/aws_waf_subscribed_rule_group.json
+var dataAwsWafSubscribedRuleGroup []byte
+
+//go:embed  mapping/aws/data/wafregional/aws_wafregional_subscribed_rule_group.json
+var dataAwsWafRegionalSubscribedRuleGroup []byte
+
+//go:embed  mapping/aws/data/elasticloadbalancing/aws_elb.json
+var dataAwsElb []byte
+
+//go:embed  mapping/aws/data/account/aws_account_primary_contact.json
+var dataAwsAccountPrimaryContact []byte
+
+//go:embed  mapping/aws/data/dynamodb/aws_dynamodb_tables.json
+var dataAwsDynamodbTables []byte
+
+//go:embed  mapping/aws/data/backend/s3.json
+var dataBackend []byte
+
+//go:embed  mapping/aws/data/ecr/aws_ecr_images.json
+var dataAwsEcrImages []byte
+
+//go:embed  mapping/aws/data/s3/aws_s3_access_point.json
+var dataAwsS3AccessPoint []byte
+
+//go:embed  mapping/aws/data/billing/aws_billing_views.json
+var dataAwsBillingViews []byte
+
+//go:embed  mapping/aws/data/mediaconvert/aws_media_convert_queue.json
+var dataAwsMediaConvertQueue []byte
+
+//go:embed  mapping/aws/data/memorydb/aws_memorydb_acl.json
+var dataAwsMemorydbAcl []byte
+
+//go:embed  mapping/aws/data/memorydb/aws_memorydb_cluster.json
+var dataAwsMemorydbCluster []byte
+
+//go:embed  mapping/aws/data/memorydb/aws_memorydb_parameter_group.json
+var dataAwsMemorydbParameterGroup []byte
+
+//go:embed  mapping/aws/data/memorydb/aws_memorydb_snapshot.json
+var dataAwsMemorydbSnapshot []byte
+
+//go:embed  mapping/aws/data/memorydb/aws_memorydb_subnet_group.json
+var dataAwsMemorydbSubnetGroup []byte
+
+//go:embed  mapping/aws/data/memorydb/aws_memorydb_user.json
+var dataAwsMemorydbUser []byte
+
+//go:embed  mapping/aws/data/securityhub/aws_securityhub_standards_control_associations.json
+var dataAwsSecurityhubStandardsControlAssociations []byte
+
+//go:embed  mapping/aws/data/workspaces/aws_workspaces_workspace.json
+var dataAwsWorkspacesWorkspace []byte
+
+//go:embed  mapping/aws/data/appconfig/aws_appconfig_application.json
+var dataAwsAppconfigApplication []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_cloud_autonomous_vm_cluster.json
+var dataAwsOdbCloudAutonomousVmCluster []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_cloud_autonomous_vm_clusters.json
+var dataAwsOdbCloudAutonomousVmClusters []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_cloud_exadata_infrastructure.json
+var dataAwsOdbCloudExadataInfrastructure []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_cloud_exadata_infrastructures.json
+var dataAwsOdbCloudExadataInfrastructures []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_cloud_vm_cluster.json
+var dataAwsOdbCloudVmCluster []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_cloud_vm_clusters.json
+var dataAwsOdbCloudVmClusters []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_db_node.json
+var dataAwsOdbDbNode []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_db_nodes.json
+var dataAwsOdbDbNodes []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_db_server.json
+var dataAwsOdbServer []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_db_servers.json
+var dataAwsOdbServers []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_db_system_shapes.json
+var dataAwsOdbDbSystemShapes []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_gi_versions.json
+var dataAwsOdbGiVersions []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_network.json
+var dataAwsOdbNetwork []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_network_peering_connection.json
+var dataAwsOdbNetworkPeeringConnection []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_network_peering_connections.json
+var dataAwsOdbNetworkPeeringConnections []byte
+
+//go:embed  mapping/aws/data/odb/aws_odb_networks.json
+var dataAwsOdbNetworks []byte
+
+//go:embed  mapping/aws/data/ecr-public/aws_ecrpublic_images.json
+var dataAwsEcrPublicImages []byte
+
+//go:embed  mapping/aws/data/rds/aws_rds_global_cluster.json
+var dataAwsRdsGlobalCluster []byte
+
+//go:embed  mapping/aws/data/ec2/aws_vpn_connection.json
+var dataAwsVpnConnection []byte

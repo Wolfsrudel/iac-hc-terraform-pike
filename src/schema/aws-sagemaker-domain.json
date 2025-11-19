@@ -9,6 +9,15 @@
     "/properties/Tags"
   ],
   "definitions": {
+    "AppLifecycleManagement": {
+      "additionalProperties": false,
+      "properties": {
+        "IdleSettings": {
+          "$ref": "#/definitions/IdleSettings"
+        }
+      },
+      "type": "object"
+    },
     "AppType": {
       "enum": [
         "JupyterServer",
@@ -25,6 +34,9 @@
       "additionalProperties": false,
       "description": "The CodeEditor app settings.",
       "properties": {
+        "AppLifecycleManagement": {
+          "$ref": "#/definitions/AppLifecycleManagement"
+        },
         "CustomImages": {
           "description": "A list of custom images for use for CodeEditor apps.",
           "items": {
@@ -72,6 +84,9 @@
       "properties": {
         "EFSFileSystemConfig": {
           "$ref": "#/definitions/EFSFileSystemConfig"
+        },
+        "FSxLustreFileSystemConfig": {
+          "$ref": "#/definitions/FSxLustreFileSystemConfig"
         }
       },
       "type": "object"
@@ -248,6 +263,14 @@
         "DockerSettings": {
           "$ref": "#/definitions/DockerSettings"
         },
+        "ExecutionRoleIdentityConfig": {
+          "description": "The configuration for attaching a SageMaker user profile name to the execution role as a sts:SourceIdentity key.",
+          "enum": [
+            "USER_PROFILE_NAME",
+            "DISABLED"
+          ],
+          "type": "string"
+        },
         "RStudioServerProDomainSettings": {
           "$ref": "#/definitions/RStudioServerProDomainSettings"
         },
@@ -288,10 +311,58 @@
       ],
       "type": "object"
     },
+    "FSxLustreFileSystemConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "FileSystemId": {
+          "maxLength": 21,
+          "minLength": 11,
+          "pattern": "^(fs-[0-9a-f]{8,})$",
+          "type": "string"
+        },
+        "FileSystemPath": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^\\/\\S*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "FileSystemId"
+      ],
+      "type": "object"
+    },
+    "IdleSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "IdleTimeoutInMinutes": {
+          "$ref": "#/definitions/IdleTimeoutInMinutes"
+        },
+        "LifecycleManagement": {
+          "$ref": "#/definitions/LifecycleManagement"
+        },
+        "MaxIdleTimeoutInMinutes": {
+          "$ref": "#/definitions/MaxIdleTimeoutInMinutes"
+        },
+        "MinIdleTimeoutInMinutes": {
+          "$ref": "#/definitions/MinIdleTimeoutInMinutes"
+        }
+      },
+      "type": "object"
+    },
+    "IdleTimeoutInMinutes": {
+      "description": "The idle timeout value set in minutes",
+      "maximum": 525600,
+      "minimum": 60,
+      "type": "integer"
+    },
     "JupyterLabAppSettings": {
       "additionalProperties": false,
       "description": "The JupyterLab app settings.",
       "properties": {
+        "AppLifecycleManagement": {
+          "$ref": "#/definitions/AppLifecycleManagement"
+        },
         "CodeRepositories": {
           "description": "A list of CodeRepositories available for use with JupyterLab apps.",
           "items": {
@@ -381,12 +452,32 @@
       },
       "type": "object"
     },
+    "LifecycleManagement": {
+      "description": "A flag to enable/disable AppLifecycleManagement settings",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
+    },
+    "MaxIdleTimeoutInMinutes": {
+      "description": "The maximum idle timeout value set in minutes",
+      "maximum": 525600,
+      "minimum": 60,
+      "type": "integer"
+    },
+    "MinIdleTimeoutInMinutes": {
+      "description": "The minimum idle timeout value set in minutes",
+      "maximum": 525600,
+      "minimum": 60,
+      "type": "integer"
+    },
     "MlTools": {
       "enum": [
         "DataWrangler",
         "FeatureStore",
         "EmrClusters",
-        "AutoML",
+        "AutoMl",
         "Experiments",
         "Training",
         "ModelEvaluation",
@@ -395,7 +486,14 @@
         "JumpStart",
         "InferenceRecommender",
         "Endpoints",
-        "Projects"
+        "Projects",
+        "InferenceOptimization",
+        "HyperPodClusters",
+        "Comet",
+        "DeepchecksLLMEvaluation",
+        "Fiddler",
+        "LakeraGuard",
+        "PerformanceEvaluation"
       ],
       "type": "string"
     },
@@ -879,6 +977,14 @@
       "minItems": 1,
       "type": "array",
       "uniqueItems": false
+    },
+    "TagPropagation": {
+      "description": "Indicates whether the tags added to Domain, User Profile and Space entity is propagated to all SageMaker resources.",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
     },
     "Tags": {
       "description": "A list of tags to apply to the user profile.",

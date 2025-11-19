@@ -5,6 +5,14 @@
     "/properties/FirewallName"
   ],
   "definitions": {
+    "EnabledAnalysisType": {
+      "description": "An analysis type.",
+      "enum": [
+        "TLS_SNI",
+        "HTTP_HOST"
+      ],
+      "type": "string"
+    },
     "EndpointId": {
       "description": "An endpoint Id.",
       "type": "string"
@@ -107,7 +115,8 @@
         "network-firewall:AssociateFirewallPolicy",
         "network-firewall:TagResource",
         "network-firewall:UntagResource",
-        "network-firewall:DescribeFirewall"
+        "network-firewall:DescribeFirewall",
+        "network-firewall:UpdateFirewallAnalysisSettings"
       ]
     }
   },
@@ -122,6 +131,14 @@
       "maxLength": 512,
       "pattern": "^.*$",
       "type": "string"
+    },
+    "EnabledAnalysisTypes": {
+      "description": "The types of analysis to enable for the firewall. Can be TLS_SNI, HTTP_HOST, or both.",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/EnabledAnalysisType"
+      },
+      "type": "array"
     },
     "EndpointIds": {
       "insertionOrder": false,
@@ -191,6 +208,15 @@
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-networkfirewall.git",
   "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "network-firewall:TagResource",
+      "network-firewall:UntagResource",
+      "network-firewall:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
     "taggable": true
   },
   "typeName": "AWS::NetworkFirewall::Firewall"

@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "dataform.repositories.getIamPolicy",
+      "dataform.repositories.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "dataform.repositories.getIamPolicy"
+    ]
+  }
+]

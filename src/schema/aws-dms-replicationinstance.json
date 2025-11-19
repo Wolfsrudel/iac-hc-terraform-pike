@@ -3,6 +3,7 @@
   "createOnlyProperties": [
     "/properties/KmsKeyId",
     "/properties/ResourceIdentifier",
+    "/properties/DnsNameServers",
     "/properties/ReplicationSubnetGroupIdentifier",
     "/properties/PubliclyAccessible"
   ],
@@ -41,6 +42,9 @@
     "AvailabilityZone": {
       "type": "string"
     },
+    "DnsNameServers": {
+      "type": "string"
+    },
     "EngineVersion": {
       "type": "string"
     },
@@ -52,6 +56,9 @@
     },
     "MultiAZ": {
       "type": "boolean"
+    },
+    "NetworkType": {
+      "type": "string"
     },
     "PreferredMaintenanceWindow": {
       "type": "string"

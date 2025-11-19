@@ -7,7 +7,7 @@ import (
 	"sort"
 	"time"
 
-	pike "github.com/jameswoolfenden/pike/src" //nolint:goimports
+	pike "github.com/jameswoolfenden/pike/src"
 	"github.com/jameswoolfenden/pike/src/parse"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -31,12 +31,16 @@ func main() {
 		region          string
 		workflow        string
 		name            string
+		provider        string
+		outfile         string
+		policyName      string
 	)
 
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	app := &cli.App{
 		EnableBashCompletion: true,
 		Flags:                []cli.Flag{},
+		UsageText:            "Pike is a CLI for investigating IAM permissions",
 		Commands: []*cli.Command{
 			{
 				Name:    "make",
@@ -53,11 +57,15 @@ func main() {
 				},
 				Action: func(*cli.Context) error {
 					arn, err := pike.Make(directory)
-					if arn != nil {
-						log.Print(*arn)
+					if err != nil {
+						return fmt.Errorf("make failed: %w", err)
 					}
 
-					return fmt.Errorf("make failed: %w", err)
+					if arn != nil {
+						fmt.Print(*arn)
+					}
+
+					return nil
 				},
 			},
 			{
@@ -159,13 +167,31 @@ func main() {
 						Usage:       "Add resource constraints to policy (AWS only)",
 						Destination: &enableResources,
 					},
+					&cli.StringFlag{
+						Name:        "provider",
+						Aliases:     []string{"p"},
+						Usage:       "Filter results for just this provider (e.g. aws, gcp, azure)",
+						Destination: &provider,
+					},
+					&cli.StringFlag{
+						Name: "outfile",
+						//Aliases:     []string{""},
+						Usage:       "filepath you want to write to the policy to",
+						Destination: &outfile,
+					},
+					&cli.StringFlag{
+						Name: "policyName",
+						//Aliases:     []string{""},
+						Usage:       "the name of the policy you want to write",
+						Destination: &policyName,
+					},
 				},
 				Action: func(*cli.Context) error {
 					if file == "" {
-						return pike.Scan(directory, output, nil, init, write, enableResources)
+						return pike.Scan(directory, output, nil, init, write, enableResources, provider, outfile, policyName)
 					}
 
-					return pike.Scan(directory, output, &file, init, write, enableResources)
+					return pike.Scan(directory, output, &file, init, write, enableResources, provider, outfile, policyName)
 				},
 			},
 			{
@@ -183,8 +209,8 @@ func main() {
 					&cli.StringFlag{
 						Name:        "arn",
 						Aliases:     []string{"a"},
-						Usage:       "Policy identifier e.g. arn",
-						Value:       "arn:aws:iam::680235478471:policy/basic",
+						Usage:       "Policy identifier e.g. arn, gcp role path",
+						Required:    true,
 						Destination: &arn,
 						EnvVars:     []string{"ARN"},
 					},
@@ -197,7 +223,15 @@ func main() {
 				},
 				Action: func(*cli.Context) error {
 					theSame, err := pike.Compare(directory, arn, init)
-					log.Print("The same: ", theSame)
+					if err != nil {
+						log.Fatal().Msg(err.Error())
+						os.Exit(1)
+					}
+
+					if !theSame {
+						os.Exit(1)
+					}
+
 					return err
 				},
 			},
@@ -226,15 +260,20 @@ func main() {
 						return err
 					}
 					if Difference.Under != nil {
+
 						fmt.Println("The following are under-permissive: ")
+
 						for _, v := range Difference.Under {
 							fmt.Println(v)
 						}
+
 						return errors.New("under-permissive")
 					}
 
 					if Difference.Over != nil {
+
 						fmt.Println("The following are over-permissive: ")
+
 						for _, v := range Difference.Over {
 							fmt.Println(v)
 						}

@@ -1,7 +1,6 @@
 package pike
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,11 +11,33 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+const (
+	providerAWS    = "aws"
+	providerAzure  = "azurerm"
+	providerGoogle = "google"
+	providerGCP    = "gcp"
+)
+
+type fileStringEmptyError struct{}
+
+func (e *fileStringEmptyError) Error() string {
+	return "no file provided"
+}
+
 // GetResources retrieves all the resources in a tf file.
 func GetResources(file string, dirName string) ([]ResourceV2, error) {
 	var Resources []ResourceV2
 
+	if file == "" {
+		return Resources, &fileStringEmptyError{}
+	}
+
 	temp, err := GetResourceBlocks(file)
+	if err != nil {
+		return Resources, err
+	}
+
+	moduleJson, err := GetModuleJson(filepath.Join(dirName, "/", ".terraform", "modules"))
 	if err != nil {
 		return Resources, err
 	}
@@ -26,22 +47,22 @@ func GetResources(file string, dirName string) ([]ResourceV2, error) {
 		resource.TypeName = block.Type
 
 		switch block.Type {
-		case "terraform":
+		case terraform:
 			{
 				Resources, _ = DetectBackend(resource, block, Resources)
 
 				continue
 			}
-		case "module":
+		case module:
 			{
-				LocalResources, err := GetLocalModules(block, dirName)
+				LocalResources, err := GetLocalModules(block, dirName, moduleJson)
 				if err == nil {
 					Resources = append(LocalResources, Resources...)
 				} else {
 					log.Info().Msg(err.Error())
 				}
 			}
-		case "output", "variable", "locals", "provider":
+		case "output", "variable", "locals", "provider", "import":
 			{
 				continue
 			}
@@ -67,7 +88,7 @@ func GetResources(file string, dirName string) ([]ResourceV2, error) {
 		} else {
 			resource.Provider = "unknown"
 
-			log.Print("parsing error for ", block)
+			log.Info().Msgf("parsing error for %s", block.Type)
 		}
 
 		Resources = append(Resources, resource)
@@ -84,23 +105,37 @@ func DetectBackend(resource ResourceV2, block *hclsyntax.Block, resources []Reso
 				if terraform.Type == "backend" {
 					if terraform.Labels != nil && terraform.Labels[0] == "s3" {
 						resource.Name = "backend"
-						resource.Provider = "aws"
+						resource.Provider = providerAWS
 						resource.Attributes = []string{"s3"}
 						resources = append(resources, resource)
 
 						return resources, nil
 					}
+
+					if terraform.Labels != nil && terraform.Labels[0] == "gcs" {
+						resource.Name = "backend"
+						resource.Provider = providerGCP
+						resource.Attributes = []string{"gcs"}
+						resources = append(resources, resource)
+
+						return resources, nil
+					}
+
 				}
 			}
 		}
 	}
 
-	return nil, errors.New("no Backend found")
+	return nil, &backendExistsError{}
 }
 
 // GetResourceBlocks breaks down a file into resources.
 func GetResourceBlocks(file string) (*hclsyntax.Body, error) {
-	temp, _ := filepath.Abs(file)
+	temp, err := filepath.Abs(file)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get absolute path: %w", err)
+	}
+
 	src, err := os.ReadFile(temp)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read file: %w", err)
@@ -117,19 +152,22 @@ func GetResourceBlocks(file string) (*hclsyntax.Body, error) {
 }
 
 // GetLocalModules return resource from a path.
-func GetLocalModules(block *hclsyntax.Block, dirName string) ([]ResourceV2, error) {
+func GetLocalModules(block *hclsyntax.Block, dirName string, listModulesJson ModuleJson) ([]ResourceV2, error) {
 	var Resources []ResourceV2
 
 	modulePath := GetModulePath(block)
 
 	// not local
 	if strings.Contains(modulePath, "git::") {
-		return nil, fmt.Errorf("git reference in module source path unsupported")
+		return nil, &gitReferenceError{modulePath}
 	}
 
+	// Module is coming from HCP Terraform Cloud
+	if strings.HasPrefix(modulePath, "app.terraform.io") {
+		modulePath = ReturnLocalAddrFromSource(modulePath, listModulesJson)
+	}
 	// have the path to the module
-	modulePath = filepath.Join(dirName, "/", modulePath)
-
+	modulePath = filepath.Join(dirName, modulePath)
 	// now process these extras
 	ExtraFiles, err := GetTF(modulePath)
 	if err != nil {
@@ -146,7 +184,7 @@ func GetLocalModules(block *hclsyntax.Block, dirName string) ([]ResourceV2, erro
 	return Resources, nil
 }
 
-// GetModulePath extracts the source location from a module
+// GetModulePath extracts the source location from a module.
 func GetModulePath(block *hclsyntax.Block) string {
 	var modulePath string
 
@@ -203,14 +241,14 @@ func GetBlockAttributes(attributes []string, block *hclsyntax.Block) []string {
 	return attributes
 }
 
-// GetPermission determines the IAM permissions required and returns a list of permission
+// GetPermission determines the IAM permissions required and returns a list of permission.
 func GetPermission(result ResourceV2) (Sorted, error) {
 	var err error
 
 	var myPermission Sorted
 
 	switch result.Provider {
-	case "aws":
+	case providerAWS:
 		myPermission.AWS, err = GetAWSPermissions(result)
 		if err != nil {
 			log.Print(err)
@@ -219,13 +257,13 @@ func GetPermission(result ResourceV2) (Sorted, error) {
 		log.Printf("Provider %s not yet implemented", result.Provider)
 
 		return myPermission, nil
-	case "azurerm", "azuread":
+	case providerAzure, "azuread":
 		myPermission.AZURE, err = GetAZUREPermissions(result)
 		if err != nil {
 			log.Print(err)
 		}
-	case "google", "gcp":
-		myPermission.GCP, err = GetGCPPermissions(result)
+	case providerGoogle, providerGCP:
+		myPermission.GCP, err = getGCPPermissions(result)
 		if err != nil {
 			log.Print(err)
 		}
@@ -242,4 +280,8 @@ func GetPermission(result ResourceV2) (Sorted, error) {
 	}
 
 	return myPermission, err
+}
+
+func GetModuleJson(dir string) (ModuleJson, error) {
+	return ReadModuleJsonForDir(dir)
 }

@@ -31,7 +31,7 @@
       "uniqueItems": true
     }
   },
-  "description": "An example resource schema demonstrating some basic constructs and validation rules.",
+  "description": "Resource Type definition for Carrier Gateway which describes the Carrier Gateway resource",
   "handlers": {
     "create": {
       "permissions": [
@@ -43,7 +43,8 @@
     "delete": {
       "permissions": [
         "ec2:DeleteCarrierGateway",
-        "ec2:DescribeCarrierGateways"
+        "ec2:DescribeCarrierGateways",
+        "ec2:DeleteTags"
       ]
     },
     "list": {
@@ -53,14 +54,16 @@
     },
     "read": {
       "permissions": [
-        "ec2:DescribeCarrierGateways"
+        "ec2:DescribeCarrierGateways",
+        "ec2:DescribeTags"
       ]
     },
     "update": {
       "permissions": [
         "ec2:DescribeCarrierGateways",
         "ec2:CreateTags",
-        "ec2:DeleteTags"
+        "ec2:DeleteTags",
+        "ec2:DescribeTags"
       ]
     }
   },
@@ -98,5 +101,17 @@
     "VpcId"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "ec2:CreateTags",
+      "ec2:DeleteTags",
+      "ec2:DescribeTags"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::EC2::CarrierGateway"
 }

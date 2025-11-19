@@ -15,7 +15,7 @@ jobs:
       ## this will contain a matrix of all the combinations
       ## we wish to test again:
       matrix:
-        go-version: [ 1.22.x ]
+        go-version: [ 1.24.x ]
         platform: [ ubuntu-latest, macos-latest, windows-latest ]
 
     ## Defines the platform for each test run
@@ -26,13 +26,13 @@ jobs:
     steps:
       ## sets up go based on the version
       - name: Install Go
-        uses: actions/setup-go@0a12ed9d6a96ab950c8f026ed9f722fe0da7ef32 # v5.0.2
+        uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6.0.0
         with:
           go-version: ${{ matrix.go-version }}
 
       ## checks out our code locally, so we can work with the files
       - name: Checkout code
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       ## runs go test ./...
       - name: Build
@@ -43,6 +43,6 @@ jobs:
         run: go test ./... -coverprofile=./cover.out
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@79066c46f8dcdf8d7355f820dbac958c5b4cb9d3 # v4.5.0
+        uses: codecov/codecov-action@af09b5e394c93991b95a5e7646aeb90c1917f78f # v5.5.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

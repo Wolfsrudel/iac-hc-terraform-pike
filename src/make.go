@@ -2,10 +2,10 @@ package pike
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"time"
 
@@ -15,61 +15,93 @@ import (
 
 // Make creates the required role.
 func Make(directory string) (*string, error) {
-	err := Scan(directory, "terraform", nil, true, true, false)
+	if directory == "" {
+		return nil, &directoryNotFoundError{directory: directory}
+	}
+
+	err := Scan(directory, "terraform", nil, true, true, false, "", "", "")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to scan directory: %w", err)
 	}
 
 	directory, err = filepath.Abs(directory)
 	if err != nil {
-		return nil, fmt.Errorf("failed to find path %w", err)
+		return nil, &absolutePathError{directory, err}
 	}
 
-	policyPath, err := filepath.Abs(directory + "/.pike/")
+	policyPath, err := filepath.Abs(path.Join(directory, ".pike"))
 	if err != nil {
-		return nil, err
+		return nil, &absolutePathError{directory, err}
 	}
 
-	tf, err2 := tfApply(policyPath)
-	if err2 != nil {
-		return nil, err2
+	tf, err := tfApply(policyPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to apply terraform: %w", err)
 	}
 
 	state, err := tf.Show(context.Background())
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to show terraform state: %w", err)
 	}
 
 	if (state.Values.Outputs["arn"]) != nil {
 		arn := state.Values.Outputs["arn"]
-		log.Info().Msgf("aws role create/updated %s", arn.Value.(string))
-		role := arn.Value.(string)
+
+		myValue, ok := arn.Value.(string)
+		if !ok {
+			return nil, &castToStringError{"arn"}
+		}
+
+		log.Info().Msgf("aws role create/updated %s", myValue)
+
+		role, ok := arn.Value.(string)
+
+		if !ok {
+			return nil, &castToStringError{"arn"}
+		}
 
 		return &role, nil
 	}
 
-	return nil, errors.New("no arn found in state")
+	return nil, &arnNotFoundInStateError{}
+}
+
+type castToStringError struct {
+	value string
+}
+
+func (e *castToStringError) Error() string {
+	return fmt.Sprint("cannot convert ", e.value, " to a string")
+}
+
+type arnNotFoundInStateError struct{}
+
+func (e *arnNotFoundInStateError) Error() string {
+	return "no arn found in state"
 }
 
 func tfApply(policyPath string) (*tfexec.Terraform, error) {
 	tfPath, err := LocateTerraform()
 	if err != nil {
-		return nil, err
+		return nil, &locateTerraformError{err}
 	}
 
 	terraform, err := tfexec.NewTerraform(policyPath, tfPath)
 	if err != nil {
-		return nil, err
+		return nil, &terraformNewError{err: err}
 	}
 
 	err = terraform.Init(context.Background(), tfexec.Upgrade(true))
 	if err != nil {
-		return nil, err
+		return nil, &terraformInitError{err}
 	}
 
-	err = terraform.Apply(context.Background())
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Minute)
+	defer cancel()
+
+	err = terraform.Apply(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("terraform apply failed %w", err)
+		return nil, &terraformApplyError{err: err, target: policyPath}
 	}
 
 	return terraform, nil
@@ -82,22 +114,27 @@ func Apply(target string, region string) error {
 	time.Sleep(5 * time.Second)
 
 	if err != nil {
-		return err
+		return &makeRoleError{err}
 	}
-	// clear any temp creds
+	// clear any temp credentials
 	unSetAWSAuth()
 
 	err = setAWSAuth(*iamRole, region)
 	if err != nil {
 		unSetAWSAuth()
 
-		return err
+		return &setAWSAuthError{err}
 	}
+
+	log.Debug().Msgf("Starting terraform apply in directory: %s", target)
+	defer log.Debug().Msg("Completed terraform apply")
 
 	_, err = tfApply(target)
 
 	if err == nil {
-		log.Printf("provisioned %s", target)
+		log.Info().Msgf("provisioned %s", target)
+	} else {
+		err = &terraformApplyError{target, err}
 	}
 
 	unSetAWSAuth()
@@ -109,37 +146,49 @@ func Apply(target string, region string) error {
 func tfPlan(policyPath string) error {
 	tfPath, err := LocateTerraform()
 	if err != nil {
-		return err
+		return &locateTerraformError{err}
 	}
 
 	terraform, err := tfexec.NewTerraform(policyPath, tfPath)
 	if err != nil {
-		return err
+		return &terraformNewError{err}
 	}
 
 	err = terraform.Init(context.Background(), tfexec.Upgrade(true))
 	if err != nil {
-		return err
+		return &terraformInitError{err: err}
 	}
 
 	chdir := "-chdir=" + policyPath
 	cmd := exec.Command(terraform.ExecPath(), chdir, "plan", "--out", "tf.plan")
-	stdout, err := cmd.Output()
 
-	cmd = exec.Command(terraform.ExecPath(), chdir, "show", "--json", "tf.plan")
+	stdout, err := cmd.Output()
+	if err != nil {
+		return &terraformPlanError{err}
+	}
+
+	if len(stdout) == 0 {
+		return &terraformOutputError{}
+	}
+
+	//goland:noinspection GoUnhandledErrorResult
+	defer os.Remove(filepath.Join(policyPath, "tf.plan"))
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	defer cancel()
+
+	cmd = exec.CommandContext(ctx, terraform.ExecPath(), chdir, "show", "--json", "tf.plan")
 	stdout, err = cmd.Output()
 
 	if err != nil {
-		fmt.Println(err.Error())
-
-		return err
+		return &terraformPlanError{err}
 	}
 
 	outfile := filepath.Join(policyPath, "tf.json")
 	err = os.WriteFile(outfile, stdout, 0o666)
 
 	if err != nil {
-		return fmt.Errorf("terraform show failed %w", err)
+		return &writeFileError{file: outfile, err: err}
 	}
 
 	return nil

@@ -3,7 +3,8 @@
   "createOnlyProperties": [
     "/properties/OutpostConfig",
     "/properties/EncryptionConfig",
-    "/properties/KubernetesNetworkConfig",
+    "/properties/KubernetesNetworkConfig/IpFamily",
+    "/properties/KubernetesNetworkConfig/ServiceIpv4Cidr",
     "/properties/AccessConfig/BootstrapClusterCreatorAdminPermissions",
     "/properties/Name",
     "/properties/RoleArn",
@@ -30,12 +31,46 @@
       },
       "type": "object"
     },
+    "BlockStorage": {
+      "additionalProperties": false,
+      "description": "Todo: add description",
+      "properties": {
+        "Enabled": {
+          "description": "Todo: add description",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "ClusterLogging": {
       "additionalProperties": false,
       "description": "The cluster control plane logging configuration for your cluster. ",
       "properties": {
         "EnabledTypes": {
           "$ref": "#/definitions/EnabledTypes"
+        }
+      },
+      "type": "object"
+    },
+    "ComputeConfig": {
+      "additionalProperties": false,
+      "description": "Todo: add description",
+      "properties": {
+        "Enabled": {
+          "description": "Todo: add description",
+          "type": "boolean"
+        },
+        "NodePools": {
+          "description": "Todo: add description",
+          "insertionOrder": false,
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "NodeRoleArn": {
+          "description": "Todo: add description",
+          "type": "string"
         }
       },
       "type": "object"
@@ -47,6 +82,17 @@
         "GroupName": {
           "description": "Specify the placement group name of the control place machines for your cluster.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ElasticLoadBalancing": {
+      "additionalProperties": false,
+      "description": "Todo: add description",
+      "properties": {
+        "Enabled": {
+          "description": "Todo: add description",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -82,6 +128,10 @@
       "additionalProperties": false,
       "description": "The Kubernetes network configuration for the cluster.",
       "properties": {
+        "ElasticLoadBalancing": {
+          "$ref": "#/definitions/ElasticLoadBalancing",
+          "description": "Todo: add description"
+        },
         "IpFamily": {
           "description": "Ipv4 or Ipv6. You can only specify ipv6 for 1.21 and later clusters that use version 1.10.1 or later of the Amazon VPC CNI add-on",
           "enum": [
@@ -166,6 +216,24 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "RemoteNetworkConfig": {
+      "additionalProperties": false,
+      "description": "Configuration fields for specifying on-premises node and pod CIDRs that are external to the VPC passed during cluster creation.",
+      "properties": {
+        "RemoteNodeNetworks": {
+          "$ref": "#/definitions/RemoteNodeNetworks",
+          "description": "Network configuration of nodes run on-premises with EKS Hybrid Nodes."
+        },
+        "RemotePodNetworks": {
+          "$ref": "#/definitions/RemotePodNetworks",
+          "description": "Network configuration of pods run on-premises with EKS Hybrid Nodes."
+        }
+      },
+      "required": [
+        "RemoteNodeNetworks"
+      ],
       "type": "object"
     },
     "RemoteNodeNetwork": {
@@ -267,6 +335,17 @@
       ],
       "type": "object"
     },
+    "StorageConfig": {
+      "additionalProperties": false,
+      "description": "Todo: add description",
+      "properties": {
+        "BlockStorage": {
+          "$ref": "#/definitions/BlockStorage",
+          "description": "Todo: add description"
+        }
+      },
+      "type": "object"
+    },
     "Tag": {
       "additionalProperties": false,
       "description": "A key-value pair to associate with a resource.",
@@ -304,6 +383,17 @@
         }
       },
       "type": "object"
+    },
+    "ZonalShiftConfig": {
+      "additionalProperties": false,
+      "description": "The current zonal shift configuration to use for the cluster.",
+      "properties": {
+        "Enabled": {
+          "description": "Set this value to true to enable zonal shift for the cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
     }
   },
   "description": "An object representing an Amazon EKS cluster.",
@@ -313,6 +403,7 @@
         "eks:CreateCluster",
         "eks:DescribeCluster",
         "eks:TagResource",
+        "eks:CreateAccessEntry",
         "iam:PassRole",
         "iam:GetRole",
         "iam:ListAttachedRolePolicies",
@@ -370,7 +461,7 @@
       "type": "string"
     },
     "BootstrapSelfManagedAddons": {
-      "description": "Set this value to false to avoid creating the default networking addons when the cluster is created.",
+      "description": "Set this value to false to avoid creating the default networking add-ons when the cluster is created.",
       "type": "boolean"
     },
     "CertificateAuthorityData": {
@@ -380,6 +471,9 @@
     "ClusterSecurityGroupId": {
       "description": "The cluster security group that was created by Amazon EKS for the cluster. Managed node groups use this security group for control plane to data plane communication.",
       "type": "string"
+    },
+    "ComputeConfig": {
+      "$ref": "#/definitions/ComputeConfig"
     },
     "EncryptionConfig": {
       "insertionOrder": false,
@@ -396,6 +490,11 @@
     "Endpoint": {
       "description": "The endpoint for your Kubernetes API server, such as https://5E1D0CEXAMPLEA591B746AFC5AB30262.yl4.us-west-2.eks.amazonaws.com.",
       "type": "string"
+    },
+    "Force": {
+      "default": false,
+      "description": "Force cluster version update",
+      "type": "boolean"
     },
     "Id": {
       "description": "The unique ID given to your cluster.",
@@ -421,12 +520,18 @@
     "OutpostConfig": {
       "$ref": "#/definitions/OutpostConfig"
     },
+    "RemoteNetworkConfig": {
+      "$ref": "#/definitions/RemoteNetworkConfig"
+    },
     "ResourcesVpcConfig": {
       "$ref": "#/definitions/ResourcesVpcConfig"
     },
     "RoleArn": {
       "description": "The Amazon Resource Name (ARN) of the IAM role that provides permissions for the Kubernetes control plane to make calls to AWS API operations on your behalf.",
       "type": "string"
+    },
+    "StorageConfig": {
+      "$ref": "#/definitions/StorageConfig"
     },
     "Tags": {
       "description": "An array of key-value pairs to apply to this resource.",
@@ -444,6 +549,9 @@
       "description": "The desired Kubernetes version for your cluster. If you don't specify a value here, the latest version available in Amazon EKS is used.",
       "pattern": "1\\.\\d\\d",
       "type": "string"
+    },
+    "ZonalShiftConfig": {
+      "$ref": "#/definitions/ZonalShiftConfig"
     }
   },
   "readOnlyProperties": [
@@ -463,6 +571,10 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-eks.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "eks:TagResource",
+      "eks:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
@@ -471,6 +583,7 @@
   "typeName": "AWS::EKS::Cluster",
   "writeOnlyProperties": [
     "/properties/AccessConfig/BootstrapClusterCreatorAdminPermissions",
-    "/properties/BootstrapSelfManagedAddons"
+    "/properties/BootstrapSelfManagedAddons",
+    "/properties/Force"
   ]
 }

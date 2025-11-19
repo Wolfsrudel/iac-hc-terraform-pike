@@ -2,9 +2,7 @@
   "additionalProperties": false,
   "createOnlyProperties": [
     "/properties/StorageVirtualMachineArn",
-    "/properties/SecurityGroupArns",
-    "/properties/Protocol",
-    "/properties/Subdirectory"
+    "/properties/SecurityGroupArns"
   ],
   "definitions": {
     "NFS": {
@@ -158,10 +156,14 @@
     },
     "update": {
       "permissions": [
+        "datasync:UpdateLocationFsxOntap",
         "datasync:DescribeLocationFsxOntap",
         "datasync:ListTagsForResource",
         "datasync:TagResource",
-        "datasync:UntagResource"
+        "datasync:UntagResource",
+        "fsx:DescribeFileSystems",
+        "fsx:DescribeStorageVirtualMachines",
+        "ec2:DescribeNetworkInterfaces"
       ]
     }
   },
@@ -238,6 +240,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-datasync.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "datasync:TagResource",
+      "datasync:UntagResource",
+      "datasync:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

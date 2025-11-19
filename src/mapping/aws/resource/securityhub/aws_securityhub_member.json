@@ -1,0 +1,18 @@
+[
+  {
+    "apply": [
+      "securityhub:GetMembers",
+      "securityhub:CreateMembers",
+      "securityhub:DeleteMembers"
+    ],
+    "attributes": {
+      "invite": [
+        "securityhub:InviteMembers"
+      ],
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

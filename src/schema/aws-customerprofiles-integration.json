@@ -569,6 +569,8 @@
         "appflow:CreateFlow",
         "app-integrations:CreateEventIntegrationAssociation",
         "app-integrations:GetEventIntegration",
+        "connect:DescribeInstance",
+        "ds:DescribeDirectories",
         "events:ListTargetsByRule",
         "events:PutRule",
         "events:PutTargets",
@@ -623,7 +625,9 @@
         "events:PutTargets",
         "events:PutEvents",
         "profile:UntagResource",
-        "profile:TagResource"
+        "profile:TagResource",
+        "connect:DescribeInstance",
+        "ds:DescribeDirectories"
       ]
     }
   },
@@ -642,6 +646,19 @@
       "minLength": 1,
       "pattern": "^[a-zA-Z0-9_-]+$",
       "type": "string"
+    },
+    "EventTriggerNames": {
+      "description": "A list of unique names for active event triggers associated with the integration.",
+      "insertionOrder": false,
+      "items": {
+        "maxLength": 64,
+        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9_-]+$",
+        "type": "string"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array"
     },
     "FlowDefinition": {
       "$ref": "#/definitions/FlowDefinition"
@@ -690,6 +707,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-customer-profiles.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "profile:TagResource",
+      "profile:UntagResource",
+      "profile:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

@@ -6,10 +6,21 @@
       "bedrock:UpdateAgent",
       "iam:PassRole",
       "bedrock:GetAgent",
-      "bedrock:PrepareAgent"
+      "bedrock:PrepareAgent",
+      "bedrock:ListTagsForResource"
     ],
     "attributes": {
-      "tags": []
+      "customer_encryption_key_arn": [
+        "kms:GenerateDataKeyWithoutPlainText",
+        "kms:ReEncryptFrom",
+        "kms:ReEncryptTo",
+        "kms:Decrypt",
+        "kms:GenerateDataKey"
+      ],
+      "tags": [
+        "bedrock:TagResource",
+        "bedrock:UntagResource"
+      ]
     },
     "destroy": [
       "bedrock:DeleteAgent"
@@ -17,6 +28,8 @@
     "modify": [
       "bedrock:UpdateAgent"
     ],
-    "plan": []
+    "plan": [
+      "bedrock:GetAgent"
+    ]
   }
 ]

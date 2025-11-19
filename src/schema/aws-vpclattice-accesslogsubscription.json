@@ -4,7 +4,9 @@
       "/properties/Id"
     ],
     [
-      "/properties/ResourceIdentifier"
+      "/properties/ResourceIdentifier",
+      "/properties/DestinationArn",
+      "/properties/ServiceNetworkLogType"
     ]
   ],
   "additionalProperties": false,
@@ -89,7 +91,8 @@
         ]
       },
       "permissions": [
-        "vpc-lattice:ListAccessLogSubscriptions"
+        "vpc-lattice:ListAccessLogSubscriptions",
+        "logs:GetLogDelivery"
       ]
     },
     "read": {
@@ -103,6 +106,7 @@
       "permissions": [
         "vpc-lattice:GetAccessLogSubscription",
         "vpc-lattice:UpdateAccessLogSubscription",
+        "vpc-lattice:ListTagsForResource",
         "vpc-lattice:TagResource",
         "vpc-lattice:UntagResource",
         "logs:UpdateLogDelivery",
@@ -161,8 +165,15 @@
     },
     "ResourceIdentifier": {
       "maxLength": 2048,
-      "minLength": 20,
-      "pattern": "^((((sn)|(svc))-[0-9a-z]{17})|(arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(service/svc))-[0-9a-z]{17}))$",
+      "minLength": 17,
+      "pattern": "^((((sn)|(svc)|(rcfg))-[0-9a-z]{17})|(arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(resourceconfiguration/rcfg)|(service/svc))-[0-9a-z]{17}))$",
+      "type": "string"
+    },
+    "ServiceNetworkLogType": {
+      "enum": [
+        "SERVICE",
+        "RESOURCE"
+      ],
       "type": "string"
     },
     "Tags": {
@@ -187,6 +198,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "vpc-lattice:UntagResource",
+      "vpc-lattice:TagResource",
+      "vpc-lattice:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

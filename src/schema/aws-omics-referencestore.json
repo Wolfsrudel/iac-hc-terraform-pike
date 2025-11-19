@@ -50,7 +50,8 @@
     "create": {
       "permissions": [
         "omics:CreateReferenceStore",
-        "omics:TagResource"
+        "omics:TagResource",
+        "kms:DescribeKey"
       ]
     },
     "delete": {
@@ -123,12 +124,14 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "omics:TagResource",
+      "omics:ListTagsForResource"
+    ],
     "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
     "tagUpdatable": false,
     "taggable": true
   },
-  "typeName": "AWS::Omics::ReferenceStore",
-  "writeOnlyProperties": [
-    "/properties/Tags"
-  ]
+  "typeName": "AWS::Omics::ReferenceStore"
 }

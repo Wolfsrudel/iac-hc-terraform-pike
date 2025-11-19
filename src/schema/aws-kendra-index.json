@@ -87,7 +87,8 @@
       "description": "Edition of index",
       "enum": [
         "DEVELOPER_EDITION",
-        "ENTERPRISE_EDITION"
+        "ENTERPRISE_EDITION",
+        "GEN_AI_ENTERPRISE_EDITION"
       ],
       "type": "string"
     },
@@ -440,5 +441,17 @@
     "Edition"
   ],
   "sourceUrl": "https://docs.aws.amazon.com/kendra/latest/dg/hiw-index.html",
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "kendra:UntagResource",
+      "kendra:TagResource",
+      "kendra:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::Kendra::Index"
 }

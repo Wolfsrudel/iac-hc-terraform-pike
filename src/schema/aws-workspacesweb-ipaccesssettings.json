@@ -69,10 +69,12 @@
         "workspaces-web:ListIpAccessSettings",
         "workspaces-web:ListTagsForResource",
         "workspaces-web:TagResource",
-        "kms:CreateGrant",
         "kms:DescribeKey",
         "kms:GenerateDataKey",
-        "kms:Decrypt"
+        "kms:Decrypt",
+        "kms:GenerateDataKeyWithoutPlaintext",
+        "kms:ReEncryptTo",
+        "kms:ReEncryptFrom"
       ]
     },
     "delete": {
@@ -88,7 +90,9 @@
     },
     "list": {
       "permissions": [
-        "workspaces-web:ListIpAccessSettings"
+        "workspaces-web:ListIpAccessSettings",
+        "kms:Decrypt",
+        "kms:DescribeKey"
       ]
     },
     "read": {
@@ -191,6 +195,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "workspaces-web:UntagResource",
+      "workspaces-web:ListTagsForResource",
+      "workspaces-web:TagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

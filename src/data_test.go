@@ -76,12 +76,15 @@ func TestGetResources(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
+
 			got, err := pike.GetResources(tt.args.file, tt.args.dirName)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetResources() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetResources() = %v, want %v", got, tt.want)
 			}
@@ -104,6 +107,7 @@ func Test_getLocalModules(t *testing.T) {
 	notLocal, _ := filepath.Abs("../testdata/modules/examples/notlocal")
 	notBlock := getInitialBlock(notLocal + "/module.local.tf")
 
+	moduleJson := make(pike.ModuleJson)
 	tests := []struct {
 		name    string
 		args    args
@@ -125,14 +129,17 @@ func Test_getLocalModules(t *testing.T) {
 		{name: "rubbish", args: args{duffBlock, duffName}, wantErr: false},
 		{name: "notLocal", args: args{notBlock, notLocal}, wantErr: false},
 	}
+
 	for _, tt := range tests {
+		// t.Parallel()
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := pike.GetLocalModules(tt.args.block, tt.args.dirName)
+			got, err := pike.GetLocalModules(tt.args.block, tt.args.dirName, moduleJson)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetResources() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetLocalModules() = %v, want %v", got, tt.want)
 			}
@@ -145,6 +152,7 @@ func getInitialBlock(file string) *hclsyntax.Block {
 	if body != nil {
 		blocks := body.Blocks
 		block := blocks[0]
+
 		return block
 	}
 
@@ -366,6 +374,7 @@ func TestGetPermission(t *testing.T) {
 				"compute.subnetworks.useExternalIp",
 				"compute.instances.setMetadata",
 				"compute.instances.delete",
+				"compute.instances.get",
 				"compute.instances.delete",
 			}},
 		},
@@ -375,12 +384,15 @@ func TestGetPermission(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
+
 			got, err := pike.GetPermission(tt.args.result)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetPermission() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetPermission() = %v, want %v", got, tt.want)
 			}
@@ -428,12 +440,15 @@ func TestGetResourceBlocks(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
+
 			got, err := pike.GetResourceBlocks(tt.args.file)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetResourceBlocks() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got.SrcRange, tt.want) {
 				t.Errorf("GetResourceBlocks() = %v, want %v", got.SrcRange, tt.want)
 			}
@@ -510,7 +525,9 @@ func TestDetectBackend(t *testing.T) {
 	}
 
 	var empty []pike.ResourceV2
+
 	var found []pike.ResourceV2
+
 	var nought []pike.ResourceV2
 
 	found = append(found, item)
@@ -529,11 +546,15 @@ func TestDetectBackend(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
+
 			got, err := pike.DetectBackend(tt.args.resource, tt.args.block, tt.args.resources)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("DetectBackend() error = %v, wantErr %v", err, tt.wantErr)
+
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("DetectBackend() got = %v, want %v", got, tt.want)
 			}

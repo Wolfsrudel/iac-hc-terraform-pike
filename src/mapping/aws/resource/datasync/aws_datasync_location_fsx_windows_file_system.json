@@ -2,7 +2,12 @@
   {
     "apply": [
       "datasync:CreateLocationFsxWindows",
-      "datasync:DescribeLocationFsxWindows"
+      "datasync:DescribeLocationFsxWindows",
+      "datasync:ListTagsForResource",
+      "fsx:DescribeFileSystems",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups"
     ],
     "attributes": {
       "tags": [
@@ -13,7 +18,13 @@
     "destroy": [
       "datasync:DeleteLocation"
     ],
-    "modify": [],
+    "modify": [
+      "datasync:DescribeLocationFsxWindows",
+      "datasync:UpdateLocationFsxWindows",
+      "datasync:ListTagsForResource",
+      "fsx:DescribeFileSystems",
+      "ec2:DescribeNetworkInterfaces"
+    ],
     "plan": []
   }
 ]

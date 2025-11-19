@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "dataplex.tasks.getIamPolicy",
+      "dataplex.tasks.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "dataplex.tasks.getIamPolicy"
+    ]
+  }
+]

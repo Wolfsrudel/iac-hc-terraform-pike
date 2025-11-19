@@ -3,7 +3,6 @@
   "createOnlyProperties": [
     "/properties/KmsKeyId",
     "/properties/SecurityGroupIds",
-    "/properties/FileSystemTypeVersion",
     "/properties/FileSystemType",
     "/properties/SubnetIds",
     "/properties/BackupId"
@@ -79,6 +78,9 @@
         },
         "DriveCacheType": {
           "type": "string"
+        },
+        "EfaEnabled": {
+          "type": "boolean"
         },
         "ExportPath": {
           "type": "string"
@@ -209,6 +211,9 @@
         "PreferredSubnetId": {
           "type": "string"
         },
+        "ReadCacheConfiguration": {
+          "$ref": "#/definitions/ReadCacheConfiguration"
+        },
         "RootVolumeConfiguration": {
           "$ref": "#/definitions/RootVolumeConfiguration"
         },
@@ -229,6 +234,18 @@
       "required": [
         "DeploymentType"
       ],
+      "type": "object"
+    },
+    "ReadCacheConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "SizeGiB": {
+          "type": "integer"
+        },
+        "SizingMode": {
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "RootVolumeConfiguration": {

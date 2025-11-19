@@ -80,20 +80,22 @@
     "create": {
       "permissions": [
         "workspaces-web:CreatePortal",
-        "workspaces-web:GetPortal",
-        "workspaces-web:GetPortalServiceProviderMetadata",
+        "workspaces-web:GetPortal*",
         "workspaces-web:AssociateBrowserSettings",
         "workspaces-web:AssociateIpAccessSettings",
         "workspaces-web:AssociateNetworkSettings",
         "workspaces-web:AssociateTrustStore",
         "workspaces-web:AssociateUserAccessLoggingSettings",
         "workspaces-web:AssociateUserSettings",
-        "workspaces-web:ListTagsForResource",
+        "workspaces-web:AssociateDataProtectionSettings",
+        "workspaces-web:List*",
         "workspaces-web:TagResource",
-        "kms:CreateGrant",
+        "kms:DescribeKey",
         "kms:GenerateDataKey",
         "kms:Decrypt",
-        "kms:DescribeKey",
+        "kms:GenerateDataKeyWithoutPlaintext",
+        "kms:ReEncryptTo",
+        "kms:ReEncryptFrom",
         "ec2:CreateNetworkInterface",
         "ec2:CreateNetworkInterfacePermission",
         "ec2:DeleteNetworkInterface",
@@ -101,14 +103,14 @@
         "ec2:ModifyNetworkInterfaceAttribute",
         "kinesis:PutRecord",
         "kinesis:PutRecords",
-        "kinesis:DescribeStreamSummary",
+        "kinesis:Describe*",
         "sso:CreateManagedApplicationInstance",
-        "sso:DescribeRegisteredRegions"
+        "sso:Describe*"
       ]
     },
     "delete": {
       "permissions": [
-        "workspaces-web:GetPortal",
+        "workspaces-web:GetPortal*",
         "workspaces-web:DeletePortal",
         "workspaces-web:DisassociateBrowserSettings",
         "workspaces-web:DisassociateIpAccessSettings",
@@ -116,6 +118,7 @@
         "workspaces-web:DisassociateTrustStore",
         "workspaces-web:DisassociateUserAccessLoggingSettings",
         "workspaces-web:DisassociateUserSettings",
+        "workspaces-web:DisassociateDataProtectionSettings",
         "kms:Decrypt",
         "kms:DescribeKey",
         "sso:DeleteManagedApplicationInstance"
@@ -123,24 +126,22 @@
     },
     "list": {
       "permissions": [
-        "workspaces-web:ListPortals",
+        "workspaces-web:List*",
         "kms:Decrypt",
         "kms:DescribeKey"
       ]
     },
     "read": {
       "permissions": [
-        "workspaces-web:GetPortal",
-        "workspaces-web:GetPortalServiceProviderMetadata",
-        "workspaces-web:ListTagsForResource",
+        "workspaces-web:GetPortal*",
+        "workspaces-web:List*",
         "kms:Decrypt",
         "kms:DescribeKey"
       ]
     },
     "update": {
       "permissions": [
-        "workspaces-web:GetPortal",
-        "workspaces-web:GetPortalServiceProviderMetadata",
+        "workspaces-web:GetPortal*",
         "workspaces-web:UpdatePortal",
         "workspaces-web:AssociateBrowserSettings",
         "workspaces-web:AssociateIpAccessSettings",
@@ -148,13 +149,15 @@
         "workspaces-web:AssociateTrustStore",
         "workspaces-web:AssociateUserAccessLoggingSettings",
         "workspaces-web:AssociateUserSettings",
+        "workspaces-web:AssociateDataProtectionSettings",
         "workspaces-web:DisassociateBrowserSettings",
         "workspaces-web:DisassociateIpAccessSettings",
         "workspaces-web:DisassociateNetworkSettings",
         "workspaces-web:DisassociateTrustStore",
         "workspaces-web:DisassociateUserAccessLoggingSettings",
         "workspaces-web:DisassociateUserSettings",
-        "workspaces-web:ListTagsForResource",
+        "workspaces-web:DisassociateDataProtectionSettings",
+        "workspaces-web:List*",
         "workspaces-web:TagResource",
         "workspaces-web:UntagResource",
         "kms:CreateGrant",
@@ -169,12 +172,12 @@
         "ec2:ModifyNetworkInterfaceAttribute",
         "kinesis:PutRecord",
         "kinesis:PutRecords",
-        "kinesis:DescribeStreamSummary",
+        "kinesis:Describe*",
         "sso:CreateManagedApplicationInstance",
         "sso:DeleteManagedApplicationInstance",
-        "sso:DescribeRegisteredRegions",
+        "sso:Describe*",
         "sso:GetApplicationInstance",
-        "sso:ListApplicationInstances"
+        "sso:List*"
       ]
     }
   },
@@ -205,6 +208,12 @@
       "maxLength": 2048,
       "minLength": 20,
       "pattern": "^arn:[\\w+=\\/,.@-]+:kms:[a-zA-Z0-9\\-]*:[a-zA-Z0-9]{1,12}:key\\/[a-zA-Z0-9-]+$",
+      "type": "string"
+    },
+    "DataProtectionSettingsArn": {
+      "maxLength": 2048,
+      "minLength": 20,
+      "pattern": "^arn:[\\w+=\\/,.@-]+:[a-zA-Z0-9\\-]+:[a-zA-Z0-9\\-]*:[a-zA-Z0-9]{1,12}:[a-zA-Z]+(\\/[a-fA-F0-9\\-]{36})+$",
       "type": "string"
     },
     "DisplayName": {
@@ -303,6 +312,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "workspaces-web:UntagResource",
+      "workspaces-web:List*",
+      "workspaces-web:TagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

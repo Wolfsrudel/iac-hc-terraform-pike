@@ -45,6 +45,23 @@
           ],
           "type": "string"
         },
+        "ConfidenceThreshold": {
+          "description": "FirewallDomainRedirectionAction",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "type": "string"
+        },
+        "DnsThreatProtection": {
+          "description": "FirewallDomainRedirectionAction",
+          "enum": [
+            "DGA",
+            "DNS_TUNNELING"
+          ],
+          "type": "string"
+        },
         "FirewallDomainListId": {
           "description": "ResourceId",
           "maxLength": 64,
@@ -59,6 +76,12 @@
           ],
           "type": "string"
         },
+        "FirewallThreatProtectionId": {
+          "description": "ResourceId",
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
         "Priority": {
           "description": "Rule Priority",
           "type": "integer"
@@ -71,7 +94,6 @@
         }
       },
       "required": [
-        "FirewallDomainListId",
         "Priority",
         "Action"
       ],
@@ -105,52 +127,48 @@
   "handlers": {
     "create": {
       "permissions": [
-        "route53resolver:*",
-        "ec2:*",
-        "logs:*",
-        "iam:*",
-        "lambda:*",
-        "s3:*"
+        "route53resolver:CreateFirewallRuleGroup",
+        "route53resolver:GetFirewallRuleGroup",
+        "route53resolver:ListFirewallRules",
+        "route53resolver:CreateFirewallRule",
+        "route53resolver:DeleteFirewallRule",
+        "route53resolver:TagResource",
+        "route53resolver:ListTagsForResource"
       ]
     },
     "delete": {
       "permissions": [
-        "route53resolver:*",
-        "ec2:*",
-        "logs:*",
-        "iam:*",
-        "lambda:*",
-        "s3:*"
+        "route53resolver:GetFirewallRuleGroup",
+        "route53resolver:DeleteFirewallRuleGroup",
+        "route53resolver:ListFirewallRules",
+        "route53resolver:DeleteFirewallRule",
+        "route53resolver:UntagResource",
+        "route53resolver:ListTagsForResource"
       ]
     },
     "list": {
       "permissions": [
-        "route53resolver:*",
-        "ec2:*",
-        "logs:*",
-        "iam:*",
-        "lambda:*",
-        "s3:*"
+        "route53resolver:ListFirewallRuleGroups",
+        "route53resolver:ListTagsForResource"
       ]
     },
     "read": {
       "permissions": [
-        "route53resolver:*",
-        "ec2:*",
-        "logs:*",
-        "iam:*",
-        "lambda:*",
-        "s3:*"
+        "route53resolver:GetFirewallRuleGroup",
+        "route53resolver:ListFirewallRules",
+        "route53resolver:ListTagsForResource"
       ]
     },
     "update": {
       "permissions": [
-        "route53resolver:*",
-        "ec2:*",
-        "logs:*",
-        "iam:*",
-        "lambda:*",
-        "s3:*"
+        "route53resolver:GetFirewallRuleGroup",
+        "route53resolver:ListFirewallRules",
+        "route53resolver:CreateFirewallRule",
+        "route53resolver:UpdateFirewallRule",
+        "route53resolver:DeleteFirewallRule",
+        "route53resolver:TagResource",
+        "route53resolver:UntagResource",
+        "route53resolver:ListTagsForResource"
       ]
     }
   },
@@ -257,10 +275,15 @@
     "/properties/ShareStatus",
     "/properties/CreatorRequestId",
     "/properties/CreationTime",
-    "/properties/ModificationTime"
+    "/properties/ModificationTime",
+    "/properties/FirewallRules/*/FirewallThreatProtectionId"
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "route53resolver:TagResource",
+      "route53resolver:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

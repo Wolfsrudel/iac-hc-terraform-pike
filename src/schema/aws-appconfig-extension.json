@@ -1,10 +1,7 @@
 {
   "additionalProperties": false,
   "createOnlyProperties": [
-    "/properties/Name",
-    "/properties/Tags",
-    "/properties/Tags/*/Key",
-    "/properties/Tags/*/Value"
+    "/properties/Name"
   ],
   "definitions": {
     "Action": {
@@ -119,7 +116,8 @@
     },
     "read": {
       "permissions": [
-        "appconfig:GetExtension"
+        "appconfig:GetExtension",
+        "appconfig:ListTagsForResource"
       ]
     },
     "update": {
@@ -176,7 +174,7 @@
         "$ref": "#/definitions/Tag"
       },
       "type": "array",
-      "uniqueItems": false
+      "uniqueItems": true
     },
     "VersionNumber": {
       "type": "integer"
@@ -194,6 +192,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "appconfig:TagResource",
+      "appconfig:UntagResource",
+      "appconfig:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
@@ -201,9 +204,6 @@
   },
   "typeName": "AWS::AppConfig::Extension",
   "writeOnlyProperties": [
-    "/properties/LatestVersionNumber",
-    "/properties/Tags",
-    "/properties/Tags/*/Key",
-    "/properties/Tags/*/Value"
+    "/properties/LatestVersionNumber"
   ]
 }

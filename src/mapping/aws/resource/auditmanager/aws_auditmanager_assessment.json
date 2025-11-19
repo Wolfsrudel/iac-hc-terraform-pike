@@ -4,17 +4,29 @@
       "auditmanager:GetAssessment",
       "auditmanager:CreateAssessment",
       "auditmanager:DeleteAssessment",
-      "auditmanager:UpdateAssessment"
+      "auditmanager:UpdateAssessment",
+      "auditmanager:BatchCreateDelegationByAssessment",
+      "auditmanager:BatchDeleteDelegationByAssessment"
     ],
     "attributes": {
-      "tags": []
+      "roles": [
+        "iam:PassRole"
+      ],
+      "tags": [
+        "auditmanager:TagResource",
+        "auditmanager:UntagResource"
+      ]
     },
     "destroy": [
       "auditmanager:DeleteAssessment"
     ],
     "modify": [
-      "auditmanager:UpdateAssessment"
+      "auditmanager:UpdateAssessment",
+      "auditmanager:UpdateAssessmentStatus",
+      "auditmanager:BatchDeleteDelegationByAssessment"
     ],
-    "plan": []
+    "plan": [
+      "auditmanager:GetAssessment"
+    ]
   }
 ]

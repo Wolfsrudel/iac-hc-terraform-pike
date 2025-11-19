@@ -115,7 +115,6 @@
     "update": {
       "permissions": [
         "eks:DescribeFargateProfile",
-        "eks:ListTagsForResource",
         "eks:TagResource",
         "eks:UntagResource"
       ]
@@ -177,6 +176,10 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-eks.git",
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "eks:TagResource",
+      "eks:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

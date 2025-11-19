@@ -103,7 +103,6 @@
       "permissions": [
         "route53:GetHostedZone",
         "route53:ListHostedZones",
-        "route53:ListHostedZonesByName",
         "route53:ListQueryLoggingConfigs",
         "route53:ListTagsForResource"
       ]
@@ -118,7 +117,9 @@
     "update": {
       "permissions": [
         "route53:GetChange",
+        "route53:GetHostedZone",
         "route53:ListTagsForResource",
+        "route53:ListQueryLoggingConfigs",
         "route53:UpdateHostedZoneComment",
         "route53:ChangeTagsForResource",
         "route53:AssociateVPCWithHostedZone",
@@ -185,5 +186,16 @@
     "/properties/NameServers"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-route53.git",
+  "tagging": {
+    "cloudFormationSystemTags": false,
+    "permissions": [
+      "route53:ChangeTagsForResource",
+      "route53:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/HostedZoneTags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::Route53::HostedZone"
 }

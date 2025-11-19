@@ -4,7 +4,12 @@
       "organizations:DescribePolicy",
       "organizations:CreatePolicy",
       "organizations:DeletePolicy",
-      "organizations:UpdatePolicy"
+      "organizations:UpdatePolicy",
+      "organizations:AttachPolicy",
+      "organizations:DetachPolicy",
+      "organizations:ListTagsForResource",
+      "organizations:ListTargetsForPolicy",
+      "organizations:ListPolicies"
     ],
     "attributes": {
       "tags": [
@@ -13,6 +18,7 @@
       ]
     },
     "destroy": [
+      "organizations:DetachPolicy",
       "organizations:DeletePolicy"
     ],
     "modify": [

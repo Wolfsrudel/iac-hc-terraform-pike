@@ -34,12 +34,15 @@
     "create": {
       "permissions": [
         "s3:CreateAccessGrantsInstance",
+        "s3:AssociateAccessGrantsIdentityCenter",
         "s3:TagResource"
       ]
     },
     "delete": {
       "permissions": [
-        "s3:DeleteAccessGrantsInstance"
+        "s3:GetAccessGrantsInstance",
+        "s3:DeleteAccessGrantsInstance",
+        "s3:DissociateAccessGrantsIdentityCenter"
       ]
     },
     "list": {
@@ -49,12 +52,14 @@
     },
     "read": {
       "permissions": [
-        "s3:GetAccessGrantsInstance"
+        "s3:GetAccessGrantsInstance",
+        "s3:ListTagsForResource"
       ]
     },
     "update": {
       "permissions": [
-        "s3:TagResource"
+        "s3:TagResource",
+        "s3:UntagResource"
       ]
     }
   },
@@ -96,13 +101,16 @@
   "required": [],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-s3",
   "tagging": {
+    "cloudFormationSystemTags": false,
+    "permissions": [
+      "s3:UntagResource",
+      "s3:TagResource",
+      "s3:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
     "taggable": true
   },
-  "typeName": "AWS::S3::AccessGrantsInstance",
-  "writeOnlyProperties": [
-    "/properties/Tags"
-  ]
+  "typeName": "AWS::S3::AccessGrantsInstance"
 }

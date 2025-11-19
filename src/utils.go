@@ -2,27 +2,28 @@ package pike
 
 import (
 	"bytes"
-	"errors"
+	"fmt"
 	"math"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/rs/zerolog/log"
 )
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") //nolint:gochecknoglobals
 
-// RandSeq generate a randown sequence.
+// RandSeq generate a random sequence.
 func RandSeq(n int) string {
 	sequence := make([]rune, n)
 	for i := range sequence {
-		//goland:noinspection GoLinter
-		sequence[i] = letters[rand.Intn(len(letters))]
+		r := rand.New(rand.NewSource(time.Now().UnixNano()))
+		sequence[i] = letters[r.Intn(len(letters))]
 	}
 
-	last := "XVlBzgba"
+	const last = "XVlBzgba"
 
 	temp := string(sequence)
 
@@ -31,6 +32,36 @@ func RandSeq(n int) string {
 	}
 
 	return temp
+}
+
+type readFileError struct {
+	file string
+	err  error
+}
+
+func (e *readFileError) Error() string {
+	return fmt.Sprintf("failed to read file %s %v", e.file, e.err)
+}
+
+type delimiterMismatchError struct{}
+
+func (e *delimiterMismatchError) Error() string {
+	return "pike delimiters mismatch in Readme"
+}
+
+type delimiterHooksMissingError struct{}
+
+func (e *delimiterHooksMissingError) Error() string {
+	return "pike hooks delimiter missing in Readme,  consider using the flag -auto"
+}
+
+type writeFileError struct {
+	file string
+	err  error
+}
+
+func (e *writeFileError) Error() string {
+	return fmt.Sprintf("failed to write file %s %v", e.file, e.err)
 }
 
 // ReplaceSection find a section in a readme and replaces the section.
@@ -44,7 +75,7 @@ func ReplaceSection(source string, middle string, autoadd bool) error {
 	dat, err := os.ReadFile(newSource)
 
 	if (err) != nil {
-		return err
+		return &readFileError{newSource, err}
 	}
 
 	file := string(dat)
@@ -55,16 +86,16 @@ func ReplaceSection(source string, middle string, autoadd bool) error {
 			if autoadd {
 				file = file + "\n\n" + start + stop
 			} else {
-				return errors.New("missing both hooks in Readme, consider using the flag -auto")
+				return &delimiterHooksMissingError{}
 			}
 		} else {
-			return errors.New("pike delimiters mismatch in Readme")
+			return &delimiterMismatchError{}
 		}
 	}
 
 	section1 := (strings.Split(file, start)[0]) + start
 	if strings.Contains(section1, stop) {
-		return errors.New("pike delimiters mismatch in Readme")
+		return &delimiterMismatchError{}
 	}
 
 	section2 := stop + (strings.Split(file, stop)[1])
@@ -76,11 +107,12 @@ func ReplaceSection(source string, middle string, autoadd bool) error {
 	Output.WriteString(section2)
 
 	err = os.WriteFile(source, Output.Bytes(), 0o644)
-	if (err) != nil {
-		return err
+
+	if err != nil {
+		return &writeFileError{source, err}
 	}
 
-	return err
+	return nil
 }
 
 // FileExists looks for a file.
@@ -101,4 +133,19 @@ const float64EqualityThreshold = 1e-9
 
 func AlmostEqual(a, b float64) bool {
 	return math.Abs(a-b) <= float64EqualityThreshold
+}
+
+type EnvVariableNotSetError struct {
+	Key string
+}
+
+func (e *EnvVariableNotSetError) Error() string {
+	return fmt.Sprintf("environment variable %s not set", e.Key)
+}
+
+func GetEnv(key string) (*string, error) {
+	if value, ok := os.LookupEnv(key); ok {
+		return &value, nil
+	}
+	return nil, &EnvVariableNotSetError{key}
 }

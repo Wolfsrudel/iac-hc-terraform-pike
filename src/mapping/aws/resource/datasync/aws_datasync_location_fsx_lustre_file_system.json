@@ -3,7 +3,13 @@
     "apply": [
       "datasync:DescribeLocationFsxLustre",
       "datasync:CreateLocationFsxLustre",
-      "datasync:DeleteLocation"
+      "datasync:DeleteLocation",
+      "datasync:ListTagsForResource",
+      "datasync:UpdateLocationFsxLustre",
+      "fsx:DescribeFileSystems",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups"
     ],
     "attributes": {
       "tags": [
@@ -12,7 +18,13 @@
       ]
     },
     "destroy": [],
-    "modify": [],
+    "modify": [
+      "datasync:DescribeLocationFsxLustre",
+      "datasync:ListTagsForResource",
+      "datasync:UpdateLocationFsxLustre",
+      "fsx:DescribeFileSystems",
+      "ec2:DescribeNetworkInterfaces"
+    ],
     "plan": []
   }
 ]

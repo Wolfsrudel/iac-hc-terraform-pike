@@ -18,7 +18,7 @@ type ResourceV2 struct {
 	Attributes   []string
 }
 
-// Policy creates iam policies.
+// Policy represents and creates IAM policy structure.
 type Policy struct {
 	Version    string      `json:"Version"`
 	Statements []Statement `json:"Statement"`
@@ -33,8 +33,12 @@ type Statement struct {
 }
 
 // NewStatement constructor.
-func NewStatement(sid string, effect string, action []string, resource []string) *Statement {
-	return &Statement{Sid: sid, Effect: effect, Action: action, Resource: resource}
+func NewStatement(sid string, effect string, action []string, resource []string) Statement {
+	if effect != allow && effect != "Deny" {
+		effect = "Deny" // Default to restrictive
+	}
+
+	return Statement{Sid: sid, Effect: effect, Action: action, Resource: resource}
 }
 
 // OutputPolicy is the main output type.
@@ -50,7 +54,7 @@ type AwsOutput struct {
 	Terraform string
 }
 
-// AsString converts object into string.
+// AsString converts an object into string.
 func (out OutputPolicy) AsString(format string) string {
 	var Output string
 	if strings.ToLower(format) == terraform {

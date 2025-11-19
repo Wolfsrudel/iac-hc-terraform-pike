@@ -5,6 +5,7 @@
     "/properties/EngineType",
     "/properties/KmsKeyId",
     "/properties/Name",
+    "/properties/NetworkType",
     "/properties/PubliclyAccessible",
     "/properties/SecurityGroupIds",
     "/properties/StorageConfigurations",
@@ -76,6 +77,13 @@
       ],
       "type": "object"
     },
+    "NetworkType": {
+      "enum": [
+        "ipv4",
+        "dual"
+      ],
+      "type": "string"
+    },
     "StorageConfiguration": {
       "description": "Defines the storage configuration for an environment.",
       "oneOf": [
@@ -143,14 +151,16 @@
         "m2:GetEnvironment",
         "m2:ListTagsForResource",
         "m2:TagResource"
-      ]
+      ],
+      "timeoutInMinutes": 120
     },
     "delete": {
       "permissions": [
         "elasticloadbalancing:DeleteLoadBalancer",
         "m2:DeleteEnvironment",
         "m2:GetEnvironment"
-      ]
+      ],
+      "timeoutInMinutes": 120
     },
     "list": {
       "permissions": [
@@ -171,7 +181,8 @@
         "m2:GetEnvironment",
         "m2:UpdateEnvironment",
         "kms:DescribeKey"
-      ]
+      ],
+      "timeoutInMinutes": 120
     }
   },
   "primaryIdentifier": [
@@ -219,6 +230,9 @@
       "description": "The name of the environment.",
       "pattern": "^[A-Za-z0-9][A-Za-z0-9_\\-]{1,59}$",
       "type": "string"
+    },
+    "NetworkType": {
+      "$ref": "#/definitions/NetworkType"
     },
     "PreferredMaintenanceWindow": {
       "description": "Configures a desired maintenance window for the environment. If you do not provide a value, a random system-generated value will be assigned.",
@@ -271,7 +285,13 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "m2:TagResource",
+      "m2:UntagResource",
+      "m2:ListTagsForResource"
+    ],
     "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
     "tagUpdatable": true,
     "taggable": true
   },

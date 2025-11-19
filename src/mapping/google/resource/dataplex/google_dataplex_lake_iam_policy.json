@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "dataplex.lakes.setIamPolicy",
+      "dataplex.lakes.getIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "dataplex.lakes.getIamPolicy"
+    ]
+  }
+]

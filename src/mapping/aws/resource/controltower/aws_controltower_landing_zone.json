@@ -1,0 +1,76 @@
+[
+  {
+    "apply": [
+      "cloudformation:DescribeOrganizationsAccess",
+      "cloudformation:EnableOrganizationsAccess",
+      "controltower:CreateLandingZone",
+      "controltower:DeleteLandingZone",
+      "controltower:GetLandingZone",
+      "controltower:GetLandingZoneOperation",
+      "controltower:ListTagsForResource",
+      "controltower:UpdateLandingZone",
+      "iam:CreateServiceLinkedRole",
+      "iam:DeleteRole",
+      "iam:DeleteRolePolicy",
+      "iam:DetachRolePolicy",
+      "organizations:AttachPolicy",
+      "organizations:CreateOrganization",
+      "organizations:CreateOrganizationalUnit",
+      "organizations:CreatePolicy",
+      "organizations:DeletePolicy",
+      "organizations:DetachPolicy",
+      "organizations:EnableAWSServiceAccess",
+      "organizations:EnablePolicyType",
+      "organizations:ListRoots",
+      "organizations:UpdatePolicy",
+      "servicecatalog:AssociatePrincipalWithPortfolio",
+      "servicecatalog:AssociateProductWithPortfolio",
+      "servicecatalog:CreatePortfolio",
+      "servicecatalog:CreateProduct",
+      "servicecatalog:CreateProvisioningArtifact",
+      "servicecatalog:DeletePortfolio",
+      "servicecatalog:DeleteProduct",
+      "servicecatalog:DeleteProvisioningArtifact",
+      "servicecatalog:DisassociatePrincipalFromPortfolio",
+      "servicecatalog:DisassociateProductFromPortfolio",
+      "servicecatalog:ListPortfolios",
+      "servicecatalog:ListPrincipalsForPortfolio",
+      "servicecatalog:ListProvisioningArtifacts",
+      "servicecatalog:SearchProductsAsAdmin",
+      "servicecatalog:UpdatePortfolio",
+      "servicecatalog:UpdatePortfolio",
+      "servicecatalog:UpdateProvisioningArtifact",
+      "sso:GetPeregrineStatus",
+      "sso:ListDirectoryAssociations",
+      "sso:RegisterRegion",
+      "sso:StartPeregrine"
+    ],
+    "attributes": {
+      "tags": [
+        "controltower:TagResource",
+        "controltower:UntagResource"
+      ]
+    },
+    "destroy": [
+      "cloudformation:EnableOrganizationsAccess",
+      "controltower:DeleteLandingZone",
+      "servicecatalog:DeleteProvisioningArtifact",
+      "servicecatalog:DeleteProduct",
+      "servicecatalog:DisassociatePrincipalFromPortfolio",
+      "servicecatalog:DisassociateProductFromPortfolio",
+      "servicecatalog:DeletePortfolio",
+      "iam:CreateServiceLinkedRole",
+      "iam:DeleteRolePolicy",
+      "iam:DetachRolePolicy",
+      "iam:DeleteRole"
+    ],
+    "modify": [
+      "controltower:UpdateLandingZone",
+      "servicecatalog:UpdatePortfolio",
+      "servicecatalog:UpdateProvisioningArtifact",
+      "iam:CreateServiceLinkedRole",
+      "cloudformation:EnableOrganizationsAccess"
+    ],
+    "plan": []
+  }
+]

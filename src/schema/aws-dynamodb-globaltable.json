@@ -90,6 +90,9 @@
         "Projection": {
           "$ref": "#/definitions/Projection"
         },
+        "WarmThroughput": {
+          "$ref": "#/definitions/WarmThroughput"
+        },
         "WriteOnDemandThroughputSettings": {
           "$ref": "#/definitions/WriteOnDemandThroughputSettings"
         },
@@ -174,9 +177,19 @@
     },
     "PointInTimeRecoverySpecification": {
       "additionalProperties": false,
+      "dependencies": {
+        "RecoveryPeriodInDays": [
+          "PointInTimeRecoveryEnabled"
+        ]
+      },
       "properties": {
         "PointInTimeRecoveryEnabled": {
           "type": "boolean"
+        },
+        "RecoveryPeriodInDays": {
+          "maximum": 35,
+          "minimum": 1,
+          "type": "integer"
         }
       },
       "type": "object"
@@ -441,6 +454,32 @@
       ],
       "type": "object"
     },
+    "WarmThroughput": {
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "ReadUnitsPerSecond"
+          ]
+        },
+        {
+          "required": [
+            "WriteUnitsPerSecond"
+          ]
+        }
+      ],
+      "properties": {
+        "ReadUnitsPerSecond": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "WriteUnitsPerSecond": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "WriteOnDemandThroughputSettings": {
       "additionalProperties": false,
       "properties": {
@@ -651,6 +690,9 @@
     },
     "TimeToLiveSpecification": {
       "$ref": "#/definitions/TimeToLiveSpecification"
+    },
+    "WarmThroughput": {
+      "$ref": "#/definitions/WarmThroughput"
     },
     "WriteOnDemandThroughputSettings": {
       "$ref": "#/definitions/WriteOnDemandThroughputSettings"

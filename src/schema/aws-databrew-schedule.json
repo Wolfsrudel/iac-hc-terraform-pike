@@ -1,8 +1,7 @@
 {
   "additionalProperties": false,
   "createOnlyProperties": [
-    "/properties/Name",
-    "/properties/Tags"
+    "/properties/Name"
   ],
   "definitions": {
     "JobName": {
@@ -38,6 +37,7 @@
     "create": {
       "permissions": [
         "databrew:CreateSchedule",
+        "databrew:DescribeSchedule",
         "databrew:TagResource",
         "databrew:UntagResource",
         "iam:PassRole"
@@ -58,13 +58,14 @@
     "read": {
       "permissions": [
         "databrew:DescribeSchedule",
-        "databrew:ListTagsForResource",
         "iam:ListRoles"
       ]
     },
     "update": {
       "permissions": [
-        "databrew:UpdateSchedule"
+        "databrew:UpdateSchedule",
+        "databrew:TagResource",
+        "databrew:UntagResource"
       ]
     }
   },
@@ -106,6 +107,17 @@
     "CronExpression"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-databrew.git",
-  "taggable": true,
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "databrew:TagResource",
+      "databrew:UntagResource",
+      "databrew:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::DataBrew::Schedule"
 }

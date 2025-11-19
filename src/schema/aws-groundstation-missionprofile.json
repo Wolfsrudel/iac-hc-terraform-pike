@@ -25,11 +25,20 @@
           "required": [
             "KmsAliasArn"
           ]
+        },
+        {
+          "required": [
+            "KmsAliasName"
+          ]
         }
       ],
       "properties": {
         "KmsAliasArn": {
           "pattern": "^(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()$",
+          "type": "string"
+        },
+        "KmsAliasName": {
+          "pattern": "^alias/[a-zA-Z0-9:/_-]+$",
           "type": "string"
         },
         "KmsKeyArn": {
@@ -173,5 +182,17 @@
     "TrackingConfigArn"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-ground-station.git",
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "groundstation:TagResource",
+      "groundstation:UntagResource",
+      "groundstation:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::GroundStation::MissionProfile"
 }

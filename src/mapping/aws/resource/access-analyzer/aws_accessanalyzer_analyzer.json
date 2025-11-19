@@ -4,7 +4,10 @@
       "access-analyzer:CreateAnalyzer",
       "access-analyzer:DeleteAnalyzer",
       "access-analyzer:GetAnalyzer",
+      "access-analyzer:UpdateAnalyzer",
       "access-analyzer:ListAnalyzers",
+      "access-analyzer:DeleteArchiveRule",
+      "access-analyzer:UpdateArchiveRule",
       "iam:CreateServiceLinkedRole"
     ],
     "attributes": {
@@ -16,7 +19,11 @@
     "destroy": [
       "access-analyzer:DeleteAnalyzer"
     ],
-    "modify": [],
+    "modify": [
+      "access-analyzer:DeleteArchiveRule",
+      "access-analyzer:UpdateArchiveRule",
+      "access-analyzer:UpdateAnalyzer"
+    ],
     "plan": []
   }
 ]

@@ -53,6 +53,12 @@
             "DoH"
           ],
           "type": "string"
+        },
+        "ServerNameIndication": {
+          "description": "The SNI of the target name servers for DoH/DoH-FIPS outbound endpoints",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
         }
       },
       "type": "object"
@@ -130,7 +136,8 @@
       "enum": [
         "FORWARD",
         "SYSTEM",
-        "RECURSIVE"
+        "RECURSIVE",
+        "DELEGATE"
       ],
       "type": "string"
     },
@@ -161,12 +168,15 @@
     "/properties/ResolverRuleId"
   ],
   "required": [
-    "DomainName",
     "RuleType"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-route53resolver.git",
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "route53resolver:TagResource",
+      "route53resolver:UntagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

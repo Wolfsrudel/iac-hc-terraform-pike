@@ -150,7 +150,8 @@
         "CLEAR_KEY_AES_128",
         "FAIRPLAY",
         "PLAYREADY",
-        "WIDEVINE"
+        "WIDEVINE",
+        "IRDETO"
       ],
       "type": "string"
     },
@@ -227,6 +228,11 @@
       "additionalProperties": false,
       "description": "<p>Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. </p>",
       "properties": {
+        "ClipStartTime": {
+          "description": "<p>Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.</p>",
+          "format": "date-time",
+          "type": "string"
+        },
         "End": {
           "description": "<p>Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.</p>",
           "format": "date-time",
@@ -257,7 +263,7 @@
       "description": "<p>The failover settings for the endpoint.</p>",
       "properties": {
         "EndpointErrorConditions": {
-          "description": "<p>The failover settings for the endpoint. The options are:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>STALE_MANIFEST</code> - The manifest stalled and there a no new segments or parts.</p>\n            </li>\n            <li>\n               <p>\n                  <code>INCOMPLETE_MANIFEST</code> - There is a gap in the manifest.</p>\n            </li>\n            <li>\n               <p>\n                  <code>MISSING_DRM_KEY</code> - Key rotation is enabled but we're unable to fetch the key for the current key period.</p>\n            </li>\n         </ul>",
+          "description": "<p>The failover conditions for the endpoint. The options are:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>STALE_MANIFEST</code> - The manifest stalled and there are no new segments or parts.</p>\n            </li>\n            <li>\n               <p>\n                  <code>INCOMPLETE_MANIFEST</code> - There is a gap in the manifest.</p>\n            </li>\n            <li>\n               <p>\n                  <code>MISSING_DRM_KEY</code> - Key rotation is enabled but we're unable to fetch the key for the current key period.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SLATE_INPUT</code> - The segments which contain slate content are considered to be missing content.</p>\n            </li>\n         </ul>",
           "items": {
             "$ref": "#/definitions/EndpointErrorCondition"
           },
@@ -292,15 +298,22 @@
           "type": "integer"
         },
         "ProgramDateTimeIntervalSeconds": {
-          "description": "<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, \n         EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. \n         The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. \n         ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p>\n         <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>",
+          "description": "<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval,\n         EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest.\n         The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player.</p>\n         <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>",
           "type": "integer"
         },
         "ScteHls": {
           "$ref": "#/definitions/ScteHls"
         },
+        "StartTag": {
+          "$ref": "#/definitions/StartTag"
+        },
         "Url": {
           "description": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
           "type": "string"
+        },
+        "UrlEncodeChildManifest": {
+          "description": "<p>When enabled, MediaPackage URL-encodes the query string for API requests for HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol.\n         For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html\">Amazon Web Services Signature Version 4 for API requests</a> in <i>Identity and Access Management User Guide</i>.</p>",
+          "type": "boolean"
         }
       },
       "required": [
@@ -334,15 +347,22 @@
           "type": "integer"
         },
         "ProgramDateTimeIntervalSeconds": {
-          "description": "<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, \n         EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. \n         The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. \n         ID3Timed metadata messages generate every 5 seconds whenever the content is ingested.</p>\n         <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>",
+          "description": "<p>Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval,\n         EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest.\n         The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player.</p>\n         <p>Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.</p>",
           "type": "integer"
         },
         "ScteHls": {
           "$ref": "#/definitions/ScteHls"
         },
+        "StartTag": {
+          "$ref": "#/definitions/StartTag"
+        },
         "Url": {
           "description": "<p>The egress domain URL for stream delivery from MediaPackage.</p>",
           "type": "string"
+        },
+        "UrlEncodeChildManifest": {
+          "description": "<p>When enabled, MediaPackage URL-encodes the query string for API requests for LL-HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol.\n         For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html\">Amazon Web Services Signature Version 4 for API requests</a> in <i>Identity and Access Management User Guide</i>.</p>",
+          "type": "boolean"
         }
       },
       "required": [
@@ -505,6 +525,24 @@
         "ResourceId",
         "RoleArn",
         "Url"
+      ],
+      "type": "object"
+    },
+    "StartTag": {
+      "additionalProperties": false,
+      "description": "<p>To insert an EXT-X-START tag in your HLS playlist, specify a StartTag configuration object with a valid TimeOffset. When you do, you can also optionally specify whether to include a PRECISE value in the EXT-X-START tag.</p>",
+      "properties": {
+        "Precise": {
+          "description": "<p>Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES.</p>",
+          "type": "boolean"
+        },
+        "TimeOffset": {
+          "description": "<p>Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration.</p>",
+          "type": "number"
+        }
+      },
+      "required": [
+        "TimeOffset"
       ],
       "type": "object"
     },
@@ -694,11 +732,17 @@
   "required": [
     "ChannelGroupName",
     "ChannelName",
-    "OriginEndpointName"
+    "OriginEndpointName",
+    "ContainerType"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-mediapackagev2",
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "mediapackagev2:TagResource",
+      "mediapackagev2:UntagResource",
+      "mediapackagev2:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

@@ -9,6 +9,17 @@
       "dynamodb:DeleteTable"
     ],
     "attributes": {
+      "kms_key_arn": [
+        "kms:CreateGrant",
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:ListAliases",
+        "kms:Encrypt",
+        "kms:RevokeGrant"
+      ],
+      "point_in_time_recovery": [
+        "dynamodb:UpdateContinuousBackups"
+      ],
       "replica": [
         "dynamodb:CreateTableReplica",
         "dynamodb:Query",
@@ -21,6 +32,13 @@
         "iam:CreateServiceLinkedRole",
         "dynamodb:UpdateContinuousBackups",
         "dynamodb:DeleteTableReplica"
+      ],
+      "stream_enabled": [
+        "kinesis:DescribeStream",
+        "kinesis:PutRecords",
+        "dynamodb:DescribeKinesisStreamingDestination",
+        "dynamodb:EnableKinesisStreamingDestination",
+        "dynamodb:DisableKinesisStreamingDestination"
       ],
       "tags": [
         "dynamodb:TagResource",
@@ -37,6 +55,8 @@
       "dynamodb:UpdateTable",
       "dynamodb:UpdateTimeToLive"
     ],
-    "plan": []
+    "plan": [
+      "dynamodb:DescribeTable"
+    ]
   }
 ]

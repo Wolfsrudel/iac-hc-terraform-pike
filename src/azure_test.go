@@ -98,6 +98,7 @@ func TestGetAZUREPermissions(t *testing.T) {
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetAZUREPermissions() = %v, want %v", got, tt.want)
 			}
@@ -151,7 +152,9 @@ func TestGetAZUREResourcePermissions(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
+
 			got, err := pike.GetAZUREResourcePermissions(tt.args.result)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAZUREResourcePermissions() error = %v, wantErr %v", err, tt.wantErr)
 

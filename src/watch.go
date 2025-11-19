@@ -3,7 +3,6 @@ package pike
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/url"
 	"reflect"
@@ -16,102 +15,140 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+const pollIntervalSeconds int = 5
+
 // Watch looks at IAM policy for new revisions.
 func Watch(arn string, wait int) error {
+	if arn == "" {
+		return &arnEmptyError{}
+	}
+
+	if wait <= 0 {
+		return fmt.Errorf("wait time must be positive, got %d", wait)
+	}
+
+	if err := verifyAWSARN(arn); err != nil {
+		return fmt.Errorf("invalid ARN format: %s", arn)
+	}
+
 	// Load the Shared AWS Configuration (~/.aws/config)
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
+
+	defer cancel()
+
+	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
-		return fmt.Errorf("failed to load default config %w", err)
+		return &awsConfigError{err}
 	}
 
 	client := iam.NewFromConfig(cfg)
 
-	Version, err := GetVersion(client, arn)
+	Version, err := getVersion(client, arn)
 	if err != nil {
-		return err
+		return &getVersionError{err}
 	}
 
-	log.Printf("Waiting for change on policy Version %s", *Version)
+	log.Info().Msgf("Waiting for change on policy Version %s", *Version)
 
-	delay, err := WaitForPolicyChange(client, "arn:aws:iam::680235478471:policy/basic", *Version, wait)
+	delay, err := waitForPolicyChange(client, arn, *Version, wait, pollIntervalSeconds) // Added default pollInterval of 10
 	if err != nil {
-		return err
+		return &waitForPolicyChangeError{err}
 	}
 
-	log.Printf("Policy updated after %d", delay)
+	log.Info().Msgf("Policy updated after %d", delay)
 
 	return nil
 }
 
-// WaitForPolicyChange looks at IAM policy change.
-func WaitForPolicyChange(client *iam.Client, arn string, version string, wait int) (int, error) {
-	magic := 5
-
+// waitForPolicyChange looks at IAM policy change.
+func waitForPolicyChange(client *iam.Client, arn string, version string, wait, pollInterval int) (int, error) {
 	for item := 1; item < wait; item++ {
-		time.Sleep(time.Duration(magic))
+		time.Sleep(time.Duration(pollInterval))
 
-		NewVersion, err := GetVersion(client, arn)
+		NewVersion, err := getVersion(client, arn)
 		if err != nil {
 			continue
 		}
 
-		if NewVersion == &version {
+		if *NewVersion != version {
 			return item, nil
 		}
 
 		log.Print("Not equal")
 	}
 
-	return wait, errors.New("wait expired with no change")
+	return wait, &waitExpiredError{}
 }
 
-// GetVersion gets the version of the IAM policy.
-func GetVersion(client *iam.Client, policyArn string) (*string, error) {
-	output, err := client.GetPolicy(context.TODO(), &iam.GetPolicyInput{PolicyArn: aws.String(policyArn)})
+type waitExpiredError struct{}
+
+func (e *waitExpiredError) Error() string {
+	return "wait expired with no change"
+}
+
+// getVersion gets the version of the IAM policy.
+func getVersion(client *iam.Client, policyArn string) (*string, error) {
+	output, err := client.GetPolicy(context.Background(), &iam.GetPolicyInput{PolicyArn: aws.String(policyArn)})
+
 	if err != nil {
-		return nil, err
+		return nil, &getVersionError{err}
 	}
 
 	return output.Policy.DefaultVersionId, nil
 }
 
-// GetPolicyVersion Obtains the versioned IAM policy.
-func GetPolicyVersion(client *iam.Client, policyArn string, version string) (*string, error) {
+type urlEscapeError struct {
+	err error
+}
+
+func (e *urlEscapeError) Error() string {
+	return fmt.Sprintf("failed to unescape url: %v", e.err)
+}
+
+// getPolicyVersion Obtains the versioned IAM policy.
+func getPolicyVersion(client *iam.Client, policyArn string, version string) (*string, error) {
 	output, err := client.GetPolicyVersion(
-		context.TODO(),
+		context.Background(),
 		&iam.GetPolicyVersionInput{
 			PolicyArn: aws.String(policyArn),
 			VersionId: &version,
 		})
 	if err != nil {
-		return nil, err
+		return nil, &getVersionError{err}
 	}
 
 	Policy, err := url.QueryUnescape(*(output.PolicyVersion.Document))
 	if err != nil {
-		return nil, err
+		return nil, &urlEscapeError{err}
 	}
 
-	fixed, err := SortActions(Policy)
+	fixed, err := sortActions(Policy)
 	if err != nil {
-		return nil, err
+		return nil, &sortActionsError{Policy}
 	}
 
 	return fixed, err
 }
 
-// SortActions sorts the actions list of an IAM policy.
-func SortActions(myPolicy string) (*string, error) {
+type castToListOfInterfaceError struct{}
+
+func (e *castToListOfInterfaceError) Error() string {
+	return "failed to convert to list of interfaces"
+}
+
+// sortActions sorts the actions list of an IAM policy.
+func sortActions(myPolicy string) (*string, error) {
 	var raw map[string]interface{}
 	err := json.Unmarshal([]byte(myPolicy), &raw)
+
 	if err != nil {
-		return nil, err
+		return nil, &unmarshallJSONError{err, myPolicy}
 	}
 
 	Statements, ok := raw["Statement"].([]interface{})
 
 	if !ok {
-		return nil, fmt.Errorf("failed to assert list of interface for Statements")
+		return nil, &castToListOfInterfaceError{}
 	}
 
 	var NewStatements []interface{}
@@ -123,20 +160,18 @@ func SortActions(myPolicy string) (*string, error) {
 		}
 
 		Actions := blocked["Action"]
-		myType := reflect.TypeOf(Actions)
 
-		switch myType.Kind() {
-		case reflect.String:
-			// do nothing
-		case reflect.Slice:
-			theActions := sortInterfaceStrings(Actions)
+		switch v := Actions.(type) {
+		case string:
+			// handle string case
+		case []interface{}:
+			theActions := sortInterfaceStrings(v)
 
 			if theActions != nil {
 				blocked["Action"] = theActions
 			}
-
 		default:
-			log.Print(myType.Kind())
+			log.Print(reflect.TypeOf(v).Kind())
 		}
 
 		NewStatements = append(NewStatements, block)
@@ -147,9 +182,14 @@ func SortActions(myPolicy string) (*string, error) {
 	}
 
 	fixed, err := json.Marshal(raw)
+
+	if err != nil {
+		return nil, &marshallPolicyError{err}
+	}
+
 	result := string(fixed)
 
-	return &result, err
+	return &result, nil
 }
 
 func sortInterfaceStrings(actions interface{}) []string {
@@ -177,4 +217,20 @@ func sortInterfaceStrings(actions interface{}) []string {
 	sort.Strings(myActions)
 
 	return myActions
+}
+
+type getVersionError struct {
+	err error
+}
+
+func (e *getVersionError) Error() string {
+	return fmt.Sprintf("failed to get version %v", e.err)
+}
+
+type waitForPolicyChangeError struct {
+	err error
+}
+
+func (e *waitForPolicyChangeError) Error() string {
+	return fmt.Sprintf("failed to wait for policy change %v", e.err)
 }

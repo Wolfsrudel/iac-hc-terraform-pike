@@ -1,0 +1,14 @@
+[
+  {
+    "apply": [],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "certificatemanager.dnsauthorizations.list",
+      "iap.webServices.getIamPolicy"
+    ]
+  }
+]

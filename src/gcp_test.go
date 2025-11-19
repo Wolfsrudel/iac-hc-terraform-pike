@@ -1,17 +1,17 @@
-package pike_test
+package pike
 
 import (
+	"errors"
+	"fmt"
 	"reflect"
 	"testing"
-
-	pike "github.com/jameswoolfenden/pike/src"
 )
 
 func TestGetGCPPermissions(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		result pike.ResourceV2
+		result ResourceV2
 	}
 
 	tests := []struct {
@@ -21,21 +21,23 @@ func TestGetGCPPermissions(t *testing.T) {
 		wantErr bool
 	}{
 		{name: "missing", args: args{
-			result: pike.ResourceV2{
+			result: ResourceV2{
 				TypeName: "bogus", Name: "bogus",
 			},
 		}, wantErr: true},
 		{name: "notype", args: args{
-			result: pike.ResourceV2{
-				TypeName: "bogus", Name: "google_compute_duff", ResourceName: "pike", Provider: "azurerm", Attributes: []string{
+			result: ResourceV2{
+				TypeName: "bogus", Name: "google_compute_duff", ResourceName: "pike", Provider: "azurerm",
+				Attributes: []string{
 					"name",
 					"machine_type", "zone",
 				},
 			},
 		}, wantErr: true},
 		{name: "not implemented", args: args{
-			result: pike.ResourceV2{
-				TypeName: "data", Name: "google_compute_duff", ResourceName: "pike", Provider: "azurerm", Attributes: []string{
+			result: ResourceV2{
+				TypeName: "data", Name: "google_compute_duff", ResourceName: "pike", Provider: "azurerm",
+				Attributes: []string{
 					"name",
 					"machine_type", "zone",
 				},
@@ -44,7 +46,7 @@ func TestGetGCPPermissions(t *testing.T) {
 		{
 			name: "resource",
 			args: args{
-				result: pike.ResourceV2{
+				result: ResourceV2{
 					TypeName: "resource", Name: "google_compute_instance",
 					Attributes: []string{"name", "machine_type", "zone"},
 				},
@@ -59,6 +61,7 @@ func TestGetGCPPermissions(t *testing.T) {
 				"compute.subnetworks.useExternalIp",
 				"compute.instances.setMetadata",
 				"compute.instances.delete",
+				"compute.instances.get",
 				"compute.instances.delete",
 			},
 		},
@@ -68,14 +71,17 @@ func TestGetGCPPermissions(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got, err := pike.GetGCPPermissions(tt.args.result)
+
+			got, err := getGCPPermissions(tt.args.result)
+
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GetGCPPermissions() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("getGCPPermissions() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetGCPPermissions() = %v, want %v", got, tt.want)
+				t.Errorf("getGCPPermissions() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -85,7 +91,7 @@ func TestGetGCPResourcePermissions(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		result pike.ResourceV2
+		result ResourceV2
 	}
 
 	tests := []struct {
@@ -94,10 +100,10 @@ func TestGetGCPResourcePermissions(t *testing.T) {
 		want    []string
 		wantErr bool
 	}{
-		{name: "missing", args: args{result: pike.ResourceV2{TypeName: "bogus", Name: "bogus"}}},
+		{name: "missing", args: args{result: ResourceV2{TypeName: "bogus", Name: "bogus"}}},
 		{
 			name: "resource",
-			args: args{result: pike.ResourceV2{TypeName: "resource", Name: "google_compute_instance", Attributes: []string{
+			args: args{result: ResourceV2{TypeName: "resource", Name: "google_compute_instance", Attributes: []string{
 				"name",
 				"machine_type", "zone",
 			}}},
@@ -111,6 +117,7 @@ func TestGetGCPResourcePermissions(t *testing.T) {
 				"compute.subnetworks.useExternalIp",
 				"compute.instances.setMetadata",
 				"compute.instances.delete",
+				"compute.instances.get",
 				"compute.instances.delete",
 			},
 		},
@@ -120,8 +127,80 @@ func TestGetGCPResourcePermissions(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			if got, _ := pike.GetGCPResourcePermissions(tt.args.result); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetGCPResourcePermissions() = %v, want %v", got, tt.want)
+
+			if got, _ := getGCPResourcePermissions(tt.args.result); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("getGCPResourcePermissions() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInvalidGCPResourceError(t *testing.T) {
+	tests := []struct {
+		name     string
+		resource string
+		want     string
+	}{
+		{
+			name:     "empty resource",
+			resource: "",
+			want:     "Invalid GCP lookup sourceData type for resource ",
+		},
+		{
+			name:     "valid resource",
+			resource: "google_storage_bucket",
+			want:     "Invalid GCP lookup sourceData type for resource google_storage_bucket",
+		},
+		{
+			name:     "special characters",
+			resource: "test*&^%",
+			want:     "Invalid GCP lookup sourceData type for resource test*&^%",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := invalidGCPResourceError{resource: tt.resource}
+			if got := err.Error(); got != tt.want {
+				t.Errorf("invalidGCPResourceError.Error() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInvalidPermissionMapError(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		err  error
+		want string
+	}{
+		{
+			name: "nil error",
+			err:  nil,
+			want: "Invalid Permission Map <nil>",
+		},
+		{
+			name: "simple error",
+			err:  errors.New("permission denied"),
+			want: "Invalid Permission Map permission denied",
+		},
+		{
+			name: "wrapped error",
+			err:  fmt.Errorf("wrapped: %w", errors.New("inner error")),
+			want: "Invalid Permission Map wrapped: inner error",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			err := invalidPermissionMapError{err: tt.err}
+
+			if got := err.Error(); got != tt.want {
+				t.Errorf("invalidPermissionMapError.Error() = %v, want %v", got, tt.want)
 			}
 		})
 	}

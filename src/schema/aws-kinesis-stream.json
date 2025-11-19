@@ -1,9 +1,25 @@
 {
+  "$comment": "Do not set SystemTags to true without implementing a fail-open mechanism. It should not fail when adding systemTags for customers without AddTagsToStream Permission. Cloudformation will automatically add system tags even if customer does not have the AddTagsToStream permission. COE: https://www.coe.a2z.com/coe/236297/content",
   "additionalProperties": false,
   "createOnlyProperties": [
     "/properties/Name"
   ],
   "definitions": {
+    "EnhancedMetric": {
+      "additionalProperties": false,
+      "description": "Value of an enhanced metric",
+      "enum": [
+        "IncomingBytes",
+        "IncomingRecords",
+        "OutgoingBytes",
+        "OutgoingRecords",
+        "WriteProvisionedThroughputExceeded",
+        "ReadProvisionedThroughputExceeded",
+        "IteratorAgeMilliseconds",
+        "ALL"
+      ],
+      "type": "string"
+    },
     "StreamEncryption": {
       "additionalProperties": false,
       "description": "When specified, enables or updates server-side encryption using an AWS KMS key for a specified stream. Removing this property from your stack template and updating your stack disables encryption.",
@@ -141,6 +157,16 @@
       "description": "The Amazon resource name (ARN) of the Kinesis stream",
       "type": "string"
     },
+    "DesiredShardLevelMetrics": {
+      "description": "The final list of shard-level metrics",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/EnhancedMetric"
+      },
+      "maxItems": 7,
+      "type": "array",
+      "uniqueItems": true
+    },
     "Name": {
       "description": "The name of the Kinesis stream.",
       "maxLength": 128,
@@ -186,6 +212,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-kinesis.git",
   "tagging": {
     "cloudFormationSystemTags": false,
+    "permissions": [
+      "kinesis:AddTagsToStream",
+      "kinesis:RemoveTagsFromStream",
+      "kinesis:ListTagsForStream"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

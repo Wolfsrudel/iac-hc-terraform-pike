@@ -13,6 +13,9 @@
         "BounceAction": {
           "$ref": "#/definitions/BounceAction"
         },
+        "ConnectAction": {
+          "$ref": "#/definitions/ConnectAction"
+        },
         "LambdaAction": {
           "$ref": "#/definitions/LambdaAction"
         },
@@ -42,8 +45,8 @@
         }
       },
       "required": [
-        "HeaderName",
-        "HeaderValue"
+        "HeaderValue",
+        "HeaderName"
       ],
       "type": "object"
     },
@@ -70,6 +73,22 @@
         "Sender",
         "SmtpReplyCode",
         "Message"
+      ],
+      "type": "object"
+    },
+    "ConnectAction": {
+      "additionalProperties": false,
+      "properties": {
+        "IAMRoleARN": {
+          "type": "string"
+        },
+        "InstanceARN": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "InstanceARN",
+        "IAMRoleARN"
       ],
       "type": "object"
     },
@@ -127,6 +146,9 @@
       "additionalProperties": false,
       "properties": {
         "BucketName": {
+          "type": "string"
+        },
+        "IamRoleArn": {
           "type": "string"
         },
         "KmsKeyArn": {
@@ -209,8 +231,8 @@
     "/properties/Id"
   ],
   "required": [
-    "RuleSetName",
-    "Rule"
+    "Rule",
+    "RuleSetName"
   ],
   "typeName": "AWS::SES::ReceiptRule"
 }

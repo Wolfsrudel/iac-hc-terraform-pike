@@ -1,0 +1,61 @@
+[
+  {
+    "apply": [
+      "controltower:ListEnabledControls",
+      "controltower:GetEnabledControl",
+      "controltower:GetControlOperation",
+      "controltower:EnableControl",
+      "controltower:DisableControl",
+      "controltower:UpdateEnabledControl",
+      "organizations:DeletePolicy",
+      "organizations:UpdatePolicy",
+      "organizations:CreatePolicy",
+      "organizations:AttachPolicy",
+      "organizations:DetachPolicy",
+      "organizations:ListPoliciesForTarget",
+      "organizations:ListTargetsForPolicy",
+      "controltower:ListTagsForResource",
+      "organizations:DescribePolicy"
+    ],
+    "attributes": {
+      "tags": [
+        "controltower:TagResource",
+        "controltower:UntagResource"
+      ]
+    },
+    "destroy": [
+      "controltower:ListEnabledControls",
+      "controltower:GetEnabledControl",
+      "controltower:GetControlOperation",
+      "controltower:DisableControl",
+      "organizations:UpdatePolicy",
+      "organizations:DeletePolicy",
+      "organizations:CreatePolicy",
+      "organizations:AttachPolicy",
+      "organizations:DetachPolicy",
+      "organizations:ListPoliciesForTarget",
+      "organizations:ListTargetsForPolicy",
+      "organizations:DescribePolicy",
+      "controltower:ListTagsForResource"
+    ],
+    "modify": [
+      "controltower:ListEnabledControls",
+      "controltower:GetEnabledControl",
+      "controltower:GetControlOperation",
+      "controltower:UpdateEnabledControl",
+      "organizations:UpdatePolicy",
+      "organizations:CreatePolicy",
+      "organizations:AttachPolicy",
+      "organizations:DetachPolicy",
+      "organizations:ListPoliciesForTarget",
+      "organizations:ListTargetsForPolicy",
+      "organizations:DescribePolicy",
+      "controltower:ListTagsForResource"
+    ],
+    "plan": [
+      "controltower:ListEnabledControls",
+      "controltower:GetEnabledControl",
+      "controltower:ListTagsForResource"
+    ]
+  }
+]

@@ -4,15 +4,106 @@
     "/properties/CollaborationIdentifier"
   ],
   "definitions": {
+    "MembershipJobComputePaymentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "IsResponsible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "IsResponsible"
+      ],
+      "type": "object"
+    },
+    "MembershipJobLogStatus": {
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
+    },
+    "MembershipMLPaymentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "ModelInference": {
+          "$ref": "#/definitions/MembershipModelInferencePaymentConfig"
+        },
+        "ModelTraining": {
+          "$ref": "#/definitions/MembershipModelTrainingPaymentConfig"
+        }
+      },
+      "type": "object"
+    },
+    "MembershipModelInferencePaymentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "IsResponsible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "IsResponsible"
+      ],
+      "type": "object"
+    },
+    "MembershipModelTrainingPaymentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "IsResponsible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "IsResponsible"
+      ],
+      "type": "object"
+    },
     "MembershipPaymentConfiguration": {
       "additionalProperties": false,
       "properties": {
+        "JobCompute": {
+          "$ref": "#/definitions/MembershipJobComputePaymentConfig"
+        },
+        "MachineLearning": {
+          "$ref": "#/definitions/MembershipMLPaymentConfig"
+        },
         "QueryCompute": {
           "$ref": "#/definitions/MembershipQueryComputePaymentConfig"
         }
       },
       "required": [
         "QueryCompute"
+      ],
+      "type": "object"
+    },
+    "MembershipProtectedJobOutputConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "S3": {
+          "$ref": "#/definitions/ProtectedJobS3OutputConfigurationInput"
+        }
+      },
+      "required": [
+        "S3"
+      ],
+      "type": "object"
+    },
+    "MembershipProtectedJobResultConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "OutputConfiguration": {
+          "$ref": "#/definitions/MembershipProtectedJobOutputConfiguration"
+        },
+        "RoleArn": {
+          "maxLength": 512,
+          "minLength": 32,
+          "type": "string"
+        }
+      },
+      "required": [
+        "OutputConfiguration",
+        "RoleArn"
       ],
       "type": "object"
     },
@@ -72,6 +163,23 @@
       ],
       "type": "string"
     },
+    "ProtectedJobS3OutputConfigurationInput": {
+      "additionalProperties": false,
+      "properties": {
+        "Bucket": {
+          "maxLength": 63,
+          "minLength": 3,
+          "type": "string"
+        },
+        "KeyPrefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Bucket"
+      ],
+      "type": "object"
+    },
     "ProtectedQueryS3OutputConfiguration": {
       "additionalProperties": false,
       "properties": {
@@ -85,6 +193,9 @@
         },
         "ResultFormat": {
           "$ref": "#/definitions/ResultFormat"
+        },
+        "SingleFileOutput": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -213,8 +324,14 @@
       "pattern": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
       "type": "string"
     },
+    "DefaultJobResultConfiguration": {
+      "$ref": "#/definitions/MembershipProtectedJobResultConfiguration"
+    },
     "DefaultResultConfiguration": {
       "$ref": "#/definitions/MembershipProtectedQueryResultConfiguration"
+    },
+    "JobLogStatus": {
+      "$ref": "#/definitions/MembershipJobLogStatus"
     },
     "MembershipIdentifier": {
       "maxLength": 36,
@@ -250,6 +367,11 @@
   ],
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "cleanrooms:ListTagsForResource",
+      "cleanrooms:UntagResource",
+      "cleanrooms:TagResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

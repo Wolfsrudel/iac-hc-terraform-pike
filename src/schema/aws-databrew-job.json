@@ -2,8 +2,7 @@
   "additionalProperties": false,
   "createOnlyProperties": [
     "/properties/Name",
-    "/properties/Type",
-    "/properties/Tags"
+    "/properties/Type"
   ],
   "definitions": {
     "AllowedStatistics": {
@@ -468,6 +467,7 @@
       "permissions": [
         "databrew:CreateProfileJob",
         "databrew:CreateRecipeJob",
+        "databrew:DescribeJob",
         "databrew:TagResource",
         "databrew:UntagResource",
         "iam:PassRole"
@@ -488,7 +488,6 @@
     "read": {
       "permissions": [
         "databrew:DescribeJob",
-        "databrew:ListTagsForResource",
         "iam:ListRoles"
       ]
     },
@@ -496,6 +495,8 @@
       "permissions": [
         "databrew:UpdateProfileJob",
         "databrew:UpdateRecipeJob",
+        "databrew:TagResource",
+        "databrew:UntagResource",
         "iam:PassRole"
       ]
     }
@@ -627,6 +628,17 @@
     "Type"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-databrew.git",
-  "taggable": true,
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "databrew:TagResource",
+      "databrew:UntagResource",
+      "databrew:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::DataBrew::Job"
 }

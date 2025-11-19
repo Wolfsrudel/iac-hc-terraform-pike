@@ -336,6 +336,9 @@
         "JA3Fingerprint": {
           "$ref": "#/definitions/JA3Fingerprint"
         },
+        "JA4Fingerprint": {
+          "$ref": "#/definitions/JA4Fingerprint"
+        },
         "JsonBody": {
           "$ref": "#/definitions/JsonBody"
         },
@@ -371,6 +374,9 @@
             "Name"
           ],
           "type": "object"
+        },
+        "UriFragment": {
+          "$ref": "#/definitions/UriFragment"
         },
         "UriPath": {
           "description": "The path component of the URI of a web request. This is the part of a web request that identifies a resource, for example, /images/daily-ad.jpg.",
@@ -533,6 +539,23 @@
     "JA3Fingerprint": {
       "additionalProperties": false,
       "description": "Includes the JA3 fingerprint of a web request.",
+      "properties": {
+        "FallbackBehavior": {
+          "enum": [
+            "MATCH",
+            "NO_MATCH"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "FallbackBehavior"
+      ],
+      "type": "object"
+    },
+    "JA4Fingerprint": {
+      "additionalProperties": false,
+      "description": "Includes the JA4 fingerprint of a web request.",
       "properties": {
         "FallbackBehavior": {
           "enum": [
@@ -768,6 +791,12 @@
         "IP": {
           "$ref": "#/definitions/RateLimitIP"
         },
+        "JA3Fingerprint": {
+          "$ref": "#/definitions/RateLimitJA3Fingerprint"
+        },
+        "JA4Fingerprint": {
+          "$ref": "#/definitions/RateLimitJA4Fingerprint"
+        },
         "LabelNamespace": {
           "$ref": "#/definitions/RateLimitLabelNamespace"
         },
@@ -785,7 +814,7 @@
     },
     "RateLimit": {
       "maximum": 2000000000,
-      "minimum": 100,
+      "minimum": 10,
       "type": "integer"
     },
     "RateLimitCookie": {
@@ -846,6 +875,40 @@
     },
     "RateLimitIP": {
       "description": "Specifies the IP address in the web request as an aggregate key for a rate-based rule.",
+      "type": "object"
+    },
+    "RateLimitJA3Fingerprint": {
+      "additionalProperties": false,
+      "description": "Specifies the request's JA3 fingerprint as an aggregate key for a rate-based rule.",
+      "properties": {
+        "FallbackBehavior": {
+          "enum": [
+            "MATCH",
+            "NO_MATCH"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "FallbackBehavior"
+      ],
+      "type": "object"
+    },
+    "RateLimitJA4Fingerprint": {
+      "additionalProperties": false,
+      "description": "Specifies the request's JA4 fingerprint as an aggregate key for a rate-based rule.",
+      "properties": {
+        "FallbackBehavior": {
+          "enum": [
+            "MATCH",
+            "NO_MATCH"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "FallbackBehavior"
+      ],
       "type": "object"
     },
     "RateLimitLabelNamespace": {
@@ -1290,6 +1353,20 @@
       ],
       "type": "string"
     },
+    "UriFragment": {
+      "additionalProperties": false,
+      "description": "The path component of the URI Fragment. This is the part of a web request that identifies a fragment uri, for example, /abcd#introduction",
+      "properties": {
+        "FallbackBehavior": {
+          "enum": [
+            "MATCH",
+            "NO_MATCH"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "VisibilityConfig": {
       "additionalProperties": false,
       "description": "Visibility Metric of the RuleGroup.",
@@ -1372,6 +1449,8 @@
     },
     "update": {
       "permissions": [
+        "wafv2:TagResource",
+        "wafv2:UntagResource",
         "wafv2:UpdateRuleGroup",
         "wafv2:GetRuleGroup",
         "wafv2:ListTagsForResource"
@@ -1455,10 +1534,11 @@
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-wafv2.git",
   "tagging": {
-    "cloudFormationSystemTags": false,
-    "tagOnCreate": false,
-    "tagUpdatable": false,
-    "taggable": false
+    "cloudFormationSystemTags": true,
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
   },
   "typeName": "AWS::WAFv2::RuleGroup"
 }

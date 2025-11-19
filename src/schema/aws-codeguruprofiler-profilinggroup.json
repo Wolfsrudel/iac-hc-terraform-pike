@@ -81,18 +81,23 @@
     "list": {
       "permissions": [
         "codeguru-profiler:ListProfilingGroups",
-        "codeguru-profiler:ListTagsForResource"
+        "codeguru-profiler:ListTagsForResource",
+        "codeguru-profiler:GetNotificationConfiguration",
+        "codeguru-profiler:GetPolicy"
       ]
     },
     "read": {
       "permissions": [
         "codeguru-profiler:DescribeProfilingGroup",
-        "codeguru-profiler:ListTagsForResource"
+        "codeguru-profiler:ListTagsForResource",
+        "codeguru-profiler:GetNotificationConfiguration",
+        "codeguru-profiler:GetPolicy"
       ]
     },
     "update": {
       "permissions": [
         "sns:Publish",
+        "codeguru-profiler:DescribeProfilingGroup",
         "codeguru-profiler:AddNotificationChannels",
         "codeguru-profiler:GetNotificationConfiguration",
         "codeguru-profiler:RemoveNotificationChannel",
@@ -172,5 +177,17 @@
     "ProfilingGroupName"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-codeguru-profiler",
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "codeguru-profiler:TagResource",
+      "codeguru-profiler:ListTagsForResource",
+      "codeguru-profiler:UntagResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::CodeGuruProfiler::ProfilingGroup"
 }

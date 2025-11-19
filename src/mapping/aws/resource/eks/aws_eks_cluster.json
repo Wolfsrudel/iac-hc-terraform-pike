@@ -2,13 +2,28 @@
   {
     "apply": [
       "ec2:DescribeAccountAttributes",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs",
+      "eks:CreateAccessEntry",
       "eks:CreateCluster",
       "eks:DeleteCluster",
+      "eks:DescribeCluster",
       "eks:ListTagsForResource",
+      "eks:UpdateClusterConfig",
+      "iam:AddRoleToInstanceProfile",
+      "iam:DeleteInstanceProfile",
+      "iam:GetInstanceProfile",
       "iam:PassRole",
-      "eks:DescribeCluster"
+      "iam:RemoveRoleFromInstanceProfile",
+      "iam:TagInstanceProfile",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs"
     ],
     "attributes": {
+      "key_arn": [
+        "kms:DescribeKey",
+        "kms:CreateGrant"
+      ],
       "tags": [
         "eks:TagResource",
         "eks:UntagResource"

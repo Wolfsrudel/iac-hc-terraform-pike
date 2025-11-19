@@ -1,0 +1,23 @@
+[
+  {
+    "apply": [
+      "workspaces-web:CreateBrowserSettings",
+      "workspaces-web:GetBrowserSettings",
+      "workspaces-web:ListTagsForResource",
+      "workspaces-web:DeleteBrowserSettings"
+    ],
+    "attributes": {
+      "tags": [
+        "workspaces-web:TagResource",
+        "workspaces-web:UntagResource"
+      ]
+    },
+    "destroy": [
+      "workspaces-web:DeleteBrowserSettings"
+    ],
+    "modify": [],
+    "plan": [
+      "workspaces-web:GetBrowserSettings"
+    ]
+  }
+]

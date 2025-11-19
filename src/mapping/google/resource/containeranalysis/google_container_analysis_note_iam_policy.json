@@ -1,0 +1,16 @@
+[
+  {
+    "apply": [
+      "containeranalysis.notes.getIamPolicy",
+      "containeranalysis.notes.setIamPolicy"
+    ],
+    "attributes": {
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": [
+      "containeranalysis.notes.getIamPolicy"
+    ]
+  }
+]

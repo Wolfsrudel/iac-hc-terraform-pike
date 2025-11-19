@@ -1,0 +1,24 @@
+[
+  {
+    "apply": [
+      "ec2:CreateManagedPrefixList",
+      "ec2:DescribeManagedPrefixLists",
+      "ec2:DeleteManagedPrefixList",
+      "ec2:GetManagedPrefixListEntries",
+      "ec2:ModifyManagedPrefixList"
+    ],
+    "attributes": {
+      "tags": [
+        "ec2:CreateTags"
+      ]
+    },
+    "destroy": [
+      "ec2:DeleteManagedPrefixList"
+    ],
+    "modify": [
+      "ec2:GetManagedPrefixListEntries",
+      "ec2:ModifyManagedPrefixList"
+    ],
+    "plan": []
+  }
+]

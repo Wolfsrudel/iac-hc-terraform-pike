@@ -1,7 +1,11 @@
 {
   "additionalProperties": false,
   "createOnlyProperties": [
-    "/properties/EncryptionConfiguration"
+    "/properties/ClientIdsForOIDC",
+    "/properties/EncryptionConfiguration",
+    "/properties/IamIdentityProviderArn",
+    "/properties/IdentityType",
+    "/properties/QuickSightConfiguration"
   ],
   "definitions": {
     "ApplicationStatus": {
@@ -33,6 +37,28 @@
       ],
       "type": "string"
     },
+    "AutoSubscriptionConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "AutoSubscribe": {
+          "$ref": "#/definitions/AutoSubscriptionStatus"
+        },
+        "DefaultSubscriptionType": {
+          "$ref": "#/definitions/SubscriptionType"
+        }
+      },
+      "required": [
+        "AutoSubscribe"
+      ],
+      "type": "object"
+    },
+    "AutoSubscriptionStatus": {
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
+    },
     "EncryptionConfiguration": {
       "additionalProperties": false,
       "properties": {
@@ -43,6 +69,34 @@
         }
       },
       "type": "object"
+    },
+    "IdentityType": {
+      "enum": [
+        "AWS_IAM_IDP_SAML",
+        "AWS_IAM_IDP_OIDC",
+        "AWS_IAM_IDC",
+        "AWS_QUICKSIGHT_IDP"
+      ],
+      "type": "string"
+    },
+    "PersonalizationConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "PersonalizationControlMode": {
+          "$ref": "#/definitions/PersonalizationControlMode"
+        }
+      },
+      "required": [
+        "PersonalizationControlMode"
+      ],
+      "type": "object"
+    },
+    "PersonalizationControlMode": {
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ],
+      "type": "string"
     },
     "QAppsConfiguration": {
       "additionalProperties": false,
@@ -60,6 +114,28 @@
       "enum": [
         "ENABLED",
         "DISABLED"
+      ],
+      "type": "string"
+    },
+    "QuickSightConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "ClientNamespace": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9._-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ClientNamespace"
+      ],
+      "type": "object"
+    },
+    "SubscriptionType": {
+      "enum": [
+        "Q_LITE",
+        "Q_BUSINESS"
       ],
       "type": "string"
     },
@@ -88,6 +164,7 @@
   "handlers": {
     "create": {
       "permissions": [
+        "iam:GetSAMLProvider",
         "iam:PassRole",
         "kms:CreateGrant",
         "kms:DescribeKey",
@@ -95,8 +172,12 @@
         "qbusiness:GetApplication",
         "qbusiness:ListTagsForResource",
         "qbusiness:TagResource",
+        "qbusiness:UpdateApplication",
+        "quicksight:DescribeAccountSubscription",
+        "quicksight:ListNamespaces",
         "sso:CreateApplication",
         "sso:DeleteApplication",
+        "sso:DescribeInstance",
         "sso:PutApplicationAccessScope",
         "sso:PutApplicationAuthenticationMethod",
         "sso:PutApplicationGrant"
@@ -131,6 +212,7 @@
         "qbusiness:UpdateApplication",
         "sso:CreateApplication",
         "sso:DeleteApplication",
+        "sso:DescribeInstance",
         "sso:PutApplicationAccessScope",
         "sso:PutApplicationAuthenticationMethod",
         "sso:PutApplicationGrant"
@@ -156,6 +238,18 @@
     "AttachmentsConfiguration": {
       "$ref": "#/definitions/AttachmentsConfiguration"
     },
+    "AutoSubscriptionConfiguration": {
+      "$ref": "#/definitions/AutoSubscriptionConfiguration"
+    },
+    "ClientIdsForOIDC": {
+      "items": {
+        "maxLength": 255,
+        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9_.:/()*?=-]*$",
+        "type": "string"
+      },
+      "type": "array"
+    },
     "CreatedAt": {
       "format": "date-time",
       "type": "string"
@@ -175,6 +269,12 @@
     "EncryptionConfiguration": {
       "$ref": "#/definitions/EncryptionConfiguration"
     },
+    "IamIdentityProviderArn": {
+      "maxLength": 2048,
+      "minLength": 20,
+      "pattern": "^arn:aws:iam::\\d{12}:(oidc-provider|saml-provider)/[a-zA-Z0-9_\\.\\/@\\-]+$",
+      "type": "string"
+    },
     "IdentityCenterApplicationArn": {
       "maxLength": 1224,
       "minLength": 10,
@@ -187,8 +287,17 @@
       "pattern": "^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}$",
       "type": "string"
     },
+    "IdentityType": {
+      "$ref": "#/definitions/IdentityType"
+    },
+    "PersonalizationConfiguration": {
+      "$ref": "#/definitions/PersonalizationConfiguration"
+    },
     "QAppsConfiguration": {
       "$ref": "#/definitions/QAppsConfiguration"
+    },
+    "QuickSightConfiguration": {
+      "$ref": "#/definitions/QuickSightConfiguration"
     },
     "RoleArn": {
       "maxLength": 1284,
@@ -200,7 +309,6 @@
       "$ref": "#/definitions/ApplicationStatus"
     },
     "Tags": {
-      "insertionOrder": false,
       "items": {
         "$ref": "#/definitions/Tag"
       },
@@ -225,6 +333,15 @@
     "DisplayName"
   ],
   "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "qbusiness:UntagResource",
+      "qbusiness:TagResource",
+      "qbusiness:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
     "taggable": true
   },
   "typeName": "AWS::QBusiness::Application",

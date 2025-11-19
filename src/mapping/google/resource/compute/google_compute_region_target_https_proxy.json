@@ -1,0 +1,20 @@
+[
+  {
+    "apply": [
+      "compute.regionTargetHttpsProxies.create",
+      "compute.regionTargetHttpsProxies.get",
+      "compute.regionTargetHttpsProxies.update",
+      "compute.regionTargetHttpsProxies.delete"
+    ],
+    "attributes": {
+      "ssl_certificates": [
+        "compute.regionSslCertificates.get",
+        "compute.regionTargetHttpsProxies.setSslCertificates"
+      ],
+      "tags": []
+    },
+    "destroy": [],
+    "modify": [],
+    "plan": []
+  }
+]

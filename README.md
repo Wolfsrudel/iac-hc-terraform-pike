@@ -3,58 +3,69 @@
 ![alt text](pike.jfif "Pike")
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/jameswoolfenden/pike/graphs/commit-activity)
-[![Build Status](https://github.com/JamesWoolfenden/pike/workflows/CI/badge.svg?branch=master)](https://github.com/JamesWoolfenden/pike)
+[![CI](https://github.com/JamesWoolfenden/pike/actions/workflows/ci.yml/badge.svg)](https://github.com/JamesWoolfenden/pike/actions/workflows/ci.yml)
 [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/pike.svg)](https://github.com/JamesWoolfenden/pike/releases/latest)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/JamesWoolfenden/pike.svg?label=latest)](https://github.com/JamesWoolfenden/pike/releases/latest)
 ![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.14.0-blue.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![checkov](https://img.shields.io/badge/checkov-verified-brightgreen)](https://www.checkov.io/)
 [![Github All Releases](https://img.shields.io/github/downloads/jameswoolfenden/pike/total.svg)](https://github.com/JamesWoolfenden/pike/releases)
-[![codecov](https://codecov.io/gh/JamesWoolfenden/pike/graph/badge.svg?token=S5SW3BHIQQ)](https://codecov.io/gh/JamesWoolfenden/pike)
+[![codecov](https://codecov.io/gh/JamesWoolfenden/pike/branch/master/graph/badge.svg?token=S5SW3BHIQQ)](https://codecov.io/gh/JamesWoolfenden/pike)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/7032/badge)](https://www.bestpractices.dev/projects/7032)
 
-Pike is a tool to determine the minimum permissions required to run a TF/IAC run:
+Pike is a tool to determine the minimum permissions required to run a TF/IAC run.
 
-Pike currently supports Terraform and supports multiple providers (AWS, GCP, AZURE),
+**What's new?**
+- json modules support.
+- GCP compare, checks IAC permissions required versus a deployed role.
+- Backend detection S3 and GCP.
+
+Pike currently supports Terraform and supports multiple providers (AWS, GCP and AZURE);
 Azure is the newest with AWS having the most supported resources
 <https://github.com/JamesWoolfenden/pike/tree/master/src/mapping>.
 Feel free to submit PR or Issue if you find an issue or even better add new resources, and then I'll take a look at
 merging it ASAP.
 
-**CAVEAT** The outputs of this tool are your first step, if you have AWS, you can now generate resources partially, there are no conditions and even partial resources are wildcarded (for now).
-(for AWS)
-**best practice** would go further (and I am working on it as well), you will need to modify these permissions to the minimum required in your environment by adding these
-restrictions, you can also deploy using short-lived credentials (using this tool or Vault) (in AWS so far), generating short-lived credentials for your build
+**CAVEAT** The outputs of this tool are your first step, if you have AWS, you can now generate resources partially,
+there are no conditions and even partial resources are wild-carded (for now).
+(for AWS)minimum
+**best practice** would go further (and I am working on it as well), you will need to modify these permissions to the
+required in your environment by adding these
+restrictions, you can also deploy using short-lived credentials (using this tool or Vault) (in AWS so far), generating
+short-lived credentials for your build
 and then remotely (REMOTE) supply and invoke your builds (INVOKE).
 
-Ideally I would like to do this for you, but these policies are currently determined statically (QUICKER), and unrecorded intentions can be impossible to infer.
+Ideally I would like to do this for you, but these policies are currently determined statically (QUICKER), and
+unrecorded intentions can be impossible to infer.
 
 ## Table of Contents
 
 <!--toc:start-->
+
 - [Pike](#pike)
-  - [Table of Contents](#table-of-contents)
-  - [Install](#install)
-    - [MacOS](#macos)
-    - [Windows](#windows)
-    - [Docker](#docker)
-  - [Usage](#usage)
-    - [Scan](#scan)
-    - [Output](#output)
-    - [Make](#make)
-    - [Invoke](#invoke)
-    - [Inspect](#inspect)
-    - [Apply](#apply)
-    - [Remote](#remote)
-    - [Readme](#readme)
-    - [Pull](#pull)
-  - [Compare](#compare)
-  - [Help](#help)
-  - [Building](#building)
-  - [Extending](#extending)
-    - [Add Import mapping file](#add-import-mapping-file)
-    - [Add to provider Scan](#add-to-provider-scan)
-  - [Related Tools](#related-tools)
+    - [Table of Contents](#table-of-contents)
+    - [Install](#install)
+        - [MacOS](#macos)
+        - [Windows](#windows)
+        - [Docker](#docker)
+    - [Usage](#usage)
+        - [Scan](#scan)
+        - [Output](#output)
+        - [Make](#make)
+        - [Invoke](#invoke)
+        - [Inspect](#inspect)
+        - [Apply](#apply)
+        - [Remote](#remote)
+        - [Readme](#readme)
+        - [Pull](#pull)
+    - [Compare](#compare)
+    - [Help](#help)
+    - [Building](#building)
+    - [Extending](#extending)
+        - [Add Import mapping file](#add-import-mapping-file)
+        - [Add to provider Scan](#add-to-provider-scan)
+    - [Related Tools](#related-tools)
+
 <!--toc:end-->
 
 ## Install
@@ -360,7 +371,7 @@ on:
       - master
 ```
 
-To authenticate the GitHub API you will need to set you GitHub Personal Access Token, as the environment variable
+To authenticate with the GitHub API, you will need to set your GitHub Personal Access Token, as the environment variable
 *GITHUB_TOKEN*
 
 To Invoke a workflow, it is then:
@@ -371,7 +382,7 @@ pike invoke -workflow master.yml -branch master -repository JamesWoolfenden/terr
 
 I created Invoke to be used in tandem with the new remote command which supplies temporary credentials to a workflow.
 
-**Note The GitHub API is rate limited, usually 5000 calls per hour.
+**Note The GitHub API is rate-limited, usually 5000 calls per hour.
 
 ```shell
 pike make -d ./module/aws/terraform-aws-s3/example/examplea
@@ -408,7 +419,7 @@ This looks in the readme for the deliminators:
 <!-- END OF PRE-COMMIT-PIKE DOCS HOOK -->
 ```
 
-and replaces is either with json or Terraform like so:
+and replaces is either with JSON or Terraform like so:
 
 ```markdown
 This is the policy required to build this project:
@@ -468,6 +479,8 @@ You can see an example here <https://github.com/jamesWoolfenden/terraform-aws-ac
 ## Compare
 
 Want to check your deployed IAM policy against your IAC requirement?
+
+This works for AWS and GCP.
 
 >$./pike compare -d ../modules/aws/terraform-aws-appsync -a arn:aws:iam::680235478471:policy/basic
 
@@ -548,7 +561,7 @@ IAM Policy arn:aws:iam::680235478471:policy/basic versus Local ../modules/aws/te
 ## Pull
 
 Pull adds the ability to work with Git repositories (thanks to **go-git**),
-to output the required permissions in json or Terraform:
+to output the required permissions in JSON or Terraform:
 
 ```bash
 ./pike  pull
@@ -759,7 +772,7 @@ Make build
 
 ## Inspect
 
-This new feature is in *beta*, and is not yet fully supported and currently only for AWS.
+This new feature is in *beta* and is not yet fully supported and currently only for AWS.
 When Pike is run with inspect, it will scan your code and output a policy that is required to deploy the code, as normal,
 but it will also detect the running IAM credentials.
 It will then report on the overlap between the running credentials and the minimum policy.
@@ -850,22 +863,23 @@ e.g. *aws_security_group.json*
 
 Datasources are the easiest to start with, I have a script (resource.ps1 - add pwsh with **brew install --cask powershell**)
 that creates a blank mapping file and tf
-resource, but you've seen the example json file - make one without any entries.
-You also need to create a minimal resource/datasource, that you are trying to figure out the permissions for, and place it in the correct dir
+resource, but you've seen the example JSON file - make one without any entries.
+You also need to create a minimal resource/datasource, that you are trying to figure out the permissions for, and place
+it in the correct dir
 e.g../terraform/aws, I have a script for making a profile for the profile in the role directory.
 You can then tf using the empty role against the resource/datasource with no permissions.
 The debug output from the tf run will help you figure out the permissions you need to add to your basic role.
 You then update your "basic" role.
 
 Issues?
-The providers don't always tell you want you need to add,
+The providers, don't always tell you what you need to add,
 you will need to check the IAM docs and the online IAM policymakers.
-Not all resource are as easy as others, anything that make/scripts CF internally.
+Not all resources are as easy as others, anything that make/scripts CF internally.
 Some roles require *Passrole* and *CreateLinkedRole* but won't say so. Trail and error
 
-#### What about "attributes" ?
+#### What about "attributes"?
 
-Some cloud providers require extra permissions depending on the attributes you add, this is how this is handled.
+Some cloud providers require extra permissions depending on the attributes you add; this is how this is handled.
 Build out your tf resources to cover all reasonable scenarios.
 
 #### Eventual consistency
@@ -885,7 +899,7 @@ var securityGroup []byte
 
 ### Add to provider Scan
 
-Once you have added the json import above you just need to update the lookup table,
+Once you have added the JSON import, as above, you then need to update the lookup table,
 so we can read it and get the permissions:
 
 ```txt

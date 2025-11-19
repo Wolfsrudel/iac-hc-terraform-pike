@@ -41,7 +41,7 @@ func TestWaitForPolicyChange(t *testing.T) {
 		Wait    int
 	}
 
-	cfg, _ := config.LoadDefaultConfig(context.TODO())
+	cfg, _ := config.LoadDefaultConfig(context.Background())
 	client := iam.NewFromConfig(cfg)
 
 	tests := []struct {
@@ -55,7 +55,7 @@ func TestWaitForPolicyChange(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := WaitForPolicyChange(tt.args.client, tt.args.arn, tt.args.Version, tt.args.Wait)
+			got, err := waitForPolicyChange(tt.args.client, tt.args.arn, tt.args.Version, tt.args.Wait, pollIntervalSeconds)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("WaitForPolicyChange() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -72,7 +72,7 @@ func TestGetVersion(t *testing.T) {
 		client    *iam.Client
 		PolicyArn string
 	}
-	cfg, _ := config.LoadDefaultConfig(context.TODO())
+	cfg, _ := config.LoadDefaultConfig(context.Background())
 	client := iam.NewFromConfig(cfg)
 	want := "v1"
 	tests := []struct {
@@ -86,7 +86,7 @@ func TestGetVersion(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetVersion(tt.args.client, tt.args.PolicyArn)
+			got, err := getVersion(tt.args.client, tt.args.PolicyArn)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetVersion() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -104,7 +104,7 @@ func TestGetPolicyVersion(t *testing.T) {
 		PolicyArn string
 		Version   string
 	}
-	cfg, _ := config.LoadDefaultConfig(context.TODO())
+	cfg, _ := config.LoadDefaultConfig(context.Background())
 	client := iam.NewFromConfig(cfg)
 	wantPass := "{\"Statement\":[{\"Action\":\"s3:*\",\"Effect\":\"Allow\",\"Resource\":\"*\"," +
 		"\"Sid\":\"VisualEditor0\"}],\"Version\":\"2012-10-17\"}"
@@ -122,7 +122,7 @@ func TestGetPolicyVersion(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetPolicyVersion(tt.args.client, tt.args.PolicyArn, tt.args.Version)
+			got, err := getPolicyVersion(tt.args.client, tt.args.PolicyArn, tt.args.Version)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetPolicyVersion() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -155,7 +155,7 @@ func TestSortActions(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := SortActions(tt.args.myPolicy)
+			got, err := sortActions(tt.args.myPolicy)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("SortActions() error = %v, wantErr %v", err, tt.wantErr)
 				return

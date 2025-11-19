@@ -37,7 +37,7 @@
       "items": {
         "$ref": "#/definitions/SchemaInputAttribute"
       },
-      "maxItems": 25,
+      "maxItems": 35,
       "minItems": 2,
       "type": "array"
     },
@@ -216,6 +216,11 @@
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-entity-resolution.git",
   "tagging": {
     "cloudFormationSystemTags": true,
+    "permissions": [
+      "entityresolution:TagResource",
+      "entityresolution:UntagResource",
+      "entityresolution:ListTagsForResource"
+    ],
     "tagOnCreate": true,
     "tagProperty": "/properties/Tags",
     "tagUpdatable": true,

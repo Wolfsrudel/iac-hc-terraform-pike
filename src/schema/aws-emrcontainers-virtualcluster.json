@@ -88,7 +88,8 @@
     },
     "delete": {
       "permissions": [
-        "emr-containers:DeleteVirtualCluster"
+        "emr-containers:DeleteVirtualCluster",
+        "emr-containers:DescribeVirtualCluster"
       ]
     },
     "list": {
@@ -134,6 +135,13 @@
       "pattern": "[\\.\\-_/#A-Za-z0-9]+",
       "type": "string"
     },
+    "SecurityConfigurationId": {
+      "description": "The ID of the security configuration.",
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "[0-9a-z]+",
+      "type": "string"
+    },
     "Tags": {
       "description": "An array of key-value pairs to apply to this virtual cluster.",
       "insertionOrder": false,
@@ -153,5 +161,16 @@
     "ContainerProvider"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "emr-containers:TagResource",
+      "emr-containers:UntagResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::EMRContainers::VirtualCluster"
 }

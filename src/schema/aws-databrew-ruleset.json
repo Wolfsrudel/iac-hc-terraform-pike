@@ -170,6 +170,7 @@
     "create": {
       "permissions": [
         "databrew:CreateRuleset",
+        "databrew:DescribeRuleset",
         "databrew:TagResource",
         "databrew:UntagResource",
         "iam:PassRole"
@@ -190,13 +191,14 @@
     "read": {
       "permissions": [
         "databrew:DescribeRuleset",
-        "databrew:ListTagsForResource",
         "iam:ListRoles"
       ]
     },
     "update": {
       "permissions": [
-        "databrew:UpdateRuleset"
+        "databrew:UpdateRuleset",
+        "databrew:TagResource",
+        "databrew:UntagResource"
       ]
     }
   },
@@ -245,6 +247,17 @@
     "Rules"
   ],
   "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-databrew.git",
-  "taggable": true,
+  "tagging": {
+    "cloudFormationSystemTags": true,
+    "permissions": [
+      "databrew:TagResource",
+      "databrew:UntagResource",
+      "databrew:ListTagsForResource"
+    ],
+    "tagOnCreate": true,
+    "tagProperty": "/properties/Tags",
+    "tagUpdatable": true,
+    "taggable": true
+  },
   "typeName": "AWS::DataBrew::Ruleset"
 }

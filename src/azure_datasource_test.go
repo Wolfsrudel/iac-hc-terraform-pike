@@ -20,16 +20,26 @@ func TestGetAZUREDataPermissions(t *testing.T) {
 		want    []string
 		wantErr bool
 	}{
-		{name: "pass", args: args{
-			result: pike.ResourceV2{
-				TypeName:     "data",
-				Name:         "azurerm_resource_group",
-				ResourceName: "pike",
-				Provider:     "azurerm",
-				Attributes:   []string{"name", "location", "tags"},
+		{
+			name: "pass",
+			args: args{
+				result: pike.ResourceV2{
+					TypeName:     "data",
+					Name:         "azurerm_resource_group",
+					ResourceName: "pike",
+					Provider:     "azurerm",
+					Attributes:   []string{"name", "location", "tags"},
+				},
 			},
-		}, want: []string{"Microsoft.Resources/subscriptions/resourcegroups/read"}},
-		{name: "empty", wantErr: true},
+			want:    []string{"Microsoft.Resources/subscriptions/resourcegroups/read"},
+			wantErr: false,
+		},
+		{
+			name:    "empty",
+			args:    args{},
+			want:    nil,
+			wantErr: true,
+		},
 		{
 			name: "guff",
 			args: args{result: pike.ResourceV2{
@@ -47,12 +57,15 @@ func TestGetAZUREDataPermissions(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
+
 			got, err := pike.GetAZUREDataPermissions(tt.args.result)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAZUREDataPermissions() error = %v, wantErr %v", err, tt.wantErr)
 
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetAZUREDataPermissions() = %v, want %v", got, tt.want)
 			}

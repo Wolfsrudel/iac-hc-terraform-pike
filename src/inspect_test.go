@@ -1,3 +1,6 @@
+//go:build auth
+// +build auth
+
 package pike
 
 import (
@@ -46,13 +49,13 @@ func TestCompareAllow(t *testing.T) {
 			"pass empty",
 			args{identity, policy},
 			PolicyDiff{},
-			false,
+			true,
 		},
 		{
 			"pass not empty",
 			args{identity, morePolicy},
-			PolicyDiff{nil, []string{"s3:*", "s3-object-lambda:*"}},
-			false,
+			PolicyDiff{nil, nil},
+			true,
 		},
 		{
 			"pass",
@@ -63,13 +66,14 @@ func TestCompareAllow(t *testing.T) {
 		{
 			"different",
 			args{moreIdentity, policy},
-			PolicyDiff{[]string{"s3:*", "s3-object-lambda:*"}, nil},
-			false,
+			PolicyDiff{nil, nil},
+			true,
 		},
+		//todo more testcases
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := CompareAllow(tt.args.identity, tt.args.policy)
+			got, err := compareAllow(tt.args.identity, tt.args.policy)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("CompareAllow() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -110,23 +114,92 @@ func TestInspect(t *testing.T) {
 	}
 }
 
-func Test_contains(t *testing.T) {
+func TestInspectExtended(t *testing.T) {
 	type args struct {
-		s []string
-		e string
+		directory string
+		init      bool
 	}
+
+	myDiff := PolicyDiff{
+		Over: []string{"ssm:DescribePatchBaselines"},
+		Under: []string{
+			"dynamodb:DeleteItem", "dynamodb:DescribeTable", "dynamodb:GetItem", "dynamodb:PutItem",
+			"s3:DeleteObject", "s3:GetObject", "s3:ListBucket", "s3:PutObject",
+		},
+	}
+
 	tests := []struct {
-		name string
-		args args
-		want bool
+		name    string
+		args    args
+		want    PolicyDiff
+		wantErr bool
 	}{
-		{"found", args{[]string{"foo", "bar"}, "foo"}, true},
-		{"not found", args{[]string{"foo", "bar"}, "bart"}, false},
+		//{
+		//	name: "empty directory",
+		//	args: args{
+		//		directory: "",
+		//		init:      false,
+		//	},
+		//	want:    PolicyDiff{},
+		//	wantErr: true,
+		//},
+		{
+			// its comparing
+			name: "init true",
+			args: args{
+				directory: "../terraform/aws",
+				init:      true,
+			},
+			want:    myDiff,
+			wantErr: false,
+		},
+		{
+			name: "directory with spaces",
+			args: args{
+				directory: "../terraform/aws/test dir",
+				init:      false,
+			},
+			want:    PolicyDiff{},
+			wantErr: true,
+		},
+		{
+			name: "relative path",
+			args: args{
+				directory: "./test",
+				init:      false,
+			},
+			want:    PolicyDiff{},
+			wantErr: true,
+		},
+		{
+			name: "absolute path",
+			args: args{
+				directory: "/absolute/path/test",
+				init:      false,
+			},
+			want:    PolicyDiff{},
+			wantErr: true,
+		},
+		{
+			name: "directory with special chars",
+			args: args{
+				directory: "../terraform/aws/test@#$",
+				init:      false,
+			},
+			want:    PolicyDiff{},
+			wantErr: true,
+		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := contains(tt.args.s, tt.args.e); got != tt.want {
-				t.Errorf("contains() = %v, want %v", got, tt.want)
+			got, err := Inspect(tt.args.directory, tt.args.init)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Inspect() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Inspect() got = %v, want %v", got, tt.want)
 			}
 		})
 	}

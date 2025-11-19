@@ -445,10 +445,10 @@ var dataGoogleIapAppEngineVersionIamPolicy []byte
 //go:embed mapping/google/data/iap/google_iap_app_engine_service_iam_policy.json
 var dataGoogleIapAppEngineServiceIamPolicy []byte
 
-//go:embed mapping/google/data/iam/google_iam_workload_identity_pool_provider.json
+//go:embed mapping/google/data/iam.googleapis.com/google_iam_workload_identity_pool_provider.json
 var dataGoogleIamWorkloadIdentityPoolProvider []byte
 
-//go:embed mapping/google/data/iam/google_iam_workload_identity_pool.json
+//go:embed mapping/google/data/iam.googleapis.com/google_iam_workload_identity_pool.json
 var dataGoogleIamWorkloadIdentityPool []byte
 
 //go:embed mapping/google/data/dataplex/google_dataplex_asset_iam_policy.json
@@ -567,3 +567,432 @@ var dataGoogleDataformRepositoryIamPolicy []byte
 
 //go:embed mapping/google/data/servicemanagement/google_endpoints_service_iam_policy.json
 var dataGoogleEndpointsServiceIamPolicy []byte
+
+//go:embed mapping/google/data/secretmanager/google_secret_manager_regional_secret.json
+var dataGoogleSecretManagerRegionalSecret []byte
+
+//go:embed mapping/google/data/secretmanager/google_secret_manager_regional_secret_iam_policy.json
+var dataGoogleSecretManagerRegionalSecretIamPolicy []byte
+
+//go:embed mapping/google/data/secretmanager/google_secret_manager_regional_secret_version.json
+var dataGoogleSecretManagerRegionalSecretVersion []byte
+
+//go:embed mapping/google/data/secretmanager/google_secret_manager_regional_secret_version_access.json
+var dataGoogleSecretManagerRegionalSecretVersionAccess []byte
+
+//go:embed mapping/google/data/secretmanager/google_secret_manager_secrets.json
+var dataGoogleSecretManagerRegionalSecrets []byte
+
+//go:embed mapping/google/data/iam/google_service_accounts.json
+var dataGoogleServiceAccounts []byte
+
+//go:embed mapping/google/data/spanner/google_spanner_database.json
+var dataGoogleSpannerDatabase []byte
+
+//go:embed mapping/google/data/storage/google_storage_bucket_objects.json
+var dataGoogleStorageBucketObjects []byte
+
+//go:embed mapping/google/data/storage/google_storage_buckets.json
+var dataGoogleStorageBuckets []byte
+
+//go:embed mapping/google/data/privateca/google_privateca_ca_pool_iam_policy.json
+var dataGooglePrivatecaCaPoolIamPolicy []byte
+
+//go:embed mapping/google/data/privateca/google_privateca_certificate_authority.json
+var dataGooglePrivatecaCertificateAuthority []byte
+
+//go:embed mapping/google/data/privateca/google_privateca_certificate_template_iam_policy.json
+var dataGooglePrivatecaCertificateTemplateIamPolicy []byte
+
+//go:embed mapping/google/data/iam/google_project_iam_custom_role.json
+var dataGoogleProjectIamCustomRole []byte
+
+//go:embed mapping/google/data/iam/google_project_iam_custom_roles.json
+var dataGoogleProjectIamCustomRoles []byte
+
+//go:embed mapping/google/data/privilegedaccessmanager/google_privileged_access_manager_entitlement.json
+var dataGooglePrivilegedAccessManagerEntitlement []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_docker_image.json
+var dataGoogleArtifactRegistryDockerImage []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_locations.json
+var dataGoogleArtifactRegistryLocations []byte
+
+//go:embed mapping/google/data/certificatemanager/google_certificate_manager_certificates.json
+var dataGoogleCertificateManagerCertificates []byte
+
+//go:embed mapping/google/data/composer/google_composer_user_workloads_config_map.json
+var dataGoogleComposerUserWorkloadsConfigMap []byte
+
+//go:embed mapping/google/data/composer/google_composer_user_workloads_secret.json
+var dataGoogleComposerUserWorkloadsSecret []byte
+
+//go:embed mapping/google/data/iam.googleapis.com/google_iam_workload_identity_pool_iam_policy.json
+var dataGoogleIamWorkloadIdentityPoolIamPolicy []byte
+
+//go:embed mapping/google/data/cloudkms/google_kms_key_handle.json
+var dataGoogleKmsKeyHandle []byte
+
+//go:embed mapping/google/data/cloudkms/google_kms_key_handles.json
+var dataGoogleKmsKeyHandles []byte
+
+//go:embed mapping/google/data/cloudkms/google_kms_key_rings.json
+var dataGoogleKmsKeyRings []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_parameter.json
+var dataGoogleParameterManagerParameter []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_parameter_version.json
+var dataGoogleParameterManagerParameterVersion []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_parameter_version_render.json
+var dataGoogleParameterManagerParameterVersionRender []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_parameters.json
+var dataGoogleParameterManagerParameters []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_regional_parameter.json
+var dataGoogleParameterManagerRegionalParameter []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_regional_parameter_version.json
+var dataGoogleParameterManagerRegionalParameterVersion []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_regional_parameter_version_render.json
+var dataGoogleParameterManagerRegionalParameterVersionRender []byte
+
+//go:embed mapping/google/data/parametermanager/google_parameter_manager_regional_parameters.json
+var dataGoogleParameterManagerRegionalParameters []byte
+
+//go:embed mapping/google/data/cloudkms/google_kms_ekm_connection_iam_policy.json
+var dataGoogleEkmConnectionIamPolicy []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_autonomous_database.json
+var dataGoogleOracleDatabaseAutonomousDatabase []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_autonomous_databases.json
+var dataGoogleOracleDatabaseAutonomousDatabases []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_cloud_exadata_infrastructure.json
+var dataGoogleOracleDatabaseCloudExadataInfrastructure []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_cloud_exadata_infrastructures.json
+var dataGoogleOracleDatabaseCloudExadataInfrastructures []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_cloud_vm_cluster.json
+var dataGoogleOracleDatabaseCloudVMCluster []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_cloud_vm_clusters.json
+var dataGoogleOracleDatabaseCloudVMClusters []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_db_nodes.json
+var dataGoogleOracleDatabaseDBNodes []byte
+
+//go:embed mapping/google/data/oracledatabase/google_oracle_database_db_servers.json
+var dataGoogleOracleDatabaseDBServers []byte
+
+//go:embed mapping/google/data/compute/google_compute_forwarding_rules.json
+var dataGoogleComputeForwardingRules []byte
+
+//go:embed mapping/google/data/compute/google_compute_images.json
+var dataGoogleComputeImages []byte
+
+//go:embed mapping/google/data/compute/google_compute_instance_guest_attributes.json
+var dataGoogleComputeInstanceGuestAttributes []byte
+
+//go:embed mapping/google/data/compute/google_compute_instance_template_iam_policy.json
+var dataGoogleComputeInstanceTemplateIamPolicy []byte
+
+//go:embed mapping/google/data/compute/google_compute_instant_snapshot_iam_policy.json
+var dataGoogleComputeInstantSnapshotIamPolicy []byte
+
+//go:embed mapping/google/data/compute/google_compute_machine_types.json
+var dataGoogleComputeMachineTypes []byte
+
+//go:embed mapping/google/data/compute/google_compute_region_backend_service.json
+var dataGoogleComputeRegionBackendService []byte
+
+//go:embed mapping/google/data/compute/google_compute_region_instance_group_manager.json
+var dataGoogleComputeRegionInstanceGroupManager []byte
+
+//go:embed mapping/google/data/compute/google_compute_security_policy.json
+var dataGoogleComputeSecurityPolicy []byte
+
+//go:embed mapping/google/data/compute/google_compute_storage_pool_iam_policy.json
+var dataGoogleComputeStoragePoolIamPolicy []byte
+
+//go:embed mapping/google/data/compute/google_compute_storage_pool_types.json
+var dataGoogleComputeStoragePoolTypes []byte
+
+//go:embed mapping/google/data/compute/google_compute_subnetworks.json
+var dataGoogleComputeSubnetworks []byte
+
+//go:embed mapping/google/data/alloydb/google_alloydb_cluster.json
+var dataGoogleAlloydbCluster []byte
+
+//go:embed mapping/google/data/alloydb/google_alloydb_instance.json
+var dataGoogleAlloydbInstance []byte
+
+//go:embed mapping/google/data/apphub/google_apphub_application.json
+var dataGoogleApphubApplication []byte
+
+//go:embed mapping/google/data/apphub/google_apphub_discovered_service.json
+var dataGoogleApphubDiscoveredService []byte
+
+//go:embed mapping/google/data/apphub/google_apphub_discovered_workload.json
+var dataGoogleApphubDiscoveredWorkload []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_backup.json
+var dataGoogleBackupDrBackup []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_backup_plan_association.json
+var dataGoogleBackupDrPlanAssociation []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_backup_vault.json
+var dataGoogleBackupDrBackupVault []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_data_source.json
+var dataGoogleBackupDrDataSource []byte
+
+//go:embed mapping/google/data/beyondcorp/google_beyondcorp_application_iam_policy.json
+var dataGoogleBeyondcorpApplicationIamPolicy []byte
+
+//go:embed mapping/google/data/beyondcorp/google_beyondcorp_security_gateway.json
+var dataGoogleBeyondcorpSecurityGateway []byte
+
+//go:embed mapping/google/data/beyondcorp/google_beyondcorp_security_gateway_application_iam_policy.json
+var dataGoogleBeyondcorpSecurityGatewayApplicationIamPolicy []byte
+
+//go:embed mapping/google/data/beyondcorp/google_beyondcorp_security_gateway_iam_policy.json
+var dataGoogleBeyondcorpSecurityGatewayIamPolicy []byte
+
+//go:embed mapping/google/data/run/google_cloud_run_v2_worker_pool.json
+var dataGoogleCloudRunV2WorkerPool []byte
+
+//go:embed mapping/google/data/run/google_cloud_run_v2_worker_pool_iam_policy.json
+var dataGoogleCloudRunWorkerPoolIamPolicy []byte
+
+//go:embed mapping/google/data/clouddeploy/google_clouddeploy_custom_target_type_iam_policy.json
+var dataGoogleClouddeployCustomTargetTypeIamPolicy []byte
+
+//go:embed mapping/google/data/clouddeploy/google_clouddeploy_delivery_pipeline_iam_policy.json
+var dataGoogleClouddeployDeliveryPipelineIamPolicy []byte
+
+//go:embed mapping/google/data/clouddeploy/google_clouddeploy_target_iam_policy.json
+var dataGoogleClouddeployTargetIamPolicy []byte
+
+//go:embed mapping/google/data/aiplatform/google_colab_runtime_template_iam_policy.json
+var dataGoogleColabRuntimeTemplateIamPolicy []byte
+
+//go:embed mapping/google/data/gkemulticloud/google_container_attached_install_manifest.json
+var dataGoogleContainerAttachedInstallManifest []byte
+
+//go:embed mapping/google/data/gkemulticloud/google_container_aws_versions.json
+var dataGoogleContainerAwsVersions []byte
+
+//go:embed mapping/google/data/gkemulticloud/google_container_azure_versions.json
+var dataGoogleContainerAzureVersions []byte
+
+//go:embed mapping/google/data/dataplex/google_dataplex_aspect_type_iam_policy.json
+var dataGoogleDataplexAspectTypeIamPolicy []byte
+
+//go:embed mapping/google/data/dataplex/google_dataplex_entry_group_iam_policy.json
+var dataGoogleDataplexEntryGroupIamPolicy []byte
+
+//go:embed mapping/google/data/dataplex/google_dataplex_entry_type_iam_policy.json
+var dataGoogleDataplexEntryTypeIamPolicy []byte
+
+//go:embed mapping/google/data/dataplex/google_dataplex_glossary_iam_policy.json
+var dataGoogleDataplexGlossaryIamPolicy []byte
+
+//go:embed mapping/google/data/metastore/google_dataproc_metastore_database_iam_policy.json
+var dataGoogleDataprocMetastoreDatabaseIamPolicy []byte
+
+//go:embed mapping/google/data/metastore/google_dataproc_metastore_table_iam_policy.json
+var dataGoogleDataprocMetastoreTableIamPolicy []byte
+
+//go:embed mapping/google/data/resourcemanager/google_folder.json
+var dataGoogleFolder []byte
+
+//go:embed mapping/google/data/resourcemanager/google_folder_iam_policy.json
+var dataGoogleFolderIamPolicy []byte
+
+//go:embed mapping/google/data/resourcemanager/google_folders.json
+var dataGoogleFolders []byte
+
+//go:embed mapping/google/data/cloudaicompanion/google_gemini_repository_group_iam_policy.json
+var dataGoogleGeminiRepositoryGroupIamPolicy []byte
+
+//go:embed mapping/google/data/gkehub/google_gke_hub_feature.json
+var dataGoogleGkeHubFeature []byte
+
+//go:embed mapping/google/data/gkehub/google_gke_hub_membership.json
+var dataGoogleGkeHubMembership []byte
+
+//go:embed mapping/google/data/iap/google_iap_tunnel_dest_group_iam_policy.json
+var dataGoogleIapTunnelDestGroupIamPolicy []byte
+
+//go:embed mapping/google/data/iap/google_iap_web_cloud_run_service_iam_policy.json
+var dataGoogleIapWebCloudRunServiceIamPolicy []byte
+
+//go:embed mapping/google/data/lustre/google_lustre_instance.json
+var dataGoogleLustreInstance []byte
+
+//go:embed mapping/google/data/memcache/google_memcache_instance.json
+var dataGoogleMemcacheInstance []byte
+
+//go:embed mapping/google/data/memorystore/google_memorystore_instance.json
+var dataGoogleMemorystoreInstance []byte
+
+//go:embed mapping/google/data/orgpolicy/google_project_organization_policy.json
+var dataGoogleProjectOrganizationPolicy []byte
+
+//go:embed mapping/google/data/resourcemanager/google_organization_iam_policy.json
+var dataGoogleOrganizationIamPolicy []byte
+
+//go:embed mapping/google/data/resourcemanager/google_project_iam_policy.json
+var dataGoogleProjectIamPolicy []byte
+
+//go:embed mapping/google/data/runtimeconfig/google_runtimeconfig_config_iam_policy.json
+var dataGoogleRuntimeconfigConfigIamPolicy []byte
+
+//go:embed mapping/google/data/securitycenter/google_scc_source_iam_policy.json
+var dataGoogleSccSourceIamPolicy []byte
+
+//go:embed mapping/google/data/securitycenter/google_scc_v2_organization_source_iam_policy.json
+var dataGoogleSccV2OrganizationSourceIamPolicy []byte
+
+//go:embed mapping/google/data/securesourcemanager/google_secure_source_manager_instance_iam_policy.json
+var dataGoogleSecureSourceManagerInstanceIamPolicy []byte
+
+//go:embed mapping/google/data/securesourcemanager/google_secure_source_manager_repository_iam_policy.json
+var dataGoogleSecureSourceManagerRepositoryIamPolicy []byte
+
+//go:embed mapping/google/data/resourcemanager/google_tags_tag_key_iam_policy.json
+var dataGoogleTagsTagKeyIamPolicy []byte
+
+//go:embed mapping/google/data/aiplatform/google_vertex_ai_feature_group_iam_policy.json
+var dataGoogleVertexAiFeatureGroupIamPolicy []byte
+
+//go:embed mapping/google/data/aiplatform/google_vertex_ai_feature_online_store_featureview_iam_policy.json
+var dataGoogleVertexAiFeatureOnlineStoreFeatureviewIamPolicy []byte
+
+//go:embed mapping/google/data/tags/google_tags_tag_value_iam_policy.json
+var dataGoogleTagsTagValueIamPolicy []byte
+
+//go:embed mapping/google/data/aiplatform/google_vertex_ai_feature_online_store_iam_policy.json
+var dataGoogleVertexAiFeatureOnlineStoreIamPolicy []byte
+
+//go:embed mapping/google/data/resourcemanager/google_tags_tag_keys.json
+var dataGoogleTagsTagKeys []byte
+
+//go:embed mapping/google/data/resourcemanager/google_tags_tag_value.json
+var dataGoogleTagsTagValue []byte
+
+//go:embed mapping/google/data/resourcemanager/google_tags_tag_values.json
+var dataGoogleTagsTagValues []byte
+
+//go:embed mapping/google/data/storage/google_storage_control_folder_intelligence_config.json
+var dataGoogleStorageControlFolderIntelligenceConfig []byte
+
+//go:embed mapping/google/data/storage/google_storage_control_organization_intelligence_config.json
+var dataGoogleStorageControlOrganizationIntelligenceConfig []byte
+
+//go:embed mapping/google/data/storage/google_storage_control_project_intelligence_config.json
+var dataGoogleStorageControlProjectIntelligenceConfig []byte
+
+//go:embed mapping/google/resource/runtimeconfig/google_runtimeconfig_config.json
+var dataGoogleRuntimeconfigConfig []byte
+
+//go:embed mapping/google/resource/runtimeconfig/google_runtimeconfig_variable.json
+var dataGoogleRuntimeconfigVariable []byte
+
+//go:embed mapping/google/data/redis/google_redis_cluster.json
+var dataGoogleRedisCluster []byte
+
+//go:embed mapping/google/data/resourcemanager/google_project_ancestry.json
+var dataGoogleProjectAncestry []byte
+
+//go:embed mapping/google/data/dns/google_dns_managed_zones.json
+var dataGoogleDNSManagedZones []byte
+
+//go:embed mapping/google/data/accesscontextmanager/google_access_context_manager_access_policy.json
+var dataGoogleAccessContextManagerAccessPolicy []byte
+
+//go:embed mapping/google/data/dataplex/google_dataplex_data_quality_rules.json
+var dataGoogleDataplexDataQualityRules []byte
+
+//go:embed mapping/google/data/iam/google_organization_iam_custom_role.json
+var dataGoogleOrganizationIamCustomRole []byte
+
+//go:embed mapping/google/data/iam/google_organization_iam_custom_roles.json
+var dataGoogleOrganizationIamCustomRoles []byte
+
+//go:embed mapping/google/data/compute/google_compute_network_attachment.json
+var dataGoogleComputeNetworkAttachment []byte
+
+//go:embed mapping/google/data/storageinsights/google_storage_insights_dataset_config.json
+var dataGoogleStorageInsightsDatasetConfig []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_docker_images.json
+var dataGoogleArtifactRegistryDockerImages []byte
+
+//go:embed mapping/google/data/iam.googleapis.com/google_iam_workforce_pool_iam_policy.json
+var dataGoogleIamWorkforcePoolIamPolicy []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_repositories.json
+var dataGoogleArtifactRegistryRepositories []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_version.json
+var dataGoogleArtifactRegistryVersion []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_versions.json
+var dataGoogleArtifactRegistryVersions []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_npm_package.json
+var dataGoogleArtifactRegistryNpmPackage []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_tags.json
+var dataGoogleArtifactRegistryTags []byte
+
+//go:embed mapping/google/data/iap/google_iap_web_region_forwarding_rule_service_iam_policy.json
+var dataGoogleIapWebRegionForwardingRuleServiceIamPolicy []byte
+
+//go:embed mapping/google/data/certificatemanager/google_certificate_manager_dns_authorization.json
+var dataGoogleCertificateManagerDnsAuthorization []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_python_package.json
+var dataGoogleArtifactRegistryPythonPackage []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_backup_plan_associations.json
+var dataGoogleBackupDrPlanAssociations []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_data_source_reference.json
+var dataGoogleBackupDrDataSourceReference []byte
+
+//go:embed mapping/google/data/backupdr/google_backup_dr_data_source_references.json
+var dataGoogleBackupDrDataSourceReferences []byte
+
+//go:embed mapping/google/data/bigquery/google_bigquery_datapolicyv2_data_policy_iam_policy.json
+var dataGoogleBigqueryDatapolicyv2DataPolicyIamPolicy []byte
+
+//go:embed mapping/google/data/iap/google_iap_web_forwarding_rule_service_iam_policy.json
+var dataGoogleIapForwardingRuleServiceIamPolicy []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_maven_artifact.json
+var dataGoogleArtifactRegistryMavenArtifact []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_maven_artifacts.json
+var dataGoogleArtifactRegistryMavenArtifacts []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_npm_packages.json
+var dataGoogleArtifactRegistryNpmPackages []byte
+
+//go:embed mapping/google/data/compute/google_compute_interconnect_location.json
+var dataGoogleComputeInterconnectLocation []byte
+
+//go:embed mapping/google/data/compute/google_compute_interconnect_locations.json
+var dataGoogleComputeInterconnectLocations []byte
+
+//go:embed mapping/google/data/artifactregistry/google_artifact_registry_packages.json
+var dataGoogleArtifactRegistryPackages []byte
