@@ -1183,6 +1183,7 @@
         "azurerm_cdn_frontdoor_profile",
         "azurerm_cdn_frontdoor_rule_set",
         "azurerm_cdn_frontdoor_secret",
+        "azurerm_cdn_frontdoor_security_policy",
         "azurerm_cdn_profile",
         "azurerm_client_config",
         "azurerm_cognitive_account",
