@@ -187,6 +187,8 @@
         "aws_bedrockagentcore_memory_strategy",
         "aws_bedrockagentcore_oauth2_credential_provider",
         "aws_bedrockagentcore_online_evaluation_config",
+        "aws_bedrockagentcore_policy_engine",
+        "aws_bedrockagentcore_resource_policy",
         "aws_bedrockagentcore_token_vault_cmk",
         "aws_bedrockagentcore_workload_identity",
         "aws_billing_view",
