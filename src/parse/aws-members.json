@@ -1933,6 +1933,8 @@
         "aws_elasticache_replication_group",
         "aws_elasticache_reserved_cache_node_offering",
         "aws_elasticache_serverless_cache",
+        "aws_elasticache_service_update_actions",
+        "aws_elasticache_service_updates",
         "aws_elasticache_subnet_group",
         "aws_elasticache_user",
         "aws_elasticsearch_domain",
