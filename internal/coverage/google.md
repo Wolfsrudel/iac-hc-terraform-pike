@@ -2,12 +2,12 @@
 
 | Terraform  | Coverage % | Resources | Total Resources |
 |------------|------------|-----------|-----------------|
-| Resources  | 81.82      |  1125       |  1375            |
-| Datasource | 96.18      |   453       |   471             |
+| Resources  | 81.46      |  1125       |  1381            |
+| Datasource | 95.97      |   453       |   472             |
 
 ## Deprecated
 
-16 resources and 5 datasources are flagged as deprecated in provider schema v8.7.0. Users pinned to an older provider major may already be affected when they upgrade.
+16 resources and 5 datasources are flagged as deprecated in provider schema v8.8.0. Users pinned to an older provider major may already be affected when they upgrade.
 
 ### Deprecated Resources
 
@@ -95,6 +95,10 @@
 ./resource.ps1 google_chronicle_parser
 ./resource.ps1 google_chronicle_parser_extension
 ./resource.ps1 google_chronicle_soar_network
+./resource.ps1 google_cloud_run_v2_instance
+./resource.ps1 google_cloud_run_v2_instance_iam_binding
+./resource.ps1 google_cloud_run_v2_instance_iam_member
+./resource.ps1 google_cloud_run_v2_instance_iam_policy
 ./resource.ps1 google_cloud_support_support_event_subscription
 ./resource.ps1 google_compute_bulk_per_instance_config
 ./resource.ps1 google_compute_firewall_policy_with_rules
@@ -141,7 +145,9 @@
 ./resource.ps1 google_dialogflow_sip_trunk
 ./resource.ps1 google_dialogflow_tool
 ./resource.ps1 google_discovery_engine_serving_config
+./resource.ps1 google_dns_outbound_endpoint
 ./resource.ps1 google_document_ai_schema
+./resource.ps1 google_document_ai_schema_version
 ./resource.ps1 google_eventarc_pipeline_iam_binding
 ./resource.ps1 google_eventarc_pipeline_iam_member
 ./resource.ps1 google_eventarc_pipeline_iam_policy
@@ -294,6 +300,7 @@
 ./resource.ps1 google_biglake_hive_catalog_iam_policy -type data
 ./resource.ps1 google_biglake_hive_database_iam_policy -type data
 ./resource.ps1 google_biglake_hive_table_iam_policy -type data
+./resource.ps1 google_cloud_run_v2_instance_iam_policy -type data
 ./resource.ps1 google_cloudbuild_worker_pool -type data
 ./resource.ps1 google_compute_service_attachments -type data
 ./resource.ps1 google_data_catalog_taxonomy -type data
