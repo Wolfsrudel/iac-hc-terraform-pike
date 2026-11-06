@@ -2,12 +2,12 @@
 
 | Terraform  | Coverage % | Resources | Total Resources |
 |------------|------------|-----------|-----------------|
-| Resources  | 80.96      |  1127       |  1392            |
-| Datasource | 95.77      |   453       |   473             |
+| Resources  | 80.80      |  1128       |  1396            |
+| Datasource | 95.57      |   453       |   474             |
 
 ## Deprecated
 
-17 resources and 5 datasources are flagged as deprecated in provider schema v8.9.0. Users pinned to an older provider major may already be affected when they upgrade.
+17 resources and 5 datasources are flagged as deprecated in provider schema v8.10.0. Users pinned to an older provider major may already be affected when they upgrade.
 
 ### Deprecated Resources
 
@@ -283,12 +283,14 @@
 ./resource.ps1 google_oracle_database_goldengate_connection
 ./resource.ps1 google_oracle_database_goldengate_connection_assignment
 ./resource.ps1 google_oracle_database_goldengate_deployment
+./resource.ps1 google_oracle_database_odb_dns_zone
 ./resource.ps1 google_redis_cluster_acl_policy
 ./resource.ps1 google_resource_manager_boundary
 ./resource.ps1 google_resource_manager_boundary_config
 ./resource.ps1 google_resource_manager_capability_config
 ./resource.ps1 google_scc_notification_service_account
 ./resource.ps1 google_scc_v2_organization_source
+./resource.ps1 google_secret_manager_regional_secret_managed_rotation
 ./resource.ps1 google_service_networking_vpc_service_controls
 ./resource.ps1 google_sql_provision_script
 ./resource.ps1 google_storage_ftp_server
@@ -306,6 +308,7 @@
 ./resource.ps1 google_vertex_ai_semantic_governance_policy_engine
 ./resource.ps1 google_vertex_ai_tensorboard_experiment
 ./resource.ps1 google_vertex_ai_tensorboard_run
+./resource.ps1 google_vertex_ai_training_pipeline
 ./resource.ps1 google_workload_identity_service_agent
 ./resource.ps1 google_agent_identity_auth_provider_iam_policy -type data
 ./resource.ps1 google_biglake_hive_catalog_iam_policy -type data
@@ -326,5 +329,6 @@
 ./resource.ps1 google_network_services_gateway -type data
 ./resource.ps1 google_oracle_database_exascale_db_storage_vault -type data
 ./resource.ps1 google_oracle_database_exascale_db_storage_vaults -type data
+./resource.ps1 google_oracle_database_odb_dns_zone -type data
 ./resource.ps1 google_redis_cluster_acl_policy -type data
 ```
