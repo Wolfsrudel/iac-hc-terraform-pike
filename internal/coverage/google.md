@@ -2,12 +2,12 @@
 
 | Terraform  | Coverage % | Resources | Total Resources |
 |------------|------------|-----------|-----------------|
-| Resources  | 80.80      |  1128       |  1396            |
-| Datasource | 95.57      |   453       |   474             |
+| Resources  | 80.44      |  1131       |  1406            |
+| Datasource | 95.37      |   453       |   475             |
 
 ## Deprecated
 
-17 resources and 5 datasources are flagged as deprecated in provider schema v8.10.0. Users pinned to an older provider major may already be affected when they upgrade.
+17 resources and 5 datasources are flagged as deprecated in provider schema v8.11.0. Users pinned to an older provider major may already be affected when they upgrade.
 
 ### Deprecated Resources
 
@@ -65,6 +65,7 @@
 ./resource.ps1 google_apihub_runtime_project_attachment
 ./resource.ps1 google_artifact_registry_project_config
 ./resource.ps1 google_artifact_registry_rule
+./resource.ps1 google_backup_dr_auto_protection_policy
 ./resource.ps1 google_biglake_hive_catalog
 ./resource.ps1 google_biglake_hive_catalog_iam_binding
 ./resource.ps1 google_biglake_hive_catalog_iam_member
@@ -136,7 +137,9 @@
 ./resource.ps1 google_container_azure_cluster
 ./resource.ps1 google_container_azure_node_pool
 ./resource.ps1 google_data_lineage_config
+./resource.ps1 google_data_lineage_open_lineage_job
 ./resource.ps1 google_data_loss_prevention_content_policy
+./resource.ps1 google_dataflow_config_store_setting
 ./resource.ps1 google_dataplex_data_product_data_asset
 ./resource.ps1 google_dataplex_metadata_feed
 ./resource.ps1 google_dataproc_gdc_application_environment
@@ -144,11 +147,13 @@
 ./resource.ps1 google_dataproc_gdc_spark_application
 ./resource.ps1 google_dataproc_metastore_federation
 ./resource.ps1 google_dataproc_metastore_service
+./resource.ps1 google_dialogflow_companion_agent
 ./resource.ps1 google_dialogflow_cx_test_case
 ./resource.ps1 google_dialogflow_cx_tool_version
 ./resource.ps1 google_dialogflow_environment
 ./resource.ps1 google_dialogflow_sip_trunk
 ./resource.ps1 google_dialogflow_tool
+./resource.ps1 google_discovery_engine_project_provision
 ./resource.ps1 google_discovery_engine_serving_config
 ./resource.ps1 google_dns_outbound_endpoint
 ./resource.ps1 google_document_ai_schema
@@ -285,6 +290,7 @@
 ./resource.ps1 google_oracle_database_goldengate_deployment
 ./resource.ps1 google_oracle_database_odb_dns_zone
 ./resource.ps1 google_redis_cluster_acl_policy
+./resource.ps1 google_redis_cluster_token_auth_user
 ./resource.ps1 google_resource_manager_boundary
 ./resource.ps1 google_resource_manager_boundary_config
 ./resource.ps1 google_resource_manager_capability_config
@@ -298,6 +304,7 @@
 ./resource.ps1 google_vector_search_data_object
 ./resource.ps1 google_vector_search_index
 ./resource.ps1 google_vertex_ai_custom_job
+./resource.ps1 google_vertex_ai_evaluation_item
 ./resource.ps1 google_vertex_ai_evaluation_metric
 ./resource.ps1 google_vertex_ai_online_evaluator
 ./resource.ps1 google_vertex_ai_persistent_resource
@@ -331,4 +338,5 @@
 ./resource.ps1 google_oracle_database_exascale_db_storage_vaults -type data
 ./resource.ps1 google_oracle_database_odb_dns_zone -type data
 ./resource.ps1 google_redis_cluster_acl_policy -type data
+./resource.ps1 google_redis_cluster_token_auth_user -type data
 ```
